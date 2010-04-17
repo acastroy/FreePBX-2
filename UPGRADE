@@ -1,0 +1,17 @@
+
+Upgrading freePBX
+
+Upgrading freePBX is easy.  You should perform these steps on a running system.  There should be no impact to service.
+
+
+Upgrading from the freePBX-version.tar.gz download from sourceforge:
+
+- save the freePBX-version.tar.gz to /usr/src/
+- cd /usr/src/ :: change to your /usr/src directory
+- rm -rf freePBX :: remove your current freePBX directory (if you have one)
+- tar -zxvf freePBX-version.tar.gz :: extract the new freePBX tar
+- cd freePBX-version :: change to the freePBX directory
+- ./install_amp :: run the install script
+
+- ./AAH_updatemaint.sh (optional)
+  This is used to restore the maintenance tab that is not part of AMP or freePBX.

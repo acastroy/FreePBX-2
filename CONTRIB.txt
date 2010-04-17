@@ -1,0 +1,27 @@
+
+*******************************************************************************************
+dialparties.agi is GPL:
+
+Zac Sprackett (www.sprackett.com)
+Ported to PHP by the freePBX community.
+
+******************************************************************************************
+CDR (Call Detail Records) Application:
+
+Arezqui Belaid (areski@gmail.com http://www.asterisk-stats.org) 
+
+License GPL (depends on JPGraph which is QPL)
+
+******************************************************************************************
+spandsp:
+
+Steve Underwood (opencall.org)
+
+License GPL
+
+*******************************************************************************************
+Flash Operator Panel is GPL (see above)
+
+Nicloas Gudino (www.asternic.org)
+
+

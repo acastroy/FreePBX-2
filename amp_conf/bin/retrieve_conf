@@ -1,0 +1,358 @@
+#!/usr/bin/php -q
+<?php
+
+define("AMP_CONF", "/etc/amportal.conf");
+define("ASTERISK_CONF", "/etc/asterisk/asterisk.conf");
+
+function out($text) {
+	echo $text."\n";
+}
+
+function outn($text) {
+	echo $text;
+}
+
+function error($text) {
+	echo "[ERROR] ".$text."\n";
+}
+
+function fatal($text) {
+	echo "[FATAL] ".$text."\n";
+	exit(1);
+}
+
+function debug($text) {
+	global $debug;
+	
+	if ($debug) echo "[DEBUG] ".$text."\n";
+}
+
+function showHelp() {
+	out("Optional parameters:");
+	out("  --help, -h, -?           Show this help");
+	out("  --debug                  Enable debug output");
+	out("  --dry-run                Don't actually do anything");
+}
+
+
+function parse_amportal_conf2($filename) {
+	$file = file($filename);
+	foreach ($file as $line) {
+		if (preg_match("/^\s*([\w]+)\s*=\s*\"?([\w\/\:\.\%-]*)\"?\s*([;#].*)?/",$line,$matches)) {
+			$conf[ $matches[1] ] = $matches[2];
+		}
+	}
+	return $conf;
+}
+
+function parse_asterisk_conf2($filename) {
+	$file = file($filename);
+	foreach ($file as $line) {
+		if (preg_match("/^\s*([a-zA-Z0-9]+)\s* => \s*(.*)\s*([;#].*)?/",$line,$matches)) { 
+			$conf[ $matches[1] ] = $matches[2];
+		}
+	}
+	return $conf;
+}
+
+
+/********************************************************************************************************************/
+
+// **** Make sure we have STDIN etc
+
+// from  ben-php dot net at efros dot com   at  php.net/install.unix.commandline
+if (version_compare(phpversion(),'4.3.0','<') || !defined("STDIN")) {
+	define('STDIN',fopen("php://stdin","r"));
+	define('STDOUT',fopen("php://stdout","r"));
+	define('STDERR',fopen("php://stderr","r"));
+	register_shutdown_function( create_function( '' , 'fclose(STDIN); fclose(STDOUT); fclose(STDERR); return true;' ) );
+}
+   
+// **** Make sure we have PEAR's DB.php, and include it
+
+outn("Checking for PEAR DB..");
+if (! @ include('DB.php')) {
+	out("FAILED");
+	fatal("PEAR must be installed (requires DB.php). Include path: ".ini_get("include_path"));
+}
+out("OK");
+
+
+// **** Make sure we have PEAR's GetOpts.php, and include it
+
+outn("Checking for PEAR Console::Getopt..");
+if (! @ include("Console/Getopt.php")) {
+	out("FAILED");
+	fatal("PEAR must be installed (requires Console/Getopt.php). Include path: ".ini_get("include_path"));
+}
+out("OK");
+
+
+// **** Parse out command-line options
+
+$shortopts = "h?u:p:";
+$longopts = array("help","debug","dry-run");
+
+$args = Console_Getopt::getopt(Console_Getopt::readPHPArgv(), $shortopts, $longopts);
+if (is_object($args)) {
+	// assume it's PEAR_ERROR
+	out($args->message);
+	exit(255);
+}
+
+$debug = false;
+$dryrun = false;
+
+foreach ($args[0] as $arg) {
+	switch ($arg[0]) {
+		case "--help": case "h": case "?":
+			showHelp();
+			exit(10);
+		break;
+		case "--dry-run":
+			out("Dry-run only, no files will be written");
+			$dryrun = true;
+		break;
+		case "--debug":
+			$debug = true;
+			debug("Debug mode enabled");
+		break;
+	}
+}
+
+// **** Check for amportal.conf
+
+outn("Checking for ".AMP_CONF."..");
+if (!file_exists(AMP_CONF)) {
+	fatal("Does not exist, or is inaccessible");
+}
+out("OK");
+
+// **** read amportal.conf
+
+outn("Reading ".AMP_CONF."..");
+$amp_conf = parse_amportal_conf2(AMP_CONF);
+if (count($amp_conf) == 0) {
+	fatal("FAILED");
+}
+out("OK");
+
+outn("Reading ".ASTERISK_CONF."..");
+$asterisk_conf = parse_asterisk_conf2(ASTERISK_CONF);
+if (count($asterisk_conf) == 0) {
+	fatal("FAILED");
+}
+out("OK");
+
+// **** Connect to database
+
+outn("Connecting to database..");
+
+/*
+$db_user = $amp_conf["AMPDBUSER"];
+$db_pass = $amp_conf["AMPDBPASS"];
+$db_host = $amp_conf["AMPDBHOST"];
+$db_name = 'asterisk';
+$db_engine = 'mysql';
+
+$datasource = $db_engine.'://'.$db_user.':'.$db_pass.'@'.$db_host.'/'.$db_name;
+
+if (!function_exists($db_engine.'_connect')) {
+	out("FAILED");
+	fatal($db_engine." PHP libraries not installed");
+}
+
+$db = DB::connect($datasource); // attempt connection
+*/
+
+# the engine to be used for the SQL queries,
+# if none supplied, backfall to mysql
+$db_engine = "mysql";
+if (isset($amp_conf["AMPDBENGINE"])){
+	$db_engine = $amp_conf["AMPDBENGINE"];
+}
+
+switch ($db_engine)
+{
+	case "pgsql":
+	case "mysql":
+		/* datasource in in this style:
+		dbengine://username:password@host/database */
+	
+		$db_user = $amp_conf["AMPDBUSER"];
+		$db_pass = $amp_conf["AMPDBPASS"];
+		$db_host = $amp_conf["AMPDBHOST"];
+		$db_name = 'asterisk';
+	
+		$datasource = $db_engine.'://'.$db_user.':'.$db_pass.'@'.$db_host.'/'.$db_name;
+		$db = DB::connect($datasource); // attempt connection
+		break;
+	
+	case "sqlite":
+		require_once('DB/sqlite.php');
+	
+		if (!isset($amp_conf["AMPDBFILE"]))
+			die("You must setup properly AMPDBFILE in /etc/amportal.conf");
+	
+		if (isset($amp_conf["AMPDBFILE"]) == "")
+			die("AMPDBFILE in /etc/amportal.conf cannot be blank");
+	
+		$DSN = array (
+			"database" => $amp_conf["AMPDBFILE"],
+			"mode" => 0666
+		);
+	
+		$db = new DB_sqlite();
+		$db->connect( $DSN );
+		break;
+	
+	default:
+		die( "Unknown SQL engine: [$db_engine]");
+}
+
+if(DB::isError($db)) {
+	out("FAILED");
+	debug($db->userinfo);
+	fatal("Cannot connect to database");
+	
+}
+out("OK");
+
+//include common functions
+require_once($amp_conf['AMPWEBROOT']."/admin/extensions.class.php");
+require_once($amp_conf['AMPWEBROOT']."/admin/functions.inc.php");
+
+// query for our modules
+$modules = find_allmodules();
+
+//Putting the core module last, to move outbound-allroutes 
+// last in from-internals-additional
+if (array_key_exists('core', $modules)) {
+        $core_tmp = $modules['core'];
+        unset($modules['core']);
+        $modules['core'] = $core_tmp;
+}
+
+// include any module global functions
+if(is_array($modules)){
+	foreach($modules as $key => $module) {
+		//only use this module if it's enabled (status=2)
+		if (isset($module['status']) && $module['status'] == 2) {
+			// Make sure the module is installed and up to date
+			runModuleSql($key, 'install');
+			// active_modules array used in genConf function
+			$active_modules[] = $key;
+			//include module functions
+			if (is_file($amp_conf['AMPWEBROOT']."/admin/modules/{$key}/functions.inc.php")) {
+				require_once($amp_conf['AMPWEBROOT']."/admin/modules/{$key}/functions.inc.php");
+			}
+		}
+	}
+}
+
+// create an object of the extensions class
+require_once($amp_conf['AMPWEBROOT']."/admin/extensions.class.php");
+$ext = new extensions;
+
+// create objects for any module classes
+// currently only 1 class can be declared per module, not sure if that will be an issue
+if(isset($active_modules) && is_array($active_modules)){
+	foreach($active_modules as $active_module) { 
+		$classname = $active_module."_conf";
+		if(class_exists($classname)) {
+			${$classname} = new $classname;
+		}
+	}
+}
+
+
+// run all of the *_get_config functions, which will populate the appropriate objects
+$engine = "asterisk";
+if(isset($active_modules) && is_array($active_modules)){
+	foreach($active_modules as $module) {
+		$funcname = $module."_get_config";
+		if (function_exists($funcname)) { 
+			$funcname($engine);
+		}
+	}
+}
+
+// now run all of the *_hookGet_config functions, which allows the generated dialplan to be modified (ie: $ext->splice())
+$engine = "asterisk";
+if(isset($active_modules) && is_array($active_modules)){
+	foreach($active_modules as $module) {
+		$funcname = $module."_hookGet_config";
+		if (function_exists($funcname)) { 
+			$funcname($engine);
+		}
+	}
+}
+
+// extensions_additional.conf
+// create the from-internal-additional context so other can add to it
+$ext->add('from-internal-additional', 'h', '', new ext_hangup(''));
+//echo $ext->get_filename();
+//echo $ext->generateConf();
+write_file($ext->get_filename(),$ext->generateConf());
+
+// now we write out our conf files for modules
+// check for any objects for each of the active modules
+// ** conferences is an example of a module that write a conf
+if(isset($active_modules) && is_array($active_modules)){
+	foreach($active_modules as $active_module) { 
+		$classname = $active_module."_conf";
+		if(class_exists($classname) && get_class(${$classname}) !== false) {
+			//echo ${$classname}->get_filename();
+			//echo ${$classname}->generateConf();
+			
+			// if the module returns an array, it wants to write multiple files
+			// ** pinsets is an example of a module that does this
+			if (is_array(${$classname}->get_filename())) {
+				foreach(${$classname}->get_filename() as $modconf) {
+					write_file($modconf,${$classname}->generateConf($modconf));
+				}
+			} else {
+				write_file(${$classname}->get_filename(),${$classname}->generateConf());
+			}
+		}
+}
+}
+
+function write_file($filename,$contents) {
+	global $asterisk_conf;
+	if (isset($filename) && !empty($filename)) {
+		if ($fd = fopen($asterisk_conf['astetcdir'].'/'.$filename, "w")) {
+			fwrite($fd, $contents);
+			fclose($fd);
+		}
+	}
+}
+
+
+// run legacy retrieve scripts
+// TODO these legacy retrieve scripts should be obsoleted, in favor of classes like extensions class
+
+//script to write op_server.cfg file from mysql 
+$script = $amp_conf['AMPBIN'].'/retrieve_op_conf_from_mysql.pl';
+exec($script);
+
+//script to write sip conf file from mysql
+$script = $amp_conf['AMPBIN'].'/retrieve_sip_conf_from_mysql.pl';
+exec($script);
+
+//script to write iax2 conf file from mysql
+$script = $amp_conf['AMPBIN'].'/retrieve_iax_conf_from_mysql.pl';
+exec($script);
+
+//script to write zap conf file from mysql
+$script = $amp_conf['AMPBIN'].'/retrieve_zap_conf_from_mysql.pl';
+exec($script);
+
+//script to write queues conf file from mysql
+$script = $amp_conf['AMPBIN'].'/retrieve_queues_conf_from_mysql.pl';
+exec($script);
+	
+// **** Set reload flag for AMP admin
+needreload();
+out("Please Reload Asterisk by visiting http://".$amp_conf["AMPWEBADDRESS"]."/admin");
+?>

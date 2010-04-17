@@ -113,7 +113,8 @@ function display_acronym($field){
 		echo '<acronym title="'.$field.'">'.substr($field,0,10).'...</acronym>';		
 }
 
-
-
+function filter_html($field) {
+  echo  htmlspecialchars($field);
+}
 
 ?>

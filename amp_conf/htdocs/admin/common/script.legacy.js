@@ -719,15 +719,14 @@ $(document).ready(function(){
 			$('.accordion#nav-'+tab).find('.category:not(.category:eq('+cat+'))').next('div').hide();
 			
 			//slide down all modules, one section at a time
-			var slide = $('#nav-'+tab).find('.category').next('div');
-			slidedivs(slide);
-			
 			function slidedivs(slide){
 				slide.eq(0).slideDown(400, function(){
         (slide=slide.slice(1)).length && slidedivs(slide);
     		});
 			};
 			
+			var slide = $('#nav-'+tab).find('.category').next('div');
+			slidedivs(slide);
 			//change link text
 			$(this).html(' - Collapse All');
 			

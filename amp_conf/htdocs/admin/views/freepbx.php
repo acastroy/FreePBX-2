@@ -162,7 +162,7 @@ if ($reload_needed) {
 		//TODO : make this go somewhere more useful? or no link?
 		"<a href=\"http://www.freepbx.org\" target=\"_blank\">"._("FreePBX")."</a>",
 		$version,
-		"<a href=\"http".(isset($_SERVER['HTTPS'])&&$_SERVER['HTTPS']!=''?'s':'')."://".$_SERVER['HTTP_HOST']."\">".$_SERVER["SERVER_NAME"]."</a>"
+		"<a href=\"http".(isset($_SERVER['HTTPS'])&&$_SERVER['HTTPS']!=''?'s':'')."://".$_SERVER['HTTP_HOST']."\">".$_SERVER['SERVER_NAME'] .' ('.trim(`hostname`).')'."</a>"
 		 );
 	echo "</div>\n";
 

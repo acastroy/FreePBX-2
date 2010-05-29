@@ -680,11 +680,11 @@ $(document).ready(function(){
   // initialize the displayed/hidden nav bar categories
 	$(".category-header").each(function(){
 		if ($.cookie(this.id) == 'collapsed') {
-			$("#id-"+this.id).hide();
+			$(".id-"+this.id).hide();
 			$(this).removeClass("toggle-minus").addClass("toggle-plus")
       $.cookie(this.id,'collapsed', { expires: 365 });
 		} else {
-			$("#id-"+this.id).show();
+			$(".id-"+this.id).show();
 			$(this).removeClass("toggle-plus").addClass("toggle-minus")
       $.cookie(this.id,'expanded', { expires: 365 });
 		}
@@ -693,11 +693,11 @@ $(document).ready(function(){
   //slide open/closed each section
 	$(".category-header").click(function(){
     if ($.cookie(this.id) == 'expanded') {
-			$("#id-"+this.id).slideUp();
+			$(".id-"+this.id).slideUp();
       $.cookie(this.id,'collapsed', { expires: 365 });
       $(this).removeClass("toggle-minus").addClass("toggle-plus")
     } else {
-			$("#id-"+this.id).slideDown();
+			$(".id-"+this.id).slideDown();
       $.cookie(this.id,'expanded', { expires: 365 });
       $(this).removeClass("toggle-plus").addClass("toggle-minus")
     }

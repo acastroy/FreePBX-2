@@ -70,7 +70,6 @@ if (is_array($fpbx_menu)) {
 	foreach ($fpbx_menu as $key => $row) {
 		if ($prev_type != $row['type']) {
 			if ($started_div) {
-				echo "\t\t</div>\n";
 				echo "\t</ul></div>\n";
 			}
 			echo "\t".'<div id="nav-'.$row['type'].'"><ul>'."\n";
@@ -79,9 +78,8 @@ if (is_array($fpbx_menu)) {
 		}
 		
 		if ($fpbx_usecategories && ($row['category'] != $prev_category)) {
-			if ($prev_category != $row['category'] && $prev_tab == $row['type']) {echo "\t\t</div>\n"; }
       $cat_id = $row['type'].'-'.md5($row['category']);
-			echo "\t\t<li id='$cat_id' class=\"category category-header\">".htmlspecialchars(_($row['category']), ENT_QUOTES)."</li>\n\t\t<div class='category-content' id='id-$cat_id'>\n";
+			echo "\t\t<li id='$cat_id' class=\"category category-header\">".htmlspecialchars(_($row['category']), ENT_QUOTES)."</li>\n";
 			$prev_category = $row['category'];
 			$prev_tab = $row['type'];
 		}
@@ -99,6 +97,9 @@ if (is_array($fpbx_menu)) {
 		if (isset($row['disabled']) && $row['disabled']) {
 			$li_classes[] = 'disabled';
 		}
+    if (isset($cat_id)) {
+			$li_classes[] = "id-$cat_id";
+    }
 
 		echo "\t\t\t<li class=\"".implode(' ',$li_classes)."\">";
 		if ($framework_text_domain[$key]) {

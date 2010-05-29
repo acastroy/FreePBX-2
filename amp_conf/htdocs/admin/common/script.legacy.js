@@ -690,7 +690,7 @@ $(document).ready(function(){
 		}
 	});
 
-  /slide open/closed each section
+  //slide open/closed each section
 	$(".category-header").click(function(){
     if ($.cookie(this.id) == 'expanded') {
 			$("#id-"+this.id).slideUp();

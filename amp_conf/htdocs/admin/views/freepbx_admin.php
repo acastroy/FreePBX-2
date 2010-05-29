@@ -50,17 +50,17 @@ if (is_array($fpbx_menu)) {
 	echo "<div id=\"nav\">\n";
 	
 	// tab menu
-	echo "<ul id=\"nav-tabs\">\n";
+	echo "\t<ul id=\"nav-tabs\">\n";
 	$tab_num = 1;
 	foreach ($fpbx_types as $key=>$val) {
 		$type_name = (isset($fpbx_type_names[$val]) ? $fpbx_type_names[$val] : ucfirst($val));
-		echo '<li><a href="#nav-'.str_replace(' ','_',$val).'"><span>'._($type_name).'</span></a></li>';
+		echo "\t\t".'<li><a href="#nav-'.str_replace(' ','_',$val).'"><span>'._($type_name)."</span></a></li>\n";
 		if ($val == $fpbx_type) {
 			$tab_num = $key+1;
 		}
 	}
-	echo "<li class=\"last\"><a><span>&nbsp;</span></a></li>";
-	echo "</ul>\n";
+	echo "\t\t<li class=\"last\"><a><span>&nbsp;</span></a></li>\n";
+	echo "\t</ul>\n";
 	
 	// menu items
 	$prev_category = false;
@@ -70,17 +70,18 @@ if (is_array($fpbx_menu)) {
 	foreach ($fpbx_menu as $key => $row) {
 		if ($prev_type != $row['type']) {
 			if ($started_div) {
-				echo '</ul></div>';
+				echo "\t\t</div>\n";
+				echo "\t</ul></div>\n";
 			}
-			echo '<div id="nav-'.$row['type'].'"><ul>';
+			echo "\t".'<div id="nav-'.$row['type'].'"><ul>'."\n";
 			$prev_type = $row['type'];	
 			$started_div = true;
 		}
 		
 		if ($fpbx_usecategories && ($row['category'] != $prev_category)) {
-			if ($prev_category != $row['category'] && $prev_tab == $row['type']) {echo '</div>'; }
+			if ($prev_category != $row['category'] && $prev_tab == $row['type']) {echo "\t\t</div>\n"; }
       $cat_id = $row['type'].'-'.md5($row['category']);
-			echo "\t\t<li id='$cat_id' class=\"category category-header\">".htmlspecialchars(_($row['category']), ENT_QUOTES)."</li>\n<div class='category-content' id='id-$cat_id'>";
+			echo "\t\t<li id='$cat_id' class=\"category category-header\">".htmlspecialchars(_($row['category']), ENT_QUOTES)."</li>\n\t\t<div class='category-content' id='id-$cat_id'>\n";
 			$prev_category = $row['category'];
 			$prev_tab = $row['type'];
 		}
@@ -99,7 +100,7 @@ if (is_array($fpbx_menu)) {
 			$li_classes[] = 'disabled';
 		}
 
-		echo "\t<li class=\"".implode(' ',$li_classes)."\">";
+		echo "\t\t\t<li class=\"".implode(' ',$li_classes)."\">";
 		if ($framework_text_domain[$key]) {
 			$label_text = dgettext($row['module']['rawname'],$row['name']);
 			if ($label_text == $row['name']) {
@@ -115,7 +116,7 @@ if (is_array($fpbx_menu)) {
 		}
 		echo "</li>\n";
 	}
-  echo "</ul></div>\n</div>\n\n";
+  echo "\t</ul></div>\n</div>\n\n";
 }
 
 

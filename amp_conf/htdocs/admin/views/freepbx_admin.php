@@ -79,7 +79,7 @@ if (is_array($fpbx_menu)) {
 		
 		if ($fpbx_usecategories && ($row['category'] != $prev_category)) {
       $cat_id = $row['type'].'-'.md5($row['category']);
-			echo "\t\t<li id='$cat_id' class=\"category category-header\">".htmlspecialchars(_($row['category']), ENT_QUOTES)."</li>\n";
+			echo "\t\t<li title='"._("click to expand/collapse section")."' id='$cat_id' class=\"category category-header\">".htmlspecialchars(_($row['category']), ENT_QUOTES)."</li>\n";
 			$prev_category = $row['category'];
 			$prev_tab = $row['type'];
 		}

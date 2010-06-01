@@ -5,6 +5,40 @@
 ?>
 <!-- begin menu -->
 <?php
+global $amp_conf;
+$fd = $amp_conf['ASTETCDIR'].'/freepbx_menu.conf';
+if ($fpbx_usecategories && file_exists($fd)) {
+  $favorites = parse_ini_file($fd,true);
+  if ($favorites !== false) foreach ($favorites as $menuitem => $setting) {
+    if (isset($fpbx_menu[$menuitem])) {
+      foreach($setting as $key => $value) {
+        switch ($key) {
+          case 'category':
+          case 'name':
+            $fpbx_menu[$menuitem][$key] = htmlspecialchars($value);
+          break;
+          case 'type':
+            if (strtolower($value)=='setup' || strtolower($value)=='tool') {
+              $fpbx_menu[$menuitem][$key] = strtolower($value);
+            }
+          break;
+          case 'sort':
+            if (is_numeric($value) && $value > -10 && $value < 10) {
+              $fpbx_menu[$menuitem][$key] = $value;
+            }
+          break;
+          case 'remove':
+            // parse_ini_file sets all forms of yes/true to 1 and no/false to nothing
+            if ($value == '1') {
+              unset($fpbx_menu[$menuitem]);
+            }
+          break;
+        }
+      }
+    }
+  }
+}
+
 $prev_category = '';
 
 if (is_array($fpbx_menu)) {
@@ -15,7 +49,8 @@ if (is_array($fpbx_menu)) {
 	$framework_text_domain = Array();
 	// Sorting menu by category and name
 	foreach ($fpbx_menu as $key => $row) {
-		$category[$key] = $row['category'];
+		// Fake name to have it follow after Admin in the sort order
+		$category[$key] = $row['category'] == 'Favorites'?'Admin Favorites':$row['category'];
 		$sort[$key] = $row['sort'];
 		$sort_name[$key] = $row['name'];
 		$sort_type[$key] = $row['type'];

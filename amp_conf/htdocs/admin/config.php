@@ -310,7 +310,6 @@ switch($display) {
 			'extdisplay',
 			'id',
 			'itemid',
-			'category',
 			'selection'
 		);
 		$itemid = '';

@@ -631,6 +631,7 @@ class Callmonitor {
       }
 
       // allow entries to be viewed with users extension
+      $searchText .= "( ";
       $searchText .= "(src = '" . $_SESSION['ari_user']['extension'] . "'
                       OR dst = '" . $_SESSION['ari_user']['extension'] . "'
 
@@ -645,6 +646,7 @@ class Callmonitor {
         $searchText .= "OR (src = '" . $_SESSION['ari_user']['outboundCID'] . "'
                         OR dst = '" . $_SESSION['ari_user']['outboundCID'] . "')";
       }
+      $searchText .= ") ";
     }
 
     return $searchText;

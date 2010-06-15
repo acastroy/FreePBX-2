@@ -895,6 +895,22 @@ class ext_confbridge {
 	}
 }
 
+class ext_meetmeadmin {
+	var $confno;
+	var $command;
+	var $user;
+
+	function ext_meetmeadmin($confno, $command, $user='') {
+		$this->confno = $confno;
+		$this->command = $command;
+		$this->user = $user;
+	}
+
+	function output() {
+		return "MeetMeAdmin(".$this->confno.",".$this->command.",".$this->user.")";
+	}
+}
+
 class ext_meetme {
 	var $confno;
 	var $options;

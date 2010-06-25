@@ -26,25 +26,11 @@ if (! function_exists("outn")) {
 	}
 }
 
-if (!function_exists('core_routing_list')) {
-	function core_routing_list() {
-	  $sql = "SELECT a.*, b.seq FROM `outbound_routes` a JOIN `outbound_route_sequence` b ON a.route_id = b.route_id ORDER BY `seq`";
-	  $routes = sql($sql,"getAll",DB_FETCHMODE_ASSOC);
-	  return $routes;
-	}
-}
-// TODO: returning false will fail the install with #4345 checked in
-//
-if (!function_exists('timeconditions_timegroups_add_group_timestrings')) {
-  out(_('Time Conditions Module required and not present .. aborting install'));
-  return false;
-}
-
 //check if we have custom context installed, and migrate them if we do
 $sql = 'DESCRIBE customcontexts_includes_list';
 $test = $db->getAll($sql);
 if(!DB::IsError($test)) { 
-$ver = modules_getversion('customcontexts');
+	$ver = modules_getversion('customcontexts');
 	outn(_("checking if Custom Context migration is required..."));
 	if ($ver !== null && version_compare($ver, "2.8.0beta1.0", "<")) {
 			outn(_("migrating.."));
@@ -67,7 +53,8 @@ $ver = modules_getversion('customcontexts');
 				 * the new core, so we can count on the APIs being available. If there are indentical names, then
 				 * oh well...
 				 */
-				$routes = core_routing_list();
+				$sql = "SELECT a.*, b.seq FROM `outbound_routes` a JOIN `outbound_route_sequence` b ON a.route_id = b.route_id ORDER BY `seq`";
+				$routes = sql($sql,"getAll",DB_FETCHMODE_ASSOC);
 				$newincludes = array();
 				foreach ($includes as $inc => $myinclude) {
 					$include = explode('-',$myinclude['include'],3);
@@ -111,24 +98,6 @@ $ver = modules_getversion('customcontexts');
 		}
 	} else {
 	  out(_("not needed"));
-	}
-	$tgs = $db->getAll('SELECT * FROM customcontexts_timegroups',DB_FETCHMODE_ASSOC);
-	if(!DB::IsError($tgs)) {
-	  outn(_("migrating customcontexts_timegroups if needed.."));			    
-	  foreach ($tgs as $tg) {
-	    $tg_strings = sql('SELECT time FROM customcontexts_timegroups_detail WHERE timegroupid = '.$tg['id'].' ORDER BY id','getCol','time');
-	    $tg_id = timeconditions_timegroups_add_group_timestrings($tg['description'],$tg_strings);
-	    sql("UPDATE customcontexts_includes set timegroupid = $tg_id WHERE timegroupid = {$tg['id']}");
-	  }
-	  out(_("done"));			    
-	  outn(_("removing customcontexts_timegroups and customcontexts_tiemgroups_detail tables.."));			    
-	  unset($sql);
-	  $sql[] = "DROP TABLE IF EXISTS `customcontexts_timegroups`";
-	  $sql[] = "DROP TABLE IF EXISTS `customcontexts_timegroups_detail`";
-	  foreach ($sql as $q){
-		  $db->query($q);
-	  }
-	  out(_("done"));			    
 	}
 }
 ?>

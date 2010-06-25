@@ -26,6 +26,17 @@ if (! function_exists("outn")) {
 	}
 }
 
+if (!function_exists('sql')) {
+  function sql($sql,$type="query",$fetchmode=null) {
+	  global $db;
+	  $results = $db->$type($sql,$fetchmode);
+	  if(DB::IsError($results)) {
+		  die($results->getDebugInfo() . "SQL - <br /> $sql" );
+	  }
+	  return $results;
+  }
+}
+
 //check if we have custom context installed, and migrate them if we do
 $sql = 'DESCRIBE customcontexts_includes_list';
 $test = $db->getAll($sql);

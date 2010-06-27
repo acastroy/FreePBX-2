@@ -3,7 +3,7 @@
 #    FreePBX is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 2 of the License, or
-#    (at your option) any later version
+#    (at your option) any later version.
 #
 #    FreePBX is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-06-26 14:58+0200\n"
+"POT-Creation-Date: 2010-06-27 12:16+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2389,6 +2389,9 @@ msgid ""
 "You can choose which music category to use. For example, choose a type "
 "appropriate for a destination country which may have announcements in the "
 "appropriate language."
+msgstr ""
+
+msgid "default"
 msgstr ""
 
 msgid "Time Group:"

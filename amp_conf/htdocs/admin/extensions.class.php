@@ -149,6 +149,9 @@ class extensions {
 		if($priority == 0) {
 			$basetag = '1';
 			// we'll be defining a new pri "1", so change existing "1" to "n"
+      if (!isset($this->_exts[$section][$extension][0])) {
+        die_freepbx("died in splice $section $extension");
+      }
 			$this->_exts[$section][$extension][0]['basetag'] = 'n';
 		} else {
 			$basetag = 'n';

@@ -364,17 +364,6 @@ if (isset($amp_conf["AMPDBENGINE"])){
 	$db_engine = $amp_conf["AMPDBENGINE"];
 }
 
-// **** Create symlinks array
-$symlink_dirs = array();
-$symlink_dirs['sounds'] = $amp_conf['ASTVARLIBDIR'].'/sounds';
-$symlink_dirs['bin']    = $amp_conf['AMPBIN'];
-$symlink_dirs['etc']    = $amp_conf['ASTETCDIR'];
-$symlink_dirs['images'] = $amp_conf['AMPWEBROOT']."/admin/images"; 
-
-$cp_errors = "";
-$cp_dirs = array();
-$cp_dirs['agi-bin'] = $amp_conf['ASTAGIDIR'];
-
 switch ($db_engine)
 {
 	case "pgsql":
@@ -496,7 +485,13 @@ if(is_array($modules)){
 			// don't symlink framework files, it is a special case module that happens to have
 			// some conflicting names
 			//
-			if ($key != 'framework') {
+      switch ($key) {
+        case 'framework':
+        case 'fw_fop':
+        case 'fw_ari':
+        case 'fw_langpacks':
+          break;
+        default:
         $con_dirs->symlink_subdirs( $amp_conf['AMPWEBROOT'].'/admin/modules/'.$key );
         $con_dirs->cp_subdirs( $amp_conf['AMPWEBROOT'].'/admin/modules/'.$key );
 			}

@@ -87,12 +87,6 @@ if (!isset($amp_conf)) {
 		if (isset($module_page) && ($module_page != $module_name) && is_file('modules/'.$module_name.'/'.$module_page.'.css')) {
 			echo "\t".'<link href="'.$_SERVER['PHP_SELF'].'?handler=file&amp;module='.$module_name.'&amp;file='.$module_page.'.css" rel="stylesheet" type="text/css" />'."\n";
 		}
-		if (is_file('modules/'.$module_name.'/'.$module_name.'.js')) {
-			echo "\t".'<script type="text/javascript" src="'.$_SERVER['PHP_SELF'].'?handler=file&amp;module='.$module_name.'&amp;file='.$module_name.'.js"></script>'."\n";
-		}
-		if (isset($module_page) && ($module_page != $module_name) && is_file('modules/'.$module_name.'/'.$module_page.'.js')) {
-			echo "\t".'<script type="text/javascript" src="'.$_SERVER['PHP_SELF'].'?handler=file&amp;module='.$module_name.'&amp;file='.$module_page.'.js"></script>'."\n";
-		}
 	}
 ?>
 
@@ -116,6 +110,14 @@ if (!isset($amp_conf)) {
 	<script type="text/javascript" src="common/interface.dim.js"></script> <!-- used for interface blocking (reload, modadmin) -->
 	<script type="text/javascript" src="common/tabber-minimized.js"></script> <!-- used for module admin (hiding content) -->
 <?php
+	if (isset($module_name)) {
+		if (is_file('modules/'.$module_name.'/'.$module_name.'.js')) {
+			echo "\t".'<script type="text/javascript" src="'.$_SERVER['PHP_SELF'].'?handler=file&amp;module='.$module_name.'&amp;file='.$module_name.'.js"></script>'."\n";
+		}
+		if (isset($module_page) && ($module_page != $module_name) && is_file('modules/'.$module_name.'/'.$module_page.'.js')) {
+			echo "\t".'<script type="text/javascript" src="'.$_SERVER['PHP_SELF'].'?handler=file&amp;module='.$module_name.'&amp;file='.$module_page.'.js"></script>'."\n";
+		}
+	}
 	}
 ?>
 	

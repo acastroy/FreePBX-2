@@ -10,7 +10,7 @@ class connectdirs {
   var $cp_errors = '';
 	var $symlink_error_modules = '';
 		
-	function &create(&$db) {
+	function &create() {
 		static $obj;
 		if (!isset($obj)) {
 			$obj = new connectdirs();

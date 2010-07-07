@@ -40,7 +40,9 @@ class connectdirs {
 					  $src = addslash($dir).$file;
 					  $dest = addslash($targetdir).$file;
 					  if (file_exists_wrapper($dest)) {
-						  if (!is_link($dest)) {
+						  if ((!is_link($dest) || readlink($dest) != $src) && (md5_file($src) == md5_file($dest))) {
+							  freepbx_log('retrieve-conf', 'devel-debug', "Can't symlink $src to $dest but files are the same so ignoring");
+              } else if (!is_link($dest)) {
 							  freepbx_log('retrieve-conf', 'error', $dest.' already exists, and is not a symlink!');
                 $this->symlink_error_modules .= "<br />&nbsp;&nbsp;&nbsp;".$dest;
 						  } else if (readlink($dest) != $src) {
@@ -70,7 +72,7 @@ class connectdirs {
 
   function symlink_check_errors() {
     if ($this->symlink_error_modules) {
-      $this->nt->add_error('retrieve_conf', 'SYMLINK', _("Symlink from modules failed"), sprintf(_("retrieve_conf failed to sym link: %s<br \>This can result in FATAL failures to your PBX. If the target file exists, the symlink will not occur and you should rename the target file to allow the automatic sym link to occur and remove this error, unless this is an intentional customization."),$this->symlink_error_modules));
+      $this->nt->add_error('retrieve_conf', 'SYMLINK', _("Symlink from modules failed"), sprintf(_("retrieve_conf failed to sym link: %s<br \>This can result in FATAL failures to your PBX. If the target file exists and not identical, the symlink will not occur and you should rename the target file to allow the automatic sym link to occur and remove this error, unless this is an intentional customization."),$this->symlink_error_modules));
 	  } else {
       $this->nt->delete('retrieve_conf', 'SYMLINK');
 	  }

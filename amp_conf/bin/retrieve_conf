@@ -25,7 +25,7 @@ class connectdirs {
     $this->symlink_dirs['bin']    = $amp_conf['AMPBIN'];
     $this->symlink_dirs['etc']    = $amp_conf['ASTETCDIR'];
     $this->symlink_dirs['images'] = $amp_conf['AMPWEBROOT']."/admin/images"; 
-    $symlink_dirs['ari_modules'] = $amp_conf['AMPWEBROOT']."/recordings/modules"; 
+    $this->$symlink_dirs['ari_modules'] = $amp_conf['AMPWEBROOT']."/recordings/modules"; 
     
     $this->cp_dirs['agi-bin'] = $amp_conf['ASTAGIDIR'];
     $this->nt = notifications::create($db);

@@ -35,7 +35,7 @@ msgid "Submit"
 msgstr "Сохранить"
 
 msgid "Please select a valid destination."
-msgstr ""
+msgstr "Выберите действительное назначение"
 
 msgid "Internal Options & Configuration"
 msgstr "Внутренние опции и конфигурации"
@@ -87,7 +87,7 @@ msgid "Used as Destination by %s %s"
 msgstr "Используется в качестве назначения в %s %s"
 
 msgid "Trace Back"
-msgstr ""
+msgstr "Трассировать"
 
 #, php-format
 msgid "Exit code was %s and output was: %s"
@@ -136,7 +136,7 @@ msgid "Add"
 msgstr "Добавить"
 
 msgid "choose one"
-msgstr ""
+msgstr "выберите один"
 
 msgid "Terminate Call"
 msgstr "Терминировать звонок"
@@ -245,13 +245,13 @@ msgid "%s version %s or higher is required, you have %s"
 msgstr "Требуется %s версии %s или выше, в наличии же %s"
 
 msgid "Module "
-msgstr ""
+msgstr "Модуль"
 
 msgid " is already enabled"
-msgstr ""
+msgstr "уже задействован"
 
 msgid " cannot be enabled"
-msgstr ""
+msgstr " не может быть задействован"
 
 msgid "Module not found in repository"
 msgstr "Модуль не найден в репозитории"
@@ -322,11 +322,11 @@ msgid "Could not read module.xml"
 msgstr "Не чиается module.xml"
 
 msgid "rawname"
-msgstr ""
+msgstr "rawname"
 
 msgid ""
 " is broken and cannot be installed. You should try to download it again."
-msgstr ""
+msgstr " повреждён и не может быть инсталлирован. Попытайтесь скачать его ещё раз."
 
 msgid "Failed to run installation scripts"
 msgstr "Ошибка при исполнении скрипта инсталляции"
@@ -366,7 +366,7 @@ msgid "You have %s disabled modules"
 msgstr "У вас отключено %s модулей"
 
 msgid "You have a disabled module"
-msgstr "У вас тключен модуль"
+msgstr "У вас отключен модуль"
 
 msgid "The following modules are disabled because they need to be upgraded:"
 msgstr "Следущий модуль отключен так как нуждается в обновлении"
@@ -398,12 +398,14 @@ msgstr ""
 "известен, лучше бы поставить какой-то пароль посекретней."
 
 msgid "Default ARI Admin password Used"
-msgstr ""
+msgstr "Используется дефолтный пароль администратора ARI"
 
 msgid ""
 "You are using the default ARI Admin password that is widely known, you "
 "should change to a new password. Do this in amportal.conf"
 msgstr ""
+"Используется дефолтный пароль администратора ARI который достаточно хорошо известен, "
+"рекомендуется изменить на любой другой. Сделать это надо в файле /etc/amportal.conf"
 
 msgid "Module Administration"
 msgstr "Управление модулями"
@@ -494,11 +496,11 @@ msgstr "%s %s будет обновлён до он-лайн версии %s"
 
 #, php-format
 msgid "%s %s will be re-installed to online version %s"
-msgstr ""
+msgstr "%s %s будет переинсталлирован на онлайн версию %s"
 
 #, php-format
 msgid "%s %s will be downgraded to online version %s"
-msgstr ""
+msgstr "%s %s будет задаунгрейден до онлайн версии %s"
 
 #, php-format
 msgid ""
@@ -570,13 +572,13 @@ msgid "Please confirm the following actions:"
 msgstr "Подтвердите следующие дейсвтия:"
 
 msgid "Upgrades, installs, enables and disables:"
-msgstr ""
+msgstr "Обноввления, инсталляции и опции включения и выключения:"
 
 msgid "Forced downgrades and re-installs:"
-msgstr ""
+msgstr "Форсировать даунгрейд и переинсталляции:"
 
 msgid "Confirm"
-msgstr "Подвердить"
+msgstr "Подтвердить"
 
 msgid "No actions to perform"
 msgstr "Никаких действий не производить"
@@ -643,7 +645,7 @@ msgstr ""
 "Если модуль в системе с таким имененм уже существует, он будет переписан."
 
 msgid "Show only upgradeable"
-msgstr ""
+msgstr "Показать только обновляемые"
 
 msgid "Download all"
 msgstr "Скачать все"
@@ -752,11 +754,11 @@ msgstr "Скачать и обновить до %s"
 
 #, php-format
 msgid "Force Download and Install %s"
-msgstr ""
+msgstr "Форсировать скачивание и инсталляцию %s"
 
 #, php-format
 msgid "Force Download and Downgrade to %s"
-msgstr ""
+msgstr "Форсировать скачивание и инсталляцию на %s"
 
 msgid "Disable"
 msgstr "Выключить"
@@ -878,12 +880,16 @@ msgid ""
 "did not intended to execute this command as it may result in changes to your "
 "configuration."
 msgstr ""
+"Подозрительный URL указан ниже. Если действие продумано, то можно кликнуть на "
+"этот линк и произвести действие. Не запускайте процесс, если это действие "
+"приведёт к исполнению команды, результатом которой будут изменения в вашей "
+"конфигурации."
 
 msgid "SUSPECT LINK:"
 msgstr "ПОДОЗРИТЕЛЬНАЯ ССЫЛКА:"
 
 msgid "click to expand/collapse section"
-msgstr ""
+msgstr "кликнуть чтобы развернуть/свернуть секцию"
 
 msgid "category"
 msgstr "категория"
@@ -955,7 +961,9 @@ msgid ""
 " error(s) occurred, you should view the notification log on the dashboard or "
 "main screen to check for more details."
 msgstr ""
-
+"произошла ошибка(-и), необходимо обратить внимание на сообщения в журнале состояния "
+"системы или на статус системы в основном экране для подробностей."
+ 
 msgid "Close"
 msgstr "Закрыть"
 
@@ -991,7 +999,7 @@ msgid "Logged out"
 msgstr "Разлогинился"
 
 msgid "You have been successfully logged out."
-msgstr ""
+msgstr "Вы успешно вошли в систему"
 
 msgid "Log in"
 msgstr "Залогиниться"
@@ -1090,6 +1098,13 @@ msgid ""
 "s'>Start IRC</a>,\n"
 "when the module is installed, to start a Java IRC client."
 msgstr ""
+"Если испытываете трудности - у вас есть возможность обратиться в <a href='%s'>Службу "
+"поддержки</a> \n"
+"через модуль Support, который (<b>нужно сначала инсталлировать через <a href='%s'>Репозиторий "
+"модулей</a></b>)\n"
+"чтобы общаться с пользователями и разработчиками в режиме реального времени. "
+"Кликайте на <a href='%s'>Start IRC</a>,\n"
+"после того, как модуль инсталлирован, для запуска Java IRC клиента."
 
 #, php-format
 msgid ""
@@ -1226,11 +1241,11 @@ msgstr "Внутренний номер %s: %s"
 
 #, php-format
 msgid "Trunk: %s (%s)"
-msgstr ""
+msgstr "Транк: %s (%s)"
 
 #, php-format
 msgid "Calling Out Route: %s"
-msgstr ""
+msgstr "Исходящие соединения по маршруту: %s"
 
 msgid "A route for this DID/CID already exists!"
 msgstr "Маршрут для этого DID/CID уже существует"
@@ -1270,7 +1285,7 @@ msgstr "Ошибка, канал существует"
 
 #, php-format
 msgid "Outbound Route: %s"
-msgstr ""
+msgstr "Исходящий маршрут: %s"
 
 #, php-format
 msgid ""
@@ -1611,7 +1626,7 @@ msgid "Generic ZAP Device"
 msgstr "Какое-то ZAP устройство"
 
 msgid "Generic DAHDI Device"
-msgstr ""
+msgstr "Какое-то DAHDI устройство "
 
 msgid "Other (Custom) Device"
 msgstr "Другое утройство"
@@ -1745,7 +1760,7 @@ msgid "User Logoff"
 msgstr "Разлогиниться пользователю"
 
 msgid "ZapBarge"
-msgstr ""
+msgstr "ZapBarge"
 
 msgid "ChanSpy"
 msgstr "Шпионский канал"
@@ -1862,10 +1877,10 @@ msgid "done"
 msgstr "готово"
 
 msgid "Checking if privacy manager options exists.."
-msgstr ""
+msgstr "Проверка - если уже существуют опции менеджера приватности.."
 
 msgid "Added pmmaxretries and pmminlength"
-msgstr ""
+msgstr "Добавлены pmmaxretries и pmminlength"
 
 msgid "Edit Administrator"
 msgstr "Редактировать Администратора"
@@ -2116,6 +2131,10 @@ msgid ""
 "the incoming caller will be be prompted to say their name when the call "
 "reaches the user/extension."
 msgstr ""
+"Если не получен Caller ID приватный менеджер попросит позвонившего указать "
+"его телефонный номер. И если включена опция Защиты от звонков для этого внутреннего "
+"номера позвонившему будет предложено назвать своё имя, каждый раз когда поступает "
+"входящий звонок на этот внутренний номер."
 
 msgid "No"
 msgstr "Нет"
@@ -2124,18 +2143,19 @@ msgid "Yes"
 msgstr "Да"
 
 msgid "Max attempts"
-msgstr ""
+msgstr "Максимально попыток"
 
 msgid "Number of attempts the caller has to enter a valid callerID"
-msgstr ""
+msgstr "Количество попыток для ввода позвонившему реальный callerID"
 
 msgid "Min Length"
-msgstr ""
+msgstr "Минимальная длина"
 
 msgid ""
 "Minimum amount of digits callerID needs to contain in order to be considered "
 "valid"
 msgstr ""
+"инимальное количество цифр в номере котороое будет анализироваться в качестве callerID"
 
 msgid "Set Destination"
 msgstr "Установить направление"
@@ -2373,6 +2393,10 @@ msgid ""
 "IVR directory (it has no effect on the Directory Module). This does NOT need "
 "to be an extension, it can be a Ring Group, or even an external number."
 msgstr ""
+"Номер по умолчанию, куда будут направляться звонки когда позвонивший нажмёт '0'"
+"в голосовой почте или в директории Интерактивного меню (не имеет эффекта в модуле "
+"Директории). Это не обязательно должен быть внутренний номер, это можеть быть "
+"номер группы вызова, или даже внешний номер."
 
 msgid "Voicemail VmX Locator"
 msgstr "Локатор голосовой почты VmX"
@@ -2471,7 +2495,7 @@ msgid ""
 msgstr "Количество раз воспроизведения сообщения о неверно набраном номере"
 
 msgid "Legacy Company Directory"
-msgstr ""
+msgstr "Устаревшая телефонная книга компании"
 
 msgid "Find users in the Company Directory by:"
 msgstr "Найти пользователя в Телефонной книге компании"
@@ -2618,18 +2642,20 @@ msgid ""
 "An unknown error occurred repositioning routes, refresh your browser to see "
 "the current correct route positions"
 msgstr ""
+"Произошла неизвестная ошибка при изменеии маршрутов, обновите ваш браузер "
+"чтобы увидеть текущий порядок маршрутов"
 
 msgid "Add Route"
 msgstr "Добавить маршрут"
 
 msgid "Drag up or down to reposition, click to choose"
-msgstr ""
+msgstr "Перетащите вверх или вниз для изменения позиции, кликните для выбора"
 
 msgid "Edit Route"
 msgstr "Редактировать маршрут"
 
 msgid "Route Settings"
-msgstr ""
+msgstr "Значения для маршрута"
 
 msgid "Route Name"
 msgstr "Название маршрута"
@@ -2642,7 +2668,7 @@ msgstr ""
 "куда он ведет (например - 'локальные', или 'межгород')."
 
 msgid "Route CID"
-msgstr ""
+msgstr "Исходящий CID для маршрута"
 
 msgid ""
 "Optional Route CID to be used for this route. If set, this will override all "
@@ -2651,9 +2677,15 @@ msgid ""
 "it's CID</li><li>Forwarded call CIDs (CF, Follow Me, Ring Groups, etc)</"
 "li><li>Extension/User CIDs if checked</li></ul>"
 msgstr ""
+"Можно использовать исходящий CID опционально для этого маршрута. Если указано, "
+"то это значение переписывает все ранее указаные CID кроме:<ul><li>Номера ИД (CID) для "
+"экстренных служб, установленных для внутреннего номера/устройства, если этот маршрут "
+"обозначен как ЭКСТРЕННЫЙ</li><li>транковый CID если на транке установлена опция форсировать "
+"этот Номер ИД (CID)</li><li>Перенаправленый звонок со своим CID (форвард, Найди меня, "
+"Группа вызова и т.п.)</li><li>CID для внутреннего номера/пользователя, если указан</li></ul>"
 
 msgid "Override Extension"
-msgstr ""
+msgstr "Отмена внутреннего номера"
 
 msgid ""
 "If checked the extension's Outbound CID will be ignored in favor of this "

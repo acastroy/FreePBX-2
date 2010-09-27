@@ -14,10 +14,10 @@
 #    along with FreePBX.  If not, see <http://www.gnu.org/licenses/>.
 #
 # Russian freePBX ver. translation 
-# Copyright (c) 2006-2008 PostMet Corporation
-# Alexander Kozyrev <ceo@postmet.com>, Sergey Nikolayev <sergey@postmet.com>, 2006-2009.
+# Copyright (c) 2006-2010 PostMet Corporation
+# Alexander Kozyrev <ceo@postmet.com>, Sergey Nikolayev <sergey@postmet.com>, 2006-2010.
 #
-# Использовать iconv amp.new -f UTF-8 -t ISO-8859-5 -o amp.po
+# Использовать iconv amp.pot -f UTF-8 -t ISO-8859-5 -o amp.po
 # fuzzy
 msgid ""
 msgstr ""
@@ -77,7 +77,7 @@ msgstr ""
 "Отсутствует или нечитаемый конфигурационный файл (%s)...невозможно продолжить"
 
 msgid "Objects"
-msgstr "Объектов"
+msgstr "Объектах"
 
 msgid "Object"
 msgstr "Объект"
@@ -99,9 +99,8 @@ msgstr "Невозможно исполнить %s скрипт"
 
 #, php-format
 msgid "Reload failed because retrieve_conf encountered an error: %s"
-msgstr ""
-"Перезагрузка невозможна потому что скрипт retrieve_conf обнаружил ошибку: "
-"retrieve_conf"
+msgstr "Перезагрузка невозможна потому что скрипт retrieve_conf обнаружил ошибку: %s"
+
 
 msgid "retrieve_conf failed, config not applied"
 msgstr "retrieve_conf не найден, конфигурация не применилась"
@@ -226,7 +225,7 @@ msgstr "Требуется версия %s не ниже %s, в наличии же %s"
 
 #, php-format
 msgid "%s version %s or below is required, you have %s"
-msgstr "Требуется версия %s или ниже, в наличии же %s"
+msgstr "Для %s требуется версия %s или ниже, в наличии же %s"
 
 #, php-format
 msgid "A %s version newer than %s required, you have %s"
@@ -616,7 +615,7 @@ msgstr "Загрузить модуль"
 
 #, php-format
 msgid "The following error(s) occurred processing the uploaded file: %s"
-msgstr "%s Следующая ошибка(-и) произошла при загрузке файла: %s"
+msgstr "Следующая ошибка(-и) произошла при загрузке файла: %s"
 
 #, php-format
 msgid "You should fix the problem or select another file and %s."
@@ -934,7 +933,7 @@ msgid "Recordings"
 msgstr "Запись"
 
 msgid "Help"
-msgstr "Помошь"
+msgstr "Помощь"
 
 msgid "Logged in: "
 msgstr "Вошёл: "
@@ -1112,8 +1111,8 @@ msgid ""
 "Forum</a> where you can post\n"
 "questions and search for answers for any problems you may be having."
 msgstr ""
-"Русскоязычную поддержку FreePBX вы можете получить на <a href='http://"
-"asterisk-support.ru/forum/18'>форуме</a>,  платная поддержка - у \n"
+"Русскоязычную поддержку FreePBX вы можете получить на <a href='%s'> и на "
+"<a href='http://asterisk-support.ru/forum/18'>форуме</a>,  платная поддержка - у \n"
 "<a href='https://www.postmet.com/shop/126-remote-support-or-consultations-1-"
 "hour.html'>консультантов компании <b>PostMet</a></b>"
 
@@ -1807,7 +1806,7 @@ msgstr "ОШИБКА: не удалось присвоить %s для пользователя %s"
 msgid ""
 "There were %s failures migrating directdids, users table not being changed"
 msgstr ""
-"При переносе прямых DID's произошли сбои, таблица пользователей осталась без "
+"При переносе %s произошли сбои, таблица пользователей осталась без "
 "изменений"
 
 #, php-format
@@ -2692,6 +2691,10 @@ msgid ""
 "CID. The extension's Emergency CID will still be used if the route is an "
 "Emergency Route and the Extension has a defined Emergency CID."
 msgstr ""
+"Если отмечено - установленный для внутреннего номера исходящий Номер ИД (CID) "
+"будет переписываться на указанный здесь CID. Но специальный CID для экстренных "
+"вызовов будет по-прежнему использоваться если если указанный маршрут предназначен "
+"для вызовов экстренных служб и внутренний номер имеет экстренный CID." 
 
 msgid "Route Password"
 msgstr "Пароль на маршрут"
@@ -2703,27 +2706,38 @@ msgid ""
 "an Authenticate password file can be used.<br><br>Leave this field blank to "
 "not prompt for password."
 msgstr ""
+"Опционально: привызове через маршрут будет предложено набрать пароль прежде. Это "
+"обычно применяется для ограничений интернациональных направлений или 900-х платных "
+"номеров.<br><br>Можно использовать цифровой пароль или путь к файлу аутентификации."
+"<br><br>Оставьте это поле пустым для отмены предложения о пароле."
 
 msgid "Route Type"
 msgstr ""
+"Тип маршрута"
 
 msgid ""
 "Optional: Selecting Emergency will enforce the use of a device's Emergency "
 "CID setting (if set).  Select this option if this route is used for "
 "emergency dialing (ie: 911)."
 msgstr ""
+"Опционально: указание маршрута в качестве экстренного для вызова экстренных "
+"служб будет форсировать использование (если установлено) в опциях устройства "
+"значения Номера ИД (CID) для вызова экстренных служб."
 
 msgid ""
 "Optional: Selecting Intra-Company will treat this route as an intra-company "
 "connection, preserving the internal Caller ID information instead of the "
 "outbound CID of either the extension or trunk."
 msgstr ""
+"Опционально: указание маршрута в качестве внутрикорпоративного будет отслеживать "
+"соединения через этот маршрут передавая внутренние номера вместо подстановки "
+"исходящего номера CID, указанного на внутреннем номере или на транке." 
 
 msgid "Emergency"
-msgstr "Экстренные"
+msgstr "Экстренный"
 
 msgid "Intra-Company"
-msgstr ""
+msgstr "Внутрикорпоративный"
 
 msgid "Music On Hold?"
 msgstr "Музыку в ожидании?"
@@ -2739,10 +2753,10 @@ msgstr ""
 "песня. Или приветствие (announcements) на соответсвующем языке."
 
 msgid "default"
-msgstr ""
+msgstr "по умолчанию"
 
 msgid "Time Group:"
-msgstr ""
+msgstr "Временное окно:"
 
 msgid ""
 "If this route should only be available during certain times then Select a "
@@ -2750,36 +2764,40 @@ msgid ""
 "times specified in that Time Group. If left as default of Permanent Route "
 "then it will always be available."
 msgstr ""
+"Если маршрут должен использоваться в ограниченное время - выберите Временное окно "
+"которое нужно создать вначале в модуле Временные группы. Соединения через маршрут "
+"будут отвергаться согласно установкам Временного окна. Если оставить значение "
+"'Постоянный маршрут' по умолчанию маршрут будет доступен всегда."
 
 msgid "---Permanent Route---"
-msgstr ""
+msgstr "---Постоянный маршрут---"
 
 msgid "Route Position"
-msgstr ""
+msgstr "Приоритет маршрута"
 
 msgid "Where to insert this route or relocate it relative to the other routes."
-msgstr ""
+msgstr "На какую позицию его поместить относительно других маршрутов."
 
 #, php-format
 msgid "First before %s"
-msgstr ""
+msgstr "Первым перед %s"
 
 msgid "---No Change---"
-msgstr ""
+msgstr "---Без изменений---"
 
 #, php-format
 msgid "Before %s"
-msgstr ""
+msgstr "Перед %s"
 
 #, php-format
 msgid "Last after %s"
-msgstr ""
+msgstr "Последним после %s"
 
 msgid "Additional Settings"
-msgstr ""
+msgstr "Дополнительные установки"
 
 msgid "Dial Patterns that will use this Route"
-msgstr ""
+msgstr "Шаблон номера, используемый на этом маршруте"
 
 msgid ""
 "A Dial Pattern is a unique set of digits that will select this route and "
@@ -2788,6 +2806,11 @@ msgid ""
 "subsequent routes will be checked for matches outside of the designated time"
 "(s)."
 msgstr ""
+"Шаблон номера - это набор цифр и букв, попадение в который направляет набранный номер "
+"в указанный транк. Если есть совпадение номера с шаблоном, то другой маршрут "
+"не будет анализироваться. Если задействована опция Временного окна, тогда при отказе "
+"вызова в текущем маршруте будет выполнен поиск на совпадение шаблона в другом "
+"маршруте, если позволяет Временное окно." 
 
 msgid "Rules:"
 msgstr "Правила:"
@@ -2802,40 +2825,47 @@ msgid "matches any digit from 2-9"
 msgstr "совпадение любой цифры от 2 - 9"
 
 msgid "matches any digit in the brackets (example: 1,2,3,7,8,9)"
-msgstr ""
+msgstr "совпадение любой цифры в скобках (например: 1,2,3,7,8,9)"
 
 msgid "wildcard, matches one or more dialed digits"
-msgstr ""
+msgstr "открытый шаблон, дпускает одну или несколько набранных цифр"
 
 msgid "prepend:"
-msgstr ""
+msgstr "полный код:"
 
 msgid ""
 "Digits to prepend to a successful match. If the dialed number matches the "
 "patterns specified by the subsequent columns, then this will be prepended "
 "before sending to the trunks."
 msgstr ""
+"Цифры, добавляемые впереди к номеру. Если набраный номер попадает под шаблон, указанный в соответствующей колонке,"
+"то впереди к нему будет добавлены цифры полного кода, прежде чем набираемый номер будет отправлен в транк."
 
 msgid "prefix:"
-msgstr ""
+msgstr "префикс:"
 
 msgid ""
 "Prefix to remove on a successful match. The dialed number is compared to "
 "this and the subsequent columns for a match. Upon a match, this prefix is "
 "removed from the dialed number before sending it to the trunks."
 msgstr ""
+"Префикс, удаляемый, если найдено совпадение набранного номера. Набираемый номер "
+"сравнивается с шаблоном, указанным в соответствующих колонках. Если найдено совпадение, "
+"префикс удаляется из набранного номера, прежде чем набираемый номер будет отправлен в транк."
 
 msgid "match pattern:"
-msgstr ""
+msgstr "совпадение по шаблону:"
 
 msgid ""
 "The dialed number will be compared against the  prefix + this match pattern. "
 "Upon a match, the match pattern portion of the dialed number will be sent to "
 "the trunks"
 msgstr ""
+"Набранный номер будет сравниваться с маской 'префикс + шаблон'. Если найдено совпадение, "
+"в транк отправляется только часть номера без префикса."
 
 msgid "CallerID:"
-msgstr ""
+msgstr "CallerID:"
 
 msgid ""
 "If CallerID is supplied, the dialed number will only match the prefix + "
@@ -2844,18 +2874,22 @@ msgid ""
 "and NOT their Outbound CID. The above special matching sequences can be used "
 "for CallerID matching similar to other number matches."
 msgstr ""
+"Если присутствует CallerID, то набранный номер сравнивается с маской 'префикс + шаблон'. "
+"Если внутренний номер совершает внешний звонок, то обычно CallerID будет тем самым внутренним "
+"номером, и совсем не Исходящим CID. Шаблон, указаный ниже, можно использовать для поиска совпадений "
+"унифицированно с другими похожими номерами."
 
 msgid "prepend"
-msgstr ""
+msgstr "полный код"
 
 msgid "prefix"
-msgstr ""
+msgstr "префикс"
 
 msgid "match pattern"
-msgstr ""
+msgstr "совпадение шаблона"
 
 msgid "CallerId"
-msgstr ""
+msgstr "CallerID"
 
 msgid "Dial patterns wizards"
 msgstr "Помощник создания шаблона номера"
@@ -2946,7 +2980,7 @@ msgid "Information"
 msgstr "Информационные"
 
 msgid "Trunk Sequence for Matched Routes"
-msgstr ""
+msgstr "Последовательность выбора транков для указанного маршрута(-ов)"
 
 msgid ""
 "The Trunk Sequence controls the order of trunks that will be used when the "
@@ -2970,10 +3004,10 @@ msgid "Add Trunk"
 msgstr "Добавить транк"
 
 msgid "remove"
-msgstr ""
+msgstr "удалить"
 
 msgid "Click here to remove this pattern"
-msgstr ""
+msgstr "Кликнуть для удаления шаблона"
 
 msgid "Route name is invalid, please try again"
 msgstr "Имя маршрута неыверно, попробуйте другое"
@@ -2988,14 +3022,14 @@ msgid "Invalid Outbound Caller ID"
 msgstr "Неверный Исходящий Номер ИД"
 
 msgid "No dial pattern, there must be at least one"
-msgstr ""
+msgstr "Нет ни одного шаблона набора, должен быть по крайней мере один"
 
 msgid "Dial pattern is invalid"
 msgstr "Неверный шаблон номера"
 
 #, php-format
 msgid "Channel %s"
-msgstr ""
+msgstr "Канал %s"
 
 msgid "Add a Trunk"
 msgstr "Добавить транк"
@@ -3004,7 +3038,7 @@ msgid "Add SIP Trunk"
 msgstr "Добавить SIP транк"
 
 msgid "Add DAHDI Trunk"
-msgstr ""
+msgstr "Добавить DAHDI транк"
 
 msgid "Add Zap Trunk"
 msgstr "Добавить Zap транк"
@@ -3026,7 +3060,7 @@ msgstr "Добавить специальный транк"
 
 #, php-format
 msgid "%s Channel %s"
-msgstr ""
+msgstr "%s Канал %s"
 
 #, php-format
 msgid "Edit %s Trunk"
@@ -3121,7 +3155,7 @@ msgstr ""
 "по цифровым линиям (E1/T1/J1/BRI/SIP/IAX)."
 
 msgid "CID Options"
-msgstr ""
+msgstr "Опции ИД Номера (CallerID)"
 
 msgid ""
 "Determines what CIDs will be allowed out this trunk. IMPORTANT: EMERGENCY "
@@ -3135,18 +3169,29 @@ msgid ""
 "except if part of any EMERGENCY Route with an EMERGENCY CID defined for the "
 "extension/device."
 msgstr ""
+"Определяет какие исходящие Номера (CallerID) разрешено отправлять с этого транка. "
+"ВАЖНО: если для текущего устройства/внутреннего номера определён номер CID для "
+"вызова экстренных служб, то он будет ВСЕГДА использоваться, только если этот "
+"транк определён в маршруте для вызова экстренных служб.<br />Разрешить любые CID: "
+"все CallerID, включая внешние междугородние и международные, которые могут перенаправляться "
+"сюда через трансфер (перенаправление).<br />Блокировать иностранные CID: блокируются все "
+"CID во входящих перенаправляемых звонках. Передаются только CID назначенные для внутренних "
+"номеров/устройств.<br />Удалить CNAM: удалять имена в CallerID, передаваемом "
+"дальше в транк.<br />Предпочитать транковый CID: будет всегда использоваться CID "
+"определённый для этого транка, кроме тех случаев, когда есть номер определённый как CID для "
+"вызова экстренных служб."
 
 msgid "Allow Any CID"
-msgstr ""
+msgstr "Разрешить любые CID"
 
 msgid "Block Foreign CIDs"
-msgstr ""
+msgstr "Блокировать иностранные CID"
 
 msgid "Remove CNAM"
-msgstr ""
+msgstr "Удалить CNAM"
 
 msgid "Force Trunk CID"
-msgstr ""
+msgstr "Предпочитать транковый CID"
 
 msgid "Maximum Channels"
 msgstr "Максимально каналов"
@@ -3195,7 +3240,7 @@ msgstr ""
 "причинами  NOANSWER или CANCEL."
 
 msgid "Dialed Number Manipulation Rules"
-msgstr ""
+msgstr "Правила трансляции набранных номеров"
 
 msgid ""
 "These rules can manipulate the dialed number before sending it out this "
@@ -3209,36 +3254,61 @@ msgid ""
 "pattern</b> and the resulting number will be sent to the trunk. All fields "
 "are optional."
 msgstr ""
+"Следующие правила служат для трансляции (преобразования) набранных номеров "
+"прежде чем их отправить в транк. Если правило не срабатывает, то номер не "
+"преобразвовывается. Исходно набранный номер может быть уже транслирован на "
+"выбранном маршруте, путём добавления полного кода впереди или отрезания префикса. "
+"На транке также имеется возможность дальнейшей трансформации номера. Если набранный "
+"номер попадает под комбинацию <b>префикс</b> плюс <b>шаблон номера</b>, то правило "
+"срабатывает, и дальнейшая проверка ппо нижеследующим правилам <b>префикс</b> плюс "
+"<b>шаблон номера</b> игнорируется.</br>Если найдено сопадение по <b>префиксу</b>, и "
+"требуется отрезать его по правилу, операция будет выполнена. Следующим шагом "
+"будет добавление полного кода перед номером, попадающим под <b>шаблон номера</b>, "
+"если такой код присутствует в правиле, и результат этих преобразований будет "
+"направлен в транк. Все поля в правилах необязательны (опциональны)."
 
 msgid ""
 "Digits to prepend upon a successful match. If the dialed number matches the "
 "patterns in the <b>prefix</b> and <b>match pattern</b> boxes, this will be "
 "prepended before sending to the trunk."
 msgstr ""
+"Цифры полного кода, добавляемые после срабатывания совпадения по шаблону номера. "
+"Если набранный номер попадает под комбинацию из <b>префикса</b> и <b>шаблона номера</b>, "
+"код будет добавлен впереди номера, прежде чем он будет отправлен в транк."
 
 msgid ""
 "Prefix to remove upon a successful match. If the dialed number matches this "
 "plus the <b>match pattern</b> box, this prefix is removed before adding the "
 "optional <b>prepend</b> box and sending the results to the trunk."
 msgstr ""
+"Префикс, отрезаемый после срабатывания совпадения по шаблону номера. "
+"Если набранный номер попадает под комбинацию из <b>префикса</b> и <b>шаблона номера</b>, "
+"префикс будет отрезан от номера, прежде чем опционально будет добавлен полный код, а уж "
+"затем он будет отправлен в транк."
 
 msgid ""
 "The dialed number will be compared against the <b>prefix</b> plus this "
 "pattern. Upon a match, this portion of the number will be sent to the trunks "
 "after removing the <b>prefix</b> and appending the <b>prepend</b> digits"
 msgstr ""
+"Набранный номер будет сравниваться с комбинацией <b>префикс</b> плюс <b>шаблон номера</b>."
+"Если сопадение, в транк будет послан номер без удалённого <b>префикса</b>, и с "
+"добавленным впереди <b>полным кодом</b>."
 
 msgid ""
 "You can completely replace a number by matching on the <b>prefix</b> only, "
 "replacing it with a <b>prepend</b> and leaving the <b>match pattern</b> "
 "blank."
 msgstr ""
+"Можно полностью заменять номер, если он попадает даже только под <b>префикс</b>, "
+"замещать его значением, указанным в поле <b>полный код</b>, оставляя поле <b>шаблон "
+"номера</b> пустым."
 
 msgid "+ Add More Dial Pattern Fields"
-msgstr ""
+msgstr "+ Добавить ещё полей для шаблонов"
 
 msgid "Clear all Fields"
-msgstr ""
+msgstr "Очистить все поля"
 
 msgid "Dial Rules Wizards"
 msgstr "Готовые шаблоны набора"
@@ -3260,15 +3330,20 @@ msgid ""
 "is useful for ZAP and DAHDI trunks, where if a local number is dialed as "
 "\"6135551234\", it can be converted to \"555-1234\"."
 msgstr ""
+"обычно используется на каналах ZAP и DAHDI, где местные номера вида \"6135551234\", "
+"\"555-1234\" можно конвертировать в \"555-1234\"."
 
 msgid "Setup Google for directory assistance"
-msgstr ""
+msgstr "Подключить сервис директорий Google"
 
 msgid ""
 "is useful to translate a call to directory assistance (default: 411) to "
 "Google's toll free directory (default: 18004664411) or any other number of "
 "your choosing"
 msgstr ""
+"обычно используется для трансляции соединения в сервис директорий (по умолчанию: "
+"411) для бесплатного сервиса директорий (по умолчанию: +18004664411 для США) или "
+"какого-то другого номера по вашему выборую."
 
 msgid "Lookup numbers for local trunk"
 msgstr "Искать номера для локального транка"
@@ -3346,23 +3421,26 @@ msgid ""
 "What is the directory assistance number you will dial locally in the format "
 "that is passed to this trunk, ie 411"
 msgstr ""
-
+"Какие номера из сервиса директорий, которые обычно набираются локально, разрешено "
+"пропускать через транк."
 msgid "\"411\""
-msgstr ""
+msgstr "\"411\""
 
 msgid "Invalid pattern. Only 0-9, #, *"
-msgstr ""
+msgstr "Неверный формат. Только 0-9, #, *"
 
 msgid ""
 "Google 411 number to dial, or alternative number you want dialed when "
 "calling directory assistance on this trunk"
 msgstr ""
+"Номер сервиса Google 411, или любой другой альтернативный, который предназначен "
+"для сервиса директорий через этот транк."
 
 msgid "18004664411"
-msgstr ""
+msgstr "18004664411"
 
 msgid "Invalid number. Only 0-9, #,  and * are allowed."
-msgstr ""
+msgstr "Неправильный номер. Разрешены только 0-9, #, и *"
 
 msgid "Outbound Dial Prefix"
 msgstr "Префикс выхода на линию"
@@ -3386,7 +3464,7 @@ msgid "Outgoing Settings"
 msgstr "Исходящие настройки"
 
 msgid "Zap Identifier"
-msgstr ""
+msgstr "Идентификатор Zap"
 
 msgid ""
 "ZAP channels are referenced either by a group number or channel number "
@@ -3398,13 +3476,16 @@ msgstr ""
 "0)."
 
 msgid "DAHDI Identifier"
-msgstr ""
+msgstr "DAHDI идентификатор"
 
 msgid ""
 "DAHDI channels are referenced either by a group number or channel number "
 "(which is defined in chan_dahdi.conf).  <br><br>The default setting is "
 "<b>g0</b> (group zero)."
 msgstr ""
+"Обращение к каналам DAHDI происходит через номер группы (g0, g1, g2) или "
+"номер канала (который определён в chan_dahdi.conf).<br><br>По умолчанию все "
+"каналы собраны в <b>g0</b> (нулевая группа)."
 
 msgid "Custom Dial String"
 msgstr "Специальный набор"
@@ -3526,12 +3607,16 @@ msgstr ""
 msgid ""
 "You must define an Outbound Caller ID when Choosing this CID Options value"
 msgstr ""
+"Необходимо назначить исходящий CallerID если используется значение этой опции"
 
 msgid ""
 "It is highly recommended that you define an Outbound Caller ID on all "
 "trunks, undefined behavior can result when nothing is specified. The CID "
 "Options can control when this CID is used. Do you still want to continue?"
 msgstr ""
+"Настоятельно рекомендуется назначить исходящие CallerID на всех транках, так "
+"при неназначеных возможно непредсказуемое поведение, например - блокировка исходящего "
+"звонка провайдером. Опции контроля CID доступны, если CID используется. Хотите продолжть?" 
 
 msgid ""
 "You have not entered a User Password.  While this is acceptable, this user "

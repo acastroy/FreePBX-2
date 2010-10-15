@@ -449,7 +449,7 @@ outn(_("Connecting to Asterisk manager interface.."));
 // connect to asterisk manager
 require_once($amp_conf['AMPWEBROOT'].'/admin/common/php-asmanager.php');
 $astman = new AGI_AsteriskManager(); 
-if (! $res = $astman->connect("127.0.0.1:".$amp_conf["ASTMANAGERPORT"], $amp_conf["AMPMGRUSER"] , $amp_conf["AMPMGRPASS"])) {
+if (! $res = $astman->connect("127.0.0.1:".$amp_conf["ASTMANAGERPORT"], $amp_conf["AMPMGRUSER"] , $amp_conf["AMPMGRPASS"],'off')) {
 	out(_("FAILED"));
 	fatal(_("Asterisk Manager Connection Failure"),sprintf(_("Failed to connect to the Asterisk manager through port: %s"), $amp_conf['ASTMANAGERPORT']));
 }

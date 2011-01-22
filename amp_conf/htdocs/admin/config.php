@@ -295,8 +295,6 @@ if (($display == 'index') && ($cur_menuitem['module']['rawname'] == 'builtin')) 
 }
 
 
-// set the language so local module languages take
-set_language();
 
 // show the appropriate page
 switch($display) {
@@ -389,6 +387,9 @@ if ($quietmode) {
 	$admin_template['fpbx_usecategories'] = $amp_conf['USECATEGORIES'];
 	$admin_template['fpbx_type'] = $type;
 	$admin_template['display'] = $display;
+
+	// set the language so local module languages take
+	set_language();
 
 	// then load it and put it into the main freepbx interface
 	$template['content'] = loadview('freepbx_admin', $admin_template);

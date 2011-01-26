@@ -96,13 +96,13 @@ if (!$bootstrap_settings['freepbx_auth'] || (php_sapi_name() == 'cli')) {
 		define('FREEPBX_IS_AUTH', 'TRUE');
 	}
 } else {
-	require(dirname(__FILE__) . '/libraries/framework_view.functions.php');
+	require(dirname(__FILE__) . '/libraries/gui_auth.php');
 	frameworkPasswordCheck();
 }
 if (!defined('FREEPBX_IS_AUTH')) { die('No direct script access allowed'); }//we should never need this, just another line of defence
 
 // I'm pretty sure if this is == true then there is no need to even pull all the module info as we are going down a path
-// such as an ajax path that this is just overhead. (We'll no soon enough if this is too restrcitive).
+// such as an ajax path that this is just overhead. (We'll know soon enough if this is too restrcitive).
 //
 if ($restrict_mods !== true) {
   $active_modules = module_getinfo(false, MODULE_STATUS_ENABLED);
@@ -114,7 +114,6 @@ if ($restrict_mods !== true) {
       if ((!$restrict_mods || (is_array($restrict_mods) && isset($restrict_mods[$key]))) && is_file($amp_conf['AMPWEBROOT']."/admin/modules/{$key}/functions.inc.php")) {
         require_once($amp_conf['AMPWEBROOT']."/admin/modules/{$key}/functions.inc.php");
       } 
-		
 		  //create an array of module sections to display
 		  // stored as [items][$type][$category][$name] = $displayvalue
 		  if (isset($module['items']) && is_array($module['items'])) {
@@ -128,10 +127,6 @@ if ($restrict_mods !== true) {
 						  $active_modules[$key]['items'][$itemKey]['disabled'] = true;
 					  }
 				  }
-				
-				  // reference to the actual module
-				  //$active_modules[$key][$itemKey]['module'] =& $active_modules[$key];
-
 			  }
 		  }
 	  }

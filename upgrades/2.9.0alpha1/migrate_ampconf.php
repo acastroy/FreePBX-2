@@ -1,5 +1,7 @@
 <?php
 
+
+//TODO: canwe remove these as there included by install_amp?
 if (! function_exists("out")) {
 	function out($text) {
 		echo $text."<br />";
@@ -66,29 +68,29 @@ $freepbx_conf =& freepbx_conf::create();
 $update_arr = array();
 out(_("Migrate current values into freepbx_conf.."));
 foreach ($current_amp_conf as $key => $val) {
-  outn(sprintf(_("checking %s .."),$key));
-  if (!$freepbx_conf->conf_setting_exists($key)) {
-    out(_("not in freepbx_conf, skipping"));
-    continue;
-  }
-  // Make sure that all "false" values are going to be interpreted as false, the trues will be converted.
-  switch (strtolower($val)) {
-  case 'false':
-  case 'no':
-  case 'off':
-    $val = false;
-    break;
-  }
-  $update_arr[$key] = $val;
-  out(_("preparing for update"));
+	outn(sprintf(_("checking %s .."),$key));
+	if (!$freepbx_conf->conf_setting_exists($key)) {
+		out(_("not in freepbx_conf, skipping"));
+		continue;
+	}
+	// Make sure that all "false" values are going to be interpreted as false, the trues will be converted.
+	switch (strtolower($val)) {
+		case 'false':
+		case 'no':
+		case 'off':
+		$val = false;
+		break;
+	}
+	$update_arr[$key] = $val;
+	out(_("preparing for update"));
 }
 unset($current_amp_conf);
 if (count($update_arr)) {
-  outn(_("Updating prepared settings.."));
-  $ret = $freepbx_conf->set_conf_values($update_arr, true, true);
-  out(sprintf(_("changed %s settings"),$ret));
+	outn(_("Updating prepared settings.."));
+	$ret = $freepbx_conf->set_conf_values($update_arr, true, true);
+	out(sprintf(_("changed %s settings"),$ret));
 } else {
-  out(_("There were no settings to update"));
+	out(_("There were no settings to update"));
 }
 
 // To get through migration in the intial install we allowed SQL and LOG_SQL even though they have been obsoleted. Here we will
@@ -96,9 +98,9 @@ if (count($update_arr)) {
 //
 $log_level = strtoupper($amp_conf['AMPSYSLOGLEVEL']);
 if ($log_level == 'SQL' || $log_level == 'LOG_SQL') {
-  outn(sprintf(_("Discontinued logging type %s changing to %s.."),$log_level,'FILE'));
-  $freepbx_conf->set_conf_values(array('AMPSYSLOGLEVEL' => 'FILE'));
-  out(_("ok"));
+	outn(sprintf(_("Discontinued logging type %s changing to %s.."),$log_level,'FILE'));
+	$freepbx_conf->set_conf_values(array('AMPSYSLOGLEVEL' => 'FILE'));
+	out(_("ok"));
 }
 // AMPSYSLOGLEVEL
 unset($set);
@@ -112,18 +114,18 @@ outn(_("checking for freepbx.conf.."));
 
 $freepbx_conf = getenv('FREEPBX_CONF');
 if ($freepbx_conf && file_exists($freepbx_conf)) {
-  out(sprintf(_("%s already exists"),$freepbx_conf));
+	out(sprintf(_("%s already exists"),$freepbx_conf));
 } else if (file_exists('/etc/freepbx.conf')) {
-  out(_("/etc/freepbx.conf already exists"));
+	out(_("/etc/freepbx.conf already exists"));
 } else if (file_exists('/etc/asterisk/freepbx.conf')) {
-  out(_("/etc/asterisk/freepbx.conf already exists"));
+	out(_("/etc/asterisk/freepbx.conf already exists"));
 } else {
 
-  if ($freepbx_conf) {
-    $filename = $freepbx_conf;
-  } else {
-	  $filename = is_writable('/etc') ? '/etc/freepbx.conf' : '/etc/asterisk/freepbx.conf';
-  }
+if ($freepbx_conf) {
+	$filename = $freepbx_conf;
+} else {
+	$filename = is_writable('/etc') ? '/etc/freepbx.conf' : '/etc/asterisk/freepbx.conf';
+}
 	
 	$txt = '';
 	$txt .= '<?php' . "\n";
@@ -135,15 +137,12 @@ if ($freepbx_conf && file_exists($freepbx_conf)) {
 	$txt .= '$amp_conf[\'datasource\']	= "' . $amp_conf['datasource'] . '";' . "\n";
 	$txt .= 'require_once(\'' . $amp_conf['AMPWEBROOT'] . '/admin/bootstrap.php\');' . "\n";
 
-  // don't use file_put_contents re php4 compatibility for framework/core
-  // or TODO: do we have install_amp include the compatibility library which we have installed by now?
-  //
-  $fh = fopen($filename,'w');
-  if ($fh === false || (fwrite($fh,$txt) === false)) {
-    out(sprintf(_("FATAL error writing  %s"),$filename));
-    die_freepbx(_("You must have a proper freepbx.conf file to proceed"));
-  }
-  fclose($fh);
-  out(sprintf(_("created %s"),$filename));
+	$fh = fopen($filename,'w');
+	if ($fh === false || (fwrite($fh,$txt) === false)) {
+		out(sprintf(_("FATAL error writing  %s"),$filename));
+		die_freepbx(_("You must have a proper freepbx.conf file to proceed"));
+	}
+	fclose($fh);
+	out(sprintf(_("created %s"),$filename));
 }
 ?>

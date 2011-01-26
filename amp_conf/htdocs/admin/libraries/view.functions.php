@@ -1,94 +1,5 @@
 <?php
 
-@session_start();
-if (isset($_REQUEST['logout'])) {
-	// logging out..
-	// remove the user
-	unset($_SESSION['AMP_user']);
-	// flag to prompt for pw again
-	$_SESSION['logout'] = true; 
-
-	showview('loggedout');
-	exit;
-}
-
-switch (strtolower($amp_conf['AUTHTYPE'])) {
-	case 'webserver':
-		// handler for apache doing authentication
-		if ((!isset($_SESSION['AMP_user']) || ($_SESSION['AMP_user']->username != $_SERVER['PHP_AUTH_USER'])) && !isset($_REQUEST['logout'])) {
-			// not logged in, or username has changed;  and not trying to log out
-			
-			if (isset($_SESSION['logout']) && $_SESSION['logout']) {
-				// workaround for HTTP-auth - just tried to logout, don't allow a log in (with the same credentials)
-				unset($_SESSION['logout']);
-				// afterwards, this falls through to the !AMP_user check below, and sends 401 header, which causes the browser to re-prompt the user
-			} else {
-				$_SESSION['AMP_user'] = new ampuser($_SERVER['PHP_AUTH_USER']);
-				
-				if ($_SESSION['AMP_user']->username == $amp_conf['AMPDBUSER']) {
-					// admin user, grant full access
-					$_SESSION['AMP_user']->setAdmin();
-				}
-			}
-		}
-
-		if (!isset($_SESSION['AMP_user'])) {
-			// not logged in, send headers
-			@header('WWW-Authenticate: Basic realm="'._('FreePBX Administration').'"');
-			@header('HTTP/1.0 401 Unauthorized');
-			showview("unauthorized");
-			exit;
-		}
-		define('FREEPBX_IS_AUTH', 'TRUE');
-	case 'none':
-		if (!isset($_SESSION['AMP_user'])) {
-			$_SESSION['AMP_user'] = new ampuser($amp_conf['AMPDBUSER']);
-			$_SESSION['AMP_user']->setAdmin();
-		}
-		define('FREEPBX_IS_AUTH', 'TRUE');
-	break;
-	case 'database':
-	default:
-		if (!isset($_SESSION['AMP_user']) && isset($_SERVER['PHP_AUTH_USER']) && isset($_SERVER['PHP_AUTH_PW']) && !isset($_REQUEST['logout'])) {
-			if (isset($_SESSION['logout']) && $_SESSION['logout']) {
-				// workaround for HTTP-auth - just tried to logout, don't allow a log in (with the same credentials)
-				unset($_SESSION['logout']);
-				// afterwards, this falls through to the !AMP_user check below, and sends 401 header, which causes the browser to re-prompt the user
-			} else {
-				// not logged in, and have provided a user/pass
-				$_SESSION['AMP_user'] = new ampuser($_SERVER['PHP_AUTH_USER']);
-				
-				if (!$_SESSION['AMP_user']->checkPassword(sha1($_SERVER['PHP_AUTH_PW']))) {
-					// failed, one last chance -- fallback to amportal.conf db admin user
-					if (($_SERVER['PHP_AUTH_USER'] == $amp_conf['AMPDBUSER']) && ($_SERVER['PHP_AUTH_PW'] == $amp_conf['AMPDBPASS'])) {
-	
-						// password succesfully matched amportal.conf db admin user 
-	
-						// set admin access
-						$_SESSION['AMP_user']->setAdmin();
-						define('FREEPBX_IS_AUTH', 'TRUE');
-					} else {
-						// password failed and admin user fall-back failed
-						unset($_SESSION['AMP_user']);
-					}
-				} // else, succesfully logged in
-			} 
-		}
-
-		if (!isset($_SESSION['AMP_user'])) {
-			// not logged in, send headers
-			@header('WWW-Authenticate: Basic realm=" '._('FreePBX Administration').'"');
-			@header('HTTP/1.0 401 Unauthorized');
-			showview("unauthorized");
-			exit;
-		}
-		if (!defined('FREEPBX_IS_AUTH')) {
-			define('FREEPBX_IS_AUTH', 'TRUE');
-		}
-	break;
-}
-
-
 function frameworkPasswordCheck() {
 	global $amp_conf;
 
@@ -136,6 +47,7 @@ function frameworkPasswordCheck() {
 		$nt->delete('core', 'MQGPC');
 	}
 }
+
 /** Loads a view (from the views/ directory) with a number of named parameters created as local variables.
  * @param  string   The name of the view.
  * @param  array    The parameters to pass. Note that the key will be turned into a variable name for use by the view.
@@ -149,6 +61,7 @@ function loadview($viewname, $parameters = false) {
 	ob_end_clean();
 	return $contents;
 }
+
 /** Outputs the contents of a view.
  * @param  string   The name of the view.
  * @param  array    The parameters to pass. Note that the key will be turned into a variable name for use by the view.
@@ -253,4 +166,46 @@ function fileRequestHandler($handler, $module = false, $file = false){
 	exit();
 }
 
+/**
+ * Load View
+ *
+ * This function is used to load a "view" file. It has two parameters:
+ *
+ * 1. The name of the "view" file to be included.
+ * 2. An associative array of data to be extracted for use in the view.
+ *
+ * NOTE: you cannot use the variable $view_filename_protected in your views!
+ *
+ * @param	string
+ * @param	array
+ * @return	string
+ * 
+ */
+
+function load_view($view_filename_protected, array $vars = array()) {
+	
+	//return false if we cant find the file or if we cant open it
+	if ( ! $view_filename_protected OR ! file_exists($view_filename_protected) OR ! is_readable($view_filename_protected) ) {
+		return false;
+	}
+
+	// Import the view variables to local namespace
+	extract($vars, EXTR_SKIP);
+	
+	// Capture the view output
+	ob_start();
+	
+	// Load the view within the current scope
+	include($view_filename_protected);
+	
+	// Get the captured output
+	$buffer = ob_get_contents();
+	
+	//Flush & close the buffer
+	@ob_end_clean();
+	
+	//Return captured output
+	return $buffer;
+	
+}
 ?>

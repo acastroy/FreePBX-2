@@ -453,5 +453,28 @@ function framework_change_destination($old_dest, $new_dest, $module_hash=false) 
 	return $total_update;
 }
 
-
+/**
+ * Search through all active modules for a function that ends in $func.
+ * Pass it $opts and return whatever is returned in to an array with the
+ * retuning module name as the key
+ * Takes:
+ * @func variable	the function name that we are searching for. The module name
+ * 					will be appened to this
+ * @opts mixed		a variable or array that will be passed to the function being 
+ * 					called , if its found
+ *
+ */
+function mod_func_iterator($func, $opts = '') {
+	global $active_modules;
+	$res = array();
+	
+	foreach ($active_modules as $active => $mod) {
+		$funct = $mod['rawname'] . '_' . $func;
+		if (function_exists($funct)) {
+			$res[$mod['rawname']] = $funct($opts);
+		}
+	}
+	
+	return $res;
+}
 ?>

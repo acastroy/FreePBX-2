@@ -238,6 +238,13 @@ function dbug(){
 
 function dbug_write($txt,$check=''){
 	global $amp_conf;
+
+  // dbug can be used prior to bootstrapping and initialization, so we set
+  // it if not defined here to a default.
+  //
+  if (!isset($amp_conf['FPBXDBUGFILE'])) {
+    $amp_conf['FPBXDBUGFILE'] = '/tmp/freepbx_debug.log';
+  }
 	$append=false;
 	//optionaly ensure that dbug file is smaller than $max_size
 	if($check){

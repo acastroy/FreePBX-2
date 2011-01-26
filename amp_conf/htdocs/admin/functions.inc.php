@@ -12,7 +12,7 @@
 //GNU General Public License for more details.
 
 $dirname = dirname(__FILE__);
-//PLEASE NORE: for performance reasons, these are hardcoded 
+//PLEASE NOTE: for performance reasons, these are hardcoded 
 //and dont get included dynamically
 
 //TODO: include these dynamically as needed/use __autoload()

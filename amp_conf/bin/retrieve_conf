@@ -103,8 +103,7 @@ class connectdirs {
               }
             }
           } else {
-            dbug('retrieve-conf', "found language dir $dir/$lang but not installed on system, skipping");
-            out("found language dir $dir/$lang but not installed on system, skipping");
+            out("found language dir $lang for ".basename($moduledir).", not installed on system, skipping");
           }
         }
 		  }

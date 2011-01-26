@@ -66,12 +66,6 @@ require_once($dirname . '/libraries/php-upgrade.functions.php');
 //lightweight query functions
 require_once($dirname . '/libraries/sql.functions.php');
 
-//framework redirector, used mainly with POST'd forms
-require_once($dirname . '/libraries/redirectors.function.php');
-
-//functions for generating destination select boxes
-require_once($dirname . '/libraries/draw_selects.function.php');
-
 //functions for view related activities
 require_once($dirname . '/libraries/view.functions.php');
 

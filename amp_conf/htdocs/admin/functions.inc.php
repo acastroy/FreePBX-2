@@ -73,7 +73,7 @@ require_once($dirname . '/libraries/redirectors.function.php');
 require_once($dirname . '/libraries/draw_selects.function.php');
 
 //functions for view related activities
-require_once($dirname . '/libraries/view.function.php');
+require_once($dirname . '/libraries/view.functions.php');
 
 //functions for reding writing voicemail files
 require_once($dirname . '/libraries/voicemail.function.php');
@@ -85,7 +85,7 @@ require_once($dirname . '/libraries/voicemail.function.php');
 require_once($dirname . '/helpers/Freepbx_helpers.php');
 
 //general html helpers
-require_once($dirname . '/helpers/Html_helpers.php');
+require_once($dirname . '/helpers/Html_helper.php');
 
 //table generation class
 require_once($dirname . '/helpers/Table.php');

@@ -208,4 +208,3 @@ function load_view($view_filename_protected, array $vars = array()) {
 	return $buffer;
 	
 }
-?>

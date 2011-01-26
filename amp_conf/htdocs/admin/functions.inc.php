@@ -82,13 +82,13 @@ require_once($dirname . '/libraries/voicemail.function.php');
 //----------include helpers----------
 
 //freepbx specific gui helpers
-require_once($dirname . '/helpers/Freepbx_helpers.php');
+require_once($dirname . '/helpers/freepbx_helpers.php');
 
 //general html helpers
-require_once($dirname . '/helpers/Html_helper.php');
+require_once($dirname . '/helpers/html_helper.php');
 
 //table generation class
-require_once($dirname . '/helpers/Table.php');
+require_once($dirname . '/helpers/table.php');
 
 
 /**

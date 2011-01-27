@@ -82,11 +82,7 @@ function version_compare_freepbx($version1, $version2, $op = null) {
 
 function die_freepbx($text, $extended_text="", $type="FATAL") {
   $trace = print_r(debug_backtrace(),true);
-  if (function_exists('fatal')) {
-    // "custom" error handler 
-    // fatal may only take one param, so we suppress error messages because it doesn't really matter
-    @fatal($text."\n".$trace, $extended_text, $type);
-	} else if (isset($_SERVER['REQUEST_METHOD'])) {
+	if (isset($_SERVER['REQUEST_METHOD'])) {
     // running in webserver
     echo "<h1>".$type." ERROR</h1>\n";
     echo "<h3>".$text."</h3>\n";

@@ -65,7 +65,7 @@ if ($amp_conf['BRAND_IMAGE_HIDE_NAV_BACKGROUND']) {
 // $freepbx_logo_r
 // AMPADMINLOGO takes precedence for backwards compatibility
 if ($amp_conf["AMPADMINLOGO"] && is_file($amp_conf["AMPWEBROOT"]."/admin/images/".$amp_conf["AMPADMINLOGO"])) {
-  $freepbx_logo_r = $amp_conf["AMPADMINLOGO"].$version_tag; 
+  $freepbx_logo_r = 'images/'.$amp_conf["AMPADMINLOGO"].$version_tag; 
 } else {
   $freepbx_logo_r =  ($amp_conf['BRAND_IMAGE_FREEPBX_RIGHT'] ? $amp_conf['BRAND_IMAGE_FREEPBX_RIGHT'] : 'images/logo.png').$version_tag;
 }

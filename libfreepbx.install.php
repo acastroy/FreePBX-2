@@ -1196,6 +1196,18 @@ function freepbx_settings_init($commit_to_db = false) {
   $set['type'] = CONF_TYPE_BOOL;
   $freepbx_conf->define_conf_setting('FPBXDBUGDISABLE',$set);
 
+  // DIE_FREEPBX_VERBOSE
+  $set['value'] = false;
+  $set['options'] = '';
+  $set['name'] = 'Provide Verbose Tracebacks';
+  $set['description'] = 'Provides a very verbose traceback when die_freepbx() is called including extensive object details if present in the traceback.';
+  $set['emptyok'] = 0;
+  $set['readonly'] = 0;
+  $set['type'] = CONF_TYPE_BOOL;
+  $freepbx_conf->define_conf_setting('DIE_FREEPBX_VERBOSE',$set);
+
+
+
   // DEVEL
   $set['value'] = false;
   $set['options'] = '';

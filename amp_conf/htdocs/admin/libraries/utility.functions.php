@@ -22,7 +22,7 @@ function freepbx_log($level, $message) {
 
 	$bt = debug_backtrace();
 
-  if ($bt[1]['function'] == 'out') {
+  if ($bt[1]['function'] == 'out' || $bt[1]['function'] == 'die_freepbx') {
     $file_full = $bt[1]['file'];
     $line = $bt[1]['line'];
   } elseif (basename($bt[0]['file']) == 'notifications.class.php') {
@@ -81,24 +81,59 @@ function version_compare_freepbx($version1, $version2, $op = null) {
 }
 
 function die_freepbx($text, $extended_text="", $type="FATAL") {
-  $trace = print_r(debug_backtrace(),true);
+  global $amp_conf;
+
+  $bt = debug_backtrace();
+  freepbx_log(FPBX_LOG_FATAL, "die_freepbx(): ".$text);
+
 	if (isset($_SERVER['REQUEST_METHOD'])) {
     // running in webserver
-    echo "<h1>".$type." ERROR</h1>\n";
-    echo "<h3>".$text."</h3>\n";
+    $trace =  "<h1>".$type." ERROR</h1>\n";
+    $trace .= "<h3>".$text."</h3>\n";
     if (!empty($extended_text)) {
-      echo "<p>".$extended_text."</p>\n";
+      $trace .= "<p>".$extended_text."</p>\n";
     }
-    echo "<h4>"._("Trace Back")."</h4>";
-    echo "<pre>$trace</pre>";
+    $trace .= "<h4>"._("Trace Back")."</h4>";
+
+    $main_fmt = "%s:%s %s()<br />\n";
+    $arg_fmt = "&nbsp;&nbsp;[%s]: %s<br />\n";
+    $separator = "<br />\n";
+    $tail = "<br />\n";
+    $f = 'htmlspecialchars';
   } else {
     // CLI
-    echo "[$type] ".$text." ".$extended_text."\n";
-    echo "Trace Back:\n";
-    echo $trace;
+    $trace =  "[$type] ".$text." ".$extended_text."\n\n";
+    $trace .= "Trace Back:\n\n";
+
+    $main_fmt = "%s:%s %s()\n";
+    $arg_fmt = " [%s]: %s\n";
+    $separator = "\n";
+    $tail = "";
+    $f = 'trim';
   }
 
-  // always ensure we exit at this point
+  foreach ($bt as $l) {
+    $cl = isset($l['class']) ? $f($l['class']) : '';
+    $ty = isset($l['type']) ? $f($l['type']) : '';
+    $func = $f($cl . $ty . $l['function']);
+    $trace .= sprintf($main_fmt, $l['file'], $l['line'], $func);
+    if (isset($l['args'])) foreach ($l['args'] as $i => $a) {
+      $trace .= sprintf($arg_fmt, $i, $f($a));
+    }
+    $trace .= $separator;
+  }
+  echo $trace . $tail;
+
+  if ($amp_conf['DIE_FREEPBX_VERBOSE']) {
+    $trace = print_r($bt,true);
+	  if (isset($_SERVER['REQUEST_METHOD'])) {
+      echo '<pre>' .$trace. '</pre>';
+    } else {
+      echo $trace;
+    }
+  }
+
+  // Now die!
   exit(1);
 }
 

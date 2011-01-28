@@ -413,6 +413,7 @@ function freepbx_settings_init($commit_to_db = false) {
   //
   $set['category'] = 'Advanced Settings Details';
 
+  /* This was too confusing, will remove for now and re-evaluate if needed
   // AS_DISPLAY_DETAIL_LEVEL
   $set['value'] = '0';
   $set['options'] = '0,1,2,3,4,5,6,7,8,9,10';
@@ -425,6 +426,7 @@ function freepbx_settings_init($commit_to_db = false) {
   $freepbx_conf->define_conf_setting('AS_DISPLAY_DETAIL_LEVEL',$set);
   $set['readonly'] = 0;
   $set['level'] = 0;
+  */
 
   // AS_DISPLAY_HIDDEN_SETTINGS
   $set['value'] = false;

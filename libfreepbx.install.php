@@ -1105,6 +1105,17 @@ function freepbx_settings_init($commit_to_db = false) {
   $freepbx_conf->define_conf_setting('CUSTOMASERROR',$set);
   $set['level'] = 0;
 
+// ALWAYS_SHOW_DEVICE_DETAILS
+  $set['value'] = false;
+  $set['options'] = '';
+  $set['name'] = 'Show all Device Setting on Add';
+  $set['description'] = 'When adding a new extension/device, setting this to true will show most available device settings that are displayed when you edit the same extension/device. Otherwise, just a few basic settings are displayed.';
+  $set['emptyok'] = 0;
+  $set['level'] = 0;
+  $set['readonly'] = 0;
+  $set['type'] = CONF_TYPE_BOOL;
+  $freepbx_conf->define_conf_setting('ALWAYS_SHOW_DEVICE_DETAILS',$set);
+  $set['level'] = 0;
 
   //
   // CATEGORY: Asterisk Manager

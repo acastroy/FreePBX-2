@@ -226,7 +226,7 @@ pid_length=`$PIDOF asterisk|awk '{print length($0)}'`
 	if [ "$pid_length" != "0" -a "$pid_length" != "" ]
 		then
 			/usr/sbin/asterisk -rx "core stop gracefully" | grep -v "No such command"
-			/usr/sbin/asterisk -rx "stop gracefully" | grep -v -E "No such command|deprecated"
+			/usr/sbin/asterisk -rx "stop gracefully" | grep -v -E "No such command|deprecated|Unable to connect to remote"
 			echo "Asterisk Stopped"
 		fi
 }

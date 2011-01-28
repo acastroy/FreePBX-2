@@ -45,7 +45,7 @@ foreach ($final as $f) {
 }
 echo "\n\n\n";
 
-file_put_contents($dir . '/' . $libfreepbx, $js);
+file_put_contents($libfreepbx, $js);
 //echo 'cat '.implode(' ',$final)." | ./jsmin.rb >  $dir/$libfreepbx\n\n";
 
 //system('cat '.implode(' ',$final)." | ./jsmin.rb >  $dir/$libfreepbx");

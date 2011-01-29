@@ -41,6 +41,8 @@ AMPASTERISKWEBGROUP=$AMPASTERISKGROUP
 AMPVMUMASK=077
 ASTETCDIR=/etc/asterisk
 FPBXDBUGFILE=/tmp/freepbx_debug.log
+ASTSTOPTIMEOUT=120
+ASTSTOPPOLLINT=2
 
 write_freepbxconf() {
 	if [ ! -e $FREEPBX_CONF  ]; then
@@ -222,12 +224,78 @@ pid_length=`$PIDOF asterisk|awk '{print length($0)}'`
 stop_asterisk() {
 echo
 echo "STOPPING ASTERISK"
+echo "All calls will be dropped once the timer hits 0. To cancel, press CTL-C"
 pid_length=`$PIDOF asterisk|awk '{print length($0)}'`
 	if [ "$pid_length" != "0" -a "$pid_length" != "" ]
 		then
 			/usr/sbin/asterisk -rx "core stop gracefully" | grep -v "No such command"
 			/usr/sbin/asterisk -rx "stop gracefully" | grep -v -E "No such command|deprecated|Unable to connect to remote"
+
+			ast_not_stopped=true
+			time_to_wait=$ASTSTOPTIMEOUT
+
+			while [ $time_to_wait -gt 0 ];
+			do
+				echo -ne "Waiting for Asterisk to Stop" $time_to_wait "\r"
+				sleep $ASTSTOPPOLLINT
+				let time_to_wait=time_to_wait-ASTSTOPPOLLINT
+				pid_length=`$PIDOF asterisk|awk '{print length($0)}'`
+				if [ "$pid_length" = "0" -o "$pid_length" = "" ]
+				then
+					ast_not_stopped=false
+					break
+				fi
+			done
+			if $ast_not_stopped ;
+			then
+				echo "Waiting for Asterisk to Stop"
+			fi
+
+			if $ast_not_stopped ;
+			then
+				echo "Force stopping Asterisk and hanging up active channels"
+				/usr/sbin/asterisk -rx "core stop now" | grep -v "No such command"
+				/usr/sbin/asterisk -rx "stop now" | grep -v -E "No such command|deprecated|Unable to connect to remote"
+				pid_length=`$PIDOF asterisk|awk '{print length($0)}'`
+				if [ "$pid_length" != "0" -a "$pid_length" != "" ]
+				then
+					time_to_wait=20
+					while [ $time_to_wait -gt 0 ];
+					do
+						echo -ne "Waiting for Asterisk to Stop" $time_to_wait "\r"
+						sleep 1
+						let time_to_wait=time_to_wait-1
+						pid_length=`$PIDOF asterisk|awk '{print length($0)}'`
+						if [ "$pid_length" = "0" -o "$pid_length" = "" ]
+						then
+							ast_not_stopped=false
+							break
+						fi
+					done
+					if $ast_not_stopped ;
+					then
+						echo "Waiting for Asterisk to Stop"
+					fi
+				else
+					ast_not_stopped=false
+				fi
+
+				if $ast_not_stopped ;
+				then
+					echo "Asterisk has still not stopped, killing Asterisk processes"
+					killall -9 safe_asterisk
+					killall -9 asterisk
+
+					pid_length=`$PIDOF asterisk|awk '{print length($0)}'`
+					if [ "$pid_length" != "0" -a "$pid_length" != "" ]
+					then
+						echo "[FATAL] Could not kill Asterisk process, exiting"
+						exit 1
+					fi
+				fi
+			fi
 			echo "Asterisk Stopped"
+
 		fi
 }
 

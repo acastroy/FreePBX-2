@@ -875,6 +875,28 @@ function freepbx_settings_init($commit_to_db = false) {
   $set['type'] = CONF_TYPE_BOOL;
   $freepbx_conf->define_conf_setting('BLOCK_OUTBOUND_TRUNK_CNAM',$set);
 
+  // ASTSTOPTIMEOUT
+  $opts = array();
+  $set['value'] = '120';
+  $set['options'] = array(0,5,10,30,60,120,300,600,1800,3600,7200,10800);
+  $set['name'] = 'Waiting Period to Stop Asterisk';
+  $set['description'] = "When Asterisk is stopped or restarted with the 'amportal stop/restart' commands, it does a graceful stop waiting for active channels to hangup. This sets the maximum time in seconds to wait prior to force stopping Asterisk";
+  $set['emptyok'] = 0;
+  $set['readonly'] = 0;
+  $set['type'] = CONF_TYPE_SELECT;
+  $freepbx_conf->define_conf_setting('ASTSTOPTIMEOUT',$set);
+
+  // ASTSTOPPOLLINT
+  $opts = array();
+  $set['value'] = '2';
+  $set['options'] = array(1,2,3,5,10);
+  $set['name'] = 'Polling Interval for Stopping Asterisk';
+  $set['description'] = "When Asterisk is stopped or restarted with the 'amportal stop/restart' commands, it does a graceful stop waiting for active channels to hangup. This sets the polling interval to check if Asterisk is shutdown and update the countdown timer.";
+  $set['emptyok'] = 0;
+  $set['readonly'] = 0;
+  $set['type'] = CONF_TYPE_SELECT;
+  $freepbx_conf->define_conf_setting('ASTSTOPPOLLINT',$set);
+
   //
   // CATEGORY: Directory Layout
   //

@@ -1420,6 +1420,18 @@ class ext_stopmixmonitor extends extension {
 	}
 }
 
+class ext_callcompletionrequest extends extension {
+	function output() {
+		return "CallCompletionRequest(".$this->data.")";
+	}
+}
+
+class ext_callcompletioncancel extends extension {
+	function output() {
+		return "CallCompletionCancel(".$this->data.")";
+	}
+}
+
 // Speech recognition applications
 class ext_speechcreate extends extension {
 	var $engine;

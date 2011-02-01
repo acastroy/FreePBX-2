@@ -463,6 +463,12 @@ class ext_return extends extension {
 	}
 }
 
+class ext_stackpop extends extension {
+	function output() {
+		return "StackPop()";
+	}
+}
+
 class ext_gosubif extends extension {
 	var $true_priority;
 	var $false_priority;

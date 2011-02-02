@@ -1,4 +1,4 @@
-<?php  //if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * CodeIgniter
  *
@@ -26,7 +26,7 @@
  * @author		ExpressionEngine Dev Team
  * @link		http://codeigniter.com/user_guide/libraries/uri.html
  */
-class Table {
+class CI_Table {
 
 	var $rows				= array();
 	var $heading			= array();
@@ -36,6 +36,11 @@ class Table {
 	var $newline			= "\n";
 	var $empty_cells		= "";
 	
+	
+	function CI_Table()
+	{
+		log_message('debug', "Table Class Initialized");
+	}
 
 	// --------------------------------------------------------------------
 
@@ -432,3 +437,4 @@ class Table {
 
 
 /* End of file Table.php */
+/* Location: ./system/libraries/Table.php */

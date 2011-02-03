@@ -82,8 +82,8 @@ require_once($dirname . '/helpers/freepbx_helpers.php');
 require_once($dirname . '/helpers/html_helper.php');
 
 //table generation class
-define('BASEPATH', '');//make upstream scripts happy
-require_once($dirname . '/helpers/table.php');
+function log_message(){} define('BASEPATH', '');//make upstream scripts happy
+require_once($dirname . '/helpers/Table.php');
 
 
 /**

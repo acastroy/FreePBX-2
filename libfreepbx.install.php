@@ -1620,7 +1620,7 @@ function freepbx_settings_init($commit_to_db = false) {
   // BRAND_HIDE_HEADER_VERSION
   $set['value'] = false;
   $set['options'] = '';
-  $set['name'] = 'Hide Right FreePBX Version';
+  $set['name'] = 'Hide Left FreePBX Version';
   $set['description'] = 'Setting to true will hide the FreePBX version information below the left upper header.';
   $set['readonly'] = 0;
   $set['type'] = CONF_TYPE_BOOL;

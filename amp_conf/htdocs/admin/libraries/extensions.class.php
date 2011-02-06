@@ -658,6 +658,12 @@ class ext_alertinfo {
 	}
 }
 
+class ext_sipremoveheader extends extension {
+	function output() {
+		return "SIPRemoveHeader(".$this->data.")";
+	}
+}
+
 class ext_wait extends extension {
 	function output() {
 		return "Wait(".$this->data.")";

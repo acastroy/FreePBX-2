@@ -459,7 +459,7 @@ class ext_gosub extends extension {
 
 class ext_return extends extension {
 	function output() {
-		return "Return()";
+		return "Return(".$this->data.")";
 	}
 }
 

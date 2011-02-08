@@ -226,7 +226,7 @@ if (isset($module_name) && $module_name != '') {
   if (is_dir($js_dir)) {
     $d = opendir($js_dir);
 		$file_list = array();
-    while ($file = readdir($d)) {
+		while ($file = readdir($d)) {
 			$file_list[] = $file;
 		}
 		sort($file_list);

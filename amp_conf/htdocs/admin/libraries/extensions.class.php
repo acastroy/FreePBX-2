@@ -311,6 +311,10 @@ class extensions {
 					}
 				}
 				
+        // probably a better way to do this. But ... if an extension happens to be the pri 1 extension, and then
+        // it outputs false (e.g. noop_trace), we need a pri 1 extension as the next one.
+        //
+        $last_base_tag = false;
 				foreach (array_keys($this->_exts[$section]) as $extension) {
           if (is_array($this->_exts[$section][$extension])) foreach (array_keys($this->_exts[$section][$extension]) as $idx) {
 					
@@ -319,6 +323,10 @@ class extensions {
 						//echo "[$section] $extension $idx\n";
 						//var_dump($ext);
 							
+            if ($last_base_tag && $ext['basetag'] = 'n') {
+              $ext['basetag'] = $last_base_tag;
+              $last_base_tag = false;
+            }
             $this_cmd = $ext['cmd']->output();
             if ($this_cmd !== false) {
 						  $output .= "exten => ".$extension.",".
@@ -326,6 +334,8 @@ class extensions {
 							  ($ext['addpri'] ? '+'.$ext['addpri'] : '').
 							  ($ext['tag'] ? '('.$ext['tag'].')' : '').
 							  ",". $this_cmd ."\n";
+            } else {
+              $last_base_tag = $ext['basetag'] == 1 ? 1 : false;
             }
 					}
 					if (isset($this->_hints[$section][$extension])) {

@@ -6,7 +6,9 @@
 * Date:    2008-08-03                                                          *
 * Author:  Olivier PLATHEY                                                     *
 *******************************************************************************/
-
+defined('FREEPBX_IS_AUTH') OR die('No direct script access allowed'); 
+if(!class_exists('FPDF')) 
+{ 
 define('FPDF_VERSION','1.6');
 
 class FPDF
@@ -1728,5 +1730,5 @@ if(isset($_SERVER['HTTP_USER_AGENT']) && $_SERVER['HTTP_USER_AGENT']=='contype')
 	header('Content-Type: application/pdf');
 	exit;
 }
-
+}
 ?>

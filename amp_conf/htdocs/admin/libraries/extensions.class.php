@@ -766,7 +766,7 @@ class ext_execif {
 		global $version;
 
 		if (version_compare($version, "1.6", "ge")) {
-			if ($app_false != '')
+			if ($this->app_false != '')
 				return "ExecIf({$this->expr}?{$this->app_true}({$this->data_true}):{$this->app_false}({$this->data_false}))";
 			else
 				return "ExecIf({$this->expr}?{$this->app_true}({$this->data_true}))";

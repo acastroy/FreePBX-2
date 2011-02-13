@@ -1657,6 +1657,143 @@ function freepbx_settings_init($commit_to_db = false) {
   $set['emptyok'] = 1;
   $freepbx_conf->define_conf_setting('BRAND_CSS_CUSTOM',$set);
 
+  //
+  // CATEGORY: Device Setting Defaults
+  //
+  $set['category'] = 'New Device Defaults';
+  $set['level'] = 0;
+
+// ALWAYS_SHOW_DEVICE_DETAILS
+  $set['value'] = false;
+  $set['options'] = '';
+  $set['name'] = 'Show all Device Setting on Add';
+  $set['description'] = 'When adding a new extension/device, setting this to true will show most available device settings that are displayed when you edit the same extension/device. Otherwise, just a few basic settings are displayed.';
+  $set['readonly'] = 0;
+  $set['type'] = CONF_TYPE_BOOL;
+  $set['emptyok'] = 0;
+  $set['sortorder'] = 10;
+  $freepbx_conf->define_conf_setting('ALWAYS_SHOW_DEVICE_DETAILS',$set);
+
+  // DEVICE_SIP_CANREINVITE
+  $set['value'] = 'yes';
+  $set['options'] = array('no', 'yes', 'nonat', 'update');
+  $set['name'] = 'SIP canrenivite (directmedia)';
+  $set['description'] = 'Default setting for SIP canreinvite (same as directmedia). See Asterisk documentation for details.';
+  $set['readonly'] = 0;
+  $set['type'] = CONF_TYPE_SELECT;
+  $set['emptyok'] = 0;
+  $set['sortorder'] = 20;
+  $freepbx_conf->define_conf_setting('DEVICE_SIP_CANREINVITE',$set);
+
+  // DEVICE_SIP_TRUSTRPID
+  $set['value'] = 'yes';
+  $set['options'] = array('no', 'yes');
+  $set['name'] = 'SIP trustrpid';
+  $set['description'] = 'Default setting for SIP trustrpid. See Asterisk documentation for details.';
+  $set['readonly'] = 0;
+  $set['type'] = CONF_TYPE_SELECT;
+  $set['emptyok'] = 0;
+  $set['sortorder'] = 30;
+  $freepbx_conf->define_conf_setting('DEVICE_SIP_TRUSTRPID',$set);
+
+  // DEVICE_SIP_SENDRPID
+  $set['value'] = 'no';
+  $set['options'] = array('no', 'yes', 'pai');
+  $set['name'] = 'SIP trustrpid';
+  $set['description'] = "Default setting for SIP sendrpid. A value of 'yes' is equivalent to 'rpid' and will send the 'Remote-Pary-ID' header. A value of 'pai' is only valid starting with Asterisk 1.8 and will send the 'P-Asserted-Identity' header. See Asterisk documentation for details.";
+  $set['readonly'] = 0;
+  $set['type'] = CONF_TYPE_SELECT;
+  $set['emptyok'] = 0;
+  $set['sortorder'] = 40;
+  $freepbx_conf->define_conf_setting('DEVICE_SIP_SENDRPID',$set);
+
+  // DEVICE_SIP_NAT
+  $set['value'] = 'yes';
+  $set['options'] = array('no', 'yes', 'never', 'route');
+  $set['name'] = 'SIP nat';
+  $set['description'] = "Default setting for SIP nat. A 'yes' will attempt to handle nat, also works for local (uses the network ports and address instead of the reported ports), 'no' follows the protocol, 'never' tries to block it, no RFC3581, 'route' ignores the rport information. See Asterisk documentation for details.";
+  $set['readonly'] = 0;
+  $set['type'] = CONF_TYPE_SELECT;
+  $set['emptyok'] = 0;
+  $set['sortorder'] = 50;
+  $freepbx_conf->define_conf_setting('DEVICE_SIP_NAT',$set);
+
+  // DEVICE_SIP_ENCRYPTION
+  $set['value'] = 'no';
+  $set['options'] = array('no', 'yes');
+  $set['name'] = 'SIP encryption';
+  $set['description'] = "Default setting for SIP encryption. Whether to offer SRTP encrypted media (and only SRTP encrypted media) on outgoing calls to a peer. Calls will fail with HANGUPCAUSE=58 if the peer does not support SRTP. See Asterisk documentation for details.";
+  $set['readonly'] = 0;
+  $set['type'] = CONF_TYPE_SELECT;
+  $set['emptyok'] = 0;
+  $set['sortorder'] = 60;
+  $freepbx_conf->define_conf_setting('DEVICE_SIP_ENCRYPTION',$set);
+
+  // DEVICE_SIP_QUALIFYFREQ
+  $set['value'] = 60;
+  $set['options'] = array(15, 86400);
+  $set['name'] = 'SIP qualifyfreq';
+  $set['description'] = "Default setting for SIP qualifyfreq. Only valid for Asterisk 1.6 and above. Frequency that 'qualify' OPTIONS messages will be sent to the device. Can help to keep NAT holes open but not dependable for remote client firewalls. See Asterisk documentation for details.";
+  $set['readonly'] = 0;
+  $set['type'] = CONF_TYPE_INT;
+  $set['emptyok'] = 0;
+  $set['sortorder'] = 70;
+  $freepbx_conf->define_conf_setting('DEVICE_SIP_QUALIFYFREQ',$set);
+
+  // DEVICE_QUALIFY
+  $set['value'] = 'yes';
+  $set['options'] = '';
+  $set['name'] = 'SIP and IAX qualify';
+  $set['description'] = "Default setting for SIP and IAX qualify. Whether to send periodic OPTIONS messages (for SIP) or otherwise monitor the channel, and at what point to consider the channel unavailable. A value of 'yes' is equivalent to 2000, time in msec. Can help to keep NAT holes open with SIP but not dependable for remote client firewalls. See Asterisk documentation for details.";
+  $set['readonly'] = 0;
+  $set['type'] = CONF_TYPE_TEXT;
+  $set['emptyok'] = 0;
+  $set['sortorder'] = 80;
+  $freepbx_conf->define_conf_setting('DEVICE_QUALIFY',$set);
+
+  // DEVICE_DISALLOW
+  $set['value'] = '';
+  $set['options'] = '';
+  $set['name'] = 'SIP and IAX disallow';
+  $set['description'] = "Default setting for SIP and IAX disallow (for codecs). Codecs to disallow, can help to reset from the general settings by setting a value of 'all' and then specifically including allowed codecs with the 'allow' directive. Values van be separated with '&' e.g. 'g729&g722'. See Asterisk documentation for details.";
+  $set['readonly'] = 0;
+  $set['type'] = CONF_TYPE_TEXT;
+  $set['emptyok'] = 1;
+  $set['sortorder'] = 90;
+  $freepbx_conf->define_conf_setting('DEVICE_DISALLOW',$set);
+
+  // DEVICE_ALLOW
+  $set['value'] = '';
+  $set['options'] = '';
+  $set['name'] = 'SIP and IAX allow';
+  $set['description'] = "Default setting for SIP and IAX allow (for codecs). Codecs to allow in addition to those set in general settings unless explicitly 'disallowed' for the device. Values van be separated with '&' e.g. 'ulaw&g729&g729' where the preference order is preserved. See Asterisk documentation for details.";
+  $set['readonly'] = 0;
+  $set['type'] = CONF_TYPE_TEXT;
+  $set['emptyok'] = 1;
+  $set['sortorder'] = 90;
+  $freepbx_conf->define_conf_setting('DEVICE_ALLOW',$set);
+
+  // DEVICE_CALLGROUP
+  $set['value'] = '';
+  $set['options'] = '';
+  $set['name'] = 'SIP & DAHDI callgroup';
+  $set['description'] = "Default setting for SIP, DAHDI (and Zap) callgroup. Callgroup(s) that the device is part of, can be one or more callgroups, e.g. '1,3-5' would be in groups 1,3,4,5. See Asterisk documentation for details.";
+  $set['readonly'] = 0;
+  $set['type'] = CONF_TYPE_TEXT;
+  $set['emptyok'] = 1;
+  $set['sortorder'] = 100;
+  $freepbx_conf->define_conf_setting('DEVICE_CALLGROUP',$set);
+
+  // DEVICE_PICKUPGROUP
+  $set['value'] = '';
+  $set['options'] = '';
+  $set['name'] = 'SIP & DAHDI pickupgroup';
+  $set['description'] = "Default setting for SIP, DAHDI (and Zap) pickupgroup. Pickupgroups(s) that the device can pickup calls from, can be one or more groups, e.g. '1,3-5' would be in groups 1,3,4,5. Device does not have to be in a group to be able to pickup calls from that group. See Asterisk documentation for details.";
+  $set['readonly'] = 0;
+  $set['type'] = CONF_TYPE_TEXT;
+  $set['emptyok'] = 1;
+  $set['sortorder'] = 110;
+  $freepbx_conf->define_conf_setting('DEVICE_PICKUPGROUP',$set);
 
   // The following settings are used in various modules prior to 2.9. If they are found in amportal.conf then we
   // retain their values until the individual modules are updated and their install scripts run where a full

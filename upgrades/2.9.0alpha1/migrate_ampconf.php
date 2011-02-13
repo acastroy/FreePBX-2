@@ -35,6 +35,7 @@ if(DB::IsError($result)){
 	  `category` varchar(50) default NULL,
 	  `module` varchar(25) default NULL,
 	  `emptyok` tinyint(1) default 1,
+	  `sortorder` int(11) default 0,
 	  PRIMARY KEY  (`keyword`)
 	) ENGINE=MyISAM DEFAULT CHARSET=latin1";
 
@@ -47,6 +48,19 @@ if(DB::IsError($result)){
   out(_("created"));
 } else {
   out(_("exists"));
+}
+outn("Add field sortorder to freepbx_settings..");
+$sql = "SELECT sortorder FROM freepbx_settings";
+$confs = $db->getRow($sql, DB_FETCHMODE_ASSOC);
+if (!DB::IsError($confs)) { // no error... Already done
+  out("Not Required");
+} else {
+  $sql = "ALTER TABLE freepbx_settings ADD sortorder INT ( 11 ) NOT NULL DEFAULT 0";
+  $results = $db->query($sql);
+  if(DB::IsError($results)) {
+    die($results->getMessage());
+  }
+  out("Done");
 }
 	
 // Make sure we save the settings as they are currenlty parsed

@@ -139,6 +139,7 @@ class freepbx_conf {
    *                [emptyok]     boolean if value can be blank
    *                [readonly]    boolean for readonly
    *                [hidden]      boolean for hidden fields
+   *                [sortorder]   'primary' sort key for presentation
    */
   var $db_conf_store;
 
@@ -210,7 +211,7 @@ class freepbx_conf {
    */
   function __construct() {
     global $db;
-    $sql = 'SELECT * FROM freepbx_settings ORDER BY category, module, level, keyword';
+    $sql = 'SELECT * FROM freepbx_settings ORDER BY category, module, sortorder, level, keyword';
     $db_raw = $db->getAll($sql, DB_FETCHMODE_ASSOC);
     if(DB::IsError($db_raw)) {
       die_freepbx(_('fatal error reading freepbx_settings'));	
@@ -644,6 +645,7 @@ class freepbx_conf {
    *                              and if the setting should only exist when
    *                              the module is installed. If set, uninstalling
    *                              the module will automatically remove this.
+   *                [sortorder]   'primary' sort order key for presentation
    * @param bool    set to true if a commit back to the database should be done
    */
   function define_conf_setting($keyword,$vars,$commit=false) {
@@ -672,6 +674,7 @@ class freepbx_conf {
 	    'category' => 'Undefined Category', // Don't gettext this
 	    'module' => '',
 	    'emptyok' => 1,
+	    'sortorder' => 0,
 	    'modified' => false, // set to false to compare against existing array
       );
     // Got to have a type and value, if no type, _prepared_conf_value will throw an error
@@ -705,6 +708,9 @@ class freepbx_conf {
       }
       if (!isset($vars['category'])) {
         $vars['category'] = $this->db_conf_store[$keyword]['category'];
+      }
+      if (!isset($vars['sortorder'])) {
+        $vars['sortorder'] = $this->db_conf_store[$keyword]['sortorder'];
       }
     }
     if (!$new_setting && $vars['type'] != $this->db_conf_store[$keyword]['type']) {
@@ -760,7 +766,7 @@ class freepbx_conf {
         $attributes[$atrib] = $vars[$atrib] ? '1' : '0';
       }
     }
-    $optional = array('name', 'description', 'module');
+    $optional = array('name', 'description', 'module', 'sortorder');
     foreach ($optional as $atrib) {
       if (isset($vars[$atrib])) {
         $attributes[$atrib] = $vars[$atrib];
@@ -887,6 +893,7 @@ class freepbx_conf {
         $atrib['category'],
         $atrib['module'],
         $atrib['emptyok'],
+        $atrib['sortorder'],
       );
       $this->db_conf_store[$keyword]['modified'] = false;
     }
@@ -894,8 +901,8 @@ class freepbx_conf {
       return 0;
     }
     $sql = 'REPLACE INTO freepbx_settings 
-      (keyword, value, name, level, description, type, options, defaultval, readonly, hidden, category, module, emptyok)
-      VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)';
+      (keyword, value, name, level, description, type, options, defaultval, readonly, hidden, category, module, emptyok, sortorder)
+      VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
     $compiled = $db->prepare($sql);
     $result = $db->executeMultiple($compiled,$update_array);
     if(DB::IsError($result)) {

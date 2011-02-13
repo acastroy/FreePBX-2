@@ -1675,7 +1675,7 @@ function freepbx_settings_init($commit_to_db = false) {
   $freepbx_conf->define_conf_setting('ALWAYS_SHOW_DEVICE_DETAILS',$set);
 
   // DEVICE_SIP_CANREINVITE
-  $set['value'] = 'yes';
+  $set['value'] = 'no';
   $set['options'] = array('no', 'yes', 'nonat', 'update');
   $set['name'] = 'SIP canrenivite (directmedia)';
   $set['description'] = 'Default setting for SIP canreinvite (same as directmedia). See Asterisk documentation for details.';
@@ -1699,7 +1699,7 @@ function freepbx_settings_init($commit_to_db = false) {
   // DEVICE_SIP_SENDRPID
   $set['value'] = 'no';
   $set['options'] = array('no', 'yes', 'pai');
-  $set['name'] = 'SIP trustrpid';
+  $set['name'] = 'SIP sendrpid';
   $set['description'] = "Default setting for SIP sendrpid. A value of 'yes' is equivalent to 'rpid' and will send the 'Remote-Pary-ID' header. A value of 'pai' is only valid starting with Asterisk 1.8 and will send the 'P-Asserted-Identity' header. See Asterisk documentation for details.";
   $set['readonly'] = 0;
   $set['type'] = CONF_TYPE_SELECT;

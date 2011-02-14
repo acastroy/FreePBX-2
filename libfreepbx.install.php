@@ -1663,7 +1663,7 @@ function freepbx_settings_init($commit_to_db = false) {
   $set['category'] = 'New Device Defaults';
   $set['level'] = 0;
 
-// ALWAYS_SHOW_DEVICE_DETAILS
+  // ALWAYS_SHOW_DEVICE_DETAILS
   $set['value'] = false;
   $set['options'] = '';
   $set['name'] = 'Show all Device Setting on Add';
@@ -1673,6 +1673,17 @@ function freepbx_settings_init($commit_to_db = false) {
   $set['emptyok'] = 0;
   $set['sortorder'] = 10;
   $freepbx_conf->define_conf_setting('ALWAYS_SHOW_DEVICE_DETAILS',$set);
+
+  // DEVICE_STRONG_SECRETS
+  $set['value'] = true;
+  $set['options'] = '';
+  $set['name'] = 'Require Strong Secrets';
+  $set['description'] = 'Requires a strong secret on SIP and IAX devices requiring at least two numeric and non-numeric characters. This can be disabled if using devices that can not meet these needs, or you prefer to put other constraints including more rigid constraints that this rule actually considers weak when it may not be.';
+  $set['readonly'] = 0;
+  $set['type'] = CONF_TYPE_BOOL;
+  $set['emptyok'] = 0;
+  $set['sortorder'] = 12;
+  $freepbx_conf->define_conf_setting('DEVICE_STRONG_SECRETS',$set);
 
   // DEVICE_SIP_CANREINVITE
   $set['value'] = 'no';

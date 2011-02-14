@@ -1708,7 +1708,7 @@ function freepbx_settings_init($commit_to_db = false) {
   $freepbx_conf->define_conf_setting('DEVICE_SIP_SENDRPID',$set);
 
   // DEVICE_SIP_NAT
-  $set['value'] = 'yes';
+  $set['value'] = 'no';
   $set['options'] = array('no', 'yes', 'never', 'route');
   $set['name'] = 'SIP nat';
   $set['description'] = "Default setting for SIP nat. A 'yes' will attempt to handle nat, also works for local (uses the network ports and address instead of the reported ports), 'no' follows the protocol, 'never' tries to block it, no RFC3581, 'route' ignores the rport information. See Asterisk documentation for details.";

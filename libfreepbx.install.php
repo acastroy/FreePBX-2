@@ -1660,7 +1660,7 @@ function freepbx_settings_init($commit_to_db = false) {
   //
   // CATEGORY: Device Setting Defaults
   //
-  $set['category'] = 'New Device Defaults';
+  $set['category'] = 'Device Settings';
   $set['level'] = 0;
 
   // ALWAYS_SHOW_DEVICE_DETAILS

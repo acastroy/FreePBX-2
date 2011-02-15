@@ -637,7 +637,7 @@ function freepbx_settings_init($commit_to_db = false) {
   $set['level'] = 0;
 
   // AMPDISABLELOG
-  $set['value'] = true;
+  $set['value'] = false;
   $set['options'] = '';
   $set['name'] = 'Disable FreePBX Log';
   $set['description'] = 'Whether or not to invoke the FreePBX log facility.';

@@ -508,7 +508,12 @@ function module_checkdepends($modulename) {
 					break;
 					case 'file': // file exists
 						// replace embedded amp_conf %VARIABLES% in string
-						$file = ampconf_string_replace($value);
+
+
+
+
+
+						$file = _module_ampconf_string_replace($value);
 						
 						if (!file_exists( $file )) {
 							$errors[] = sprintf(_('File %s must exist.'), $file);
@@ -1527,4 +1532,20 @@ function module_run_notification_checks() {
 	}
 }
 
+/** Replaces variables in a string with the values from ampconf
+ * eg, "%AMPWEBROOT%/admin" => "/var/www/html/admin"
+ */
+function _module_ampconf_string_replace($string) {
+	$freepbx_conf =& freepbx_conf::create();
+	
+	$target = array();
+	$replace = array();
+	
+	foreach ($freepbx_conf->conf as $key=>$value) {
+		$target[] = '%'.$key.'%';
+		$replace[] = $value;
+	}
+	
+	return str_replace($target, $replace, $string);
+}
 ?>

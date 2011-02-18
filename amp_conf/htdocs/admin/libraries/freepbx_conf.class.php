@@ -1021,36 +1021,4 @@ class freepbx_conf {
     return $ret;
   }
 }
-
-
-/**
- * These functions are LEFT OVER Legacy functions very minimally used and should probably be
- * removed and the offending usage eliminated.
- */
-
-/** Replaces variables in a string with the values from ampconf
- * eg, "%AMPWEBROOT%/admin" => "/var/www/html/admin"
- */
-function ampconf_string_replace($string) {
-	$freepbx_conf =& freepbx_conf::create();
-	
-	$target = array();
-	$replace = array();
-	
-	foreach ($freepbx_conf->conf as $key=>$value) {
-		$target[] = '%'.$key.'%';
-		$replace[] = $value;
-	}
-	
-	return str_replace($target, $replace, $string);
-}
-
-/** Expands variables from amportal.conf 
- * Replaces any variables enclosed in percent (%) signs with their value
- * eg, "%AMPWEBROOT%/admin/functions.inc.php"
- */
-//TODO: seems this the exact same as the above function. Should either be removed?
-function expand_variables($string) {
-	return ampconf_string_replace($string);
-}
 ?>

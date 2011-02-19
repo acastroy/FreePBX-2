@@ -362,17 +362,19 @@ function merge_ext_followme($dest) {
 
 function get_headers_assoc($url) {
 	$url_info=parse_url($url);
+  $host = isset($url_info['host']) ? $url_info['host'] : '';
 	if (isset($url_info['scheme']) && $url_info['scheme'] == 'https') {
 		$port = isset($url_info['port']) ? $url_info['port'] : 443;
-		@$fp=fsockopen('ssl://'.$url_info['host'], $port, $errno, $errstr, 10);
+		@$fp=fsockopen('ssl://'.$host, $port, $errno, $errstr, 10);
 	} else {
 		$port = isset($url_info['port']) ? $url_info['port'] : 80;
-		@$fp=fsockopen($url_info['host'], $port, $errno, $errstr, 10);
+		@$fp=fsockopen($host, $port, $errno, $errstr, 10);
 	}
 	if ($fp) {
 		stream_set_timeout($fp, 10);
-		$head = "HEAD ".@$url_info['path']."?".@$url_info['query'];
-		$head .= " HTTP/1.0\r\nHost: ".@$url_info['host']."\r\n\r\n";
+    $query = isset($url_info['query']) ? $url_info['query'] : '';
+		$head = "HEAD ".@$url_info['path']."?".$query;
+		$head .= " HTTP/1.0\r\nHost: ".$host."\r\n\r\n";
 		fputs($fp, $head);
 		while(!feof($fp)) {
 			if($header=trim(fgets($fp, 1024))) {

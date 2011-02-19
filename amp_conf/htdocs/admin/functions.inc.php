@@ -1630,23 +1630,32 @@ function do_reload() {
 //get the version number
 function getversion() {
 	global $db;
+  static $freepbx_version;
+  if (isset($freepbx_version) && $freepbx_version) {
+    return $freepbx_version;
+  }
 	$sql = "SELECT value FROM admin WHERE variable = 'version'";
 	$results = $db->getRow($sql);
 	if(DB::IsError($results)) {
 		die_freepbx($sql."<br>\n".$results->getMessage());
 	}
-	return $results[0];
+  $freepbx_version = $results[0];
+	return $freepbx_version;
 }
 
 //get the version number
 function get_framework_version() {
 	global $db;
+  static $freepbx_framework_version;
+  if (isset($freepbx_framework_version) && $freepbx_framework_version) {
+    return $freepbx_version;
+  }
 	$sql = "SELECT version FROM modules WHERE modulename = 'framework' AND enabled = 1";
-	$version = $db->getOne($sql);
-	if(DB::IsError($version)) {
-		die_freepbx($sql."<br>\n".$version->getMessage());
+	$freepbx_framework_version = $db->getOne($sql);
+	if(DB::IsError($freepbx_framework_version)) {
+		die_freepbx($sql."<br>\n".$freepbx_framework_version->getMessage());
 	}
-	return $version;
+	return $freepbx_framework_version;
 }
 
 // draw list for users and devices with paging

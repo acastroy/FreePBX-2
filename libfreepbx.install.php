@@ -1512,6 +1512,7 @@ function freepbx_settings_init($commit_to_db = false) {
   $set['name'] = 'Legacy Right Logo';
   $set['description'] = 'Legacy setting, use BRAND_IMAGE_FREEPBX_RIGHT in the future. If set, this will override BRAND_IMAGE_FREEPBX_RIGHT. The setting is the name of the image file and is always assumed to be present in the admin/images directory. Overrides the standard logo that is to be displayed at the TOP RIGHT of the admin screen. This enables you to customize the look of the administration screen. NOTE: images need to be saved in the ..../admin/images directory of your AMP install. This image should be 55px in height.';
   $set['readonly'] = 1;
+  $set['sortorder'] = 0;
   $set['type'] = CONF_TYPE_TEXT;
   $set['emptyok'] = 1;
   $freepbx_conf->define_conf_setting('AMPADMINLOGO',$set);
@@ -1522,6 +1523,7 @@ function freepbx_settings_init($commit_to_db = false) {
   $set['name'] = 'Hide Nav Background';
   $set['description'] = 'Hide the configured left navigation bar background.';
   $set['readonly'] = 0;
+  $set['sortorder'] = 10;
   $set['type'] = CONF_TYPE_BOOL;
   $set['emptyok'] = 0;
   $freepbx_conf->define_conf_setting('BRAND_IMAGE_HIDE_NAV_BACKGROUND',$set);
@@ -1533,6 +1535,7 @@ function freepbx_settings_init($commit_to_db = false) {
   $set['description'] = 'Styling image.';
   $set['emptyok'] = 1;
   $set['readonly'] = 1;
+  $set['sortorder'] = 20;
   $set['type'] = CONF_TYPE_TEXT;
   $freepbx_conf->define_conf_setting('BRAND_IMAGE_SHADOW_SIDE_BACKGROUND',$set);
 
@@ -1542,6 +1545,7 @@ function freepbx_settings_init($commit_to_db = false) {
   $set['name'] = 'Image: Right Upper';
   $set['description'] = 'Right upper logo. Use this setting instead of AMPADMINLOGO. Path is relative to admin.';
   $set['readonly'] = 1;
+  $set['sortorder'] = 30;
   $set['type'] = CONF_TYPE_TEXT;
   $set['emptyok'] = 0;
   $freepbx_conf->define_conf_setting('BRAND_IMAGE_FREEPBX_RIGHT',$set);
@@ -1552,6 +1556,7 @@ function freepbx_settings_init($commit_to_db = false) {
   $set['name'] = 'Image: Left Upper';
   $set['description'] = 'Left upper logo.  Path is relative to admin.';
   $set['readonly'] = 1;
+  $set['sortorder'] = 40;
   $set['type'] = CONF_TYPE_TEXT;
   $set['emptyok'] = 0;
   $freepbx_conf->define_conf_setting('BRAND_IMAGE_FREEPBX_LEFT',$set);
@@ -1562,6 +1567,7 @@ function freepbx_settings_init($commit_to_db = false) {
   $set['name'] = 'Image: Footer';
   $set['description'] = 'Logo in footer.  Path is relative to admin.';
   $set['readonly'] = 1;
+  $set['sortorder'] = 50;
   $set['type'] = CONF_TYPE_TEXT;
   $set['emptyok'] = 1;
   $freepbx_conf->define_conf_setting('BRAND_IMAGE_FREEPBX_FOOT',$set);
@@ -1572,6 +1578,7 @@ function freepbx_settings_init($commit_to_db = false) {
   $set['name'] = 'Image: Reload Screen';
   $set['description'] = 'Image used during a reload, default is animated GIF eating the * (asterisk).  Path is relative to admin.';
   $set['readonly'] = 1;
+  $set['sortorder'] = 60;
   $set['type'] = CONF_TYPE_TEXT;
   $set['emptyok'] = 1;
   $freepbx_conf->define_conf_setting('BRAND_IMAGE_RELOAD_LOADING',$set);
@@ -1582,6 +1589,7 @@ function freepbx_settings_init($commit_to_db = false) {
   $set['name'] = 'Alt for Left Logo';
   $set['description'] = 'alt attribute to use in place of image and title hover value. Defaults to FreePBX';
   $set['readonly'] = 1;
+  $set['sortorder'] = 70;
   $set['type'] = CONF_TYPE_TEXT;
   $set['emptyok'] = 1;
   $freepbx_conf->define_conf_setting('BRAND_FREEPBX_ALT_LEFT',$set);
@@ -1592,6 +1600,7 @@ function freepbx_settings_init($commit_to_db = false) {
   $set['name'] = 'Alt for Right Logo';
   $set['description'] = 'alt attribute to use in place of image and title hover value. Defaults to FreePBX';
   $set['readonly'] = 1;
+  $set['sortorder'] = 80;
   $set['type'] = CONF_TYPE_TEXT;
   $set['emptyok'] = 1;
   $freepbx_conf->define_conf_setting('BRAND_FREEPBX_ALT_RIGHT',$set);
@@ -1602,6 +1611,7 @@ function freepbx_settings_init($commit_to_db = false) {
   $set['name'] = 'Alt for Footer Logo';
   $set['description'] = 'alt attribute to use in place of image and title hover value. Defaults to FreePBX';
   $set['readonly'] = 1;
+  $set['sortorder'] = 90;
   $set['type'] = CONF_TYPE_TEXT;
   $set['emptyok'] = 1;
   $freepbx_conf->define_conf_setting('BRAND_FREEPBX_ALT_FOOT',$set);
@@ -1612,6 +1622,7 @@ function freepbx_settings_init($commit_to_db = false) {
   $set['name'] = 'Link for Left Logo';
   $set['description'] = 'link to follow when clicking on logo, defaults to http://www.freepbx.org';
   $set['readonly'] = 1;
+  $set['sortorder'] = 100;
   $set['type'] = CONF_TYPE_TEXT;
   $set['emptyok'] = 1;
   $freepbx_conf->define_conf_setting('BRAND_IMAGE_FREEPBX_LINK_LEFT',$set);
@@ -1622,6 +1633,7 @@ function freepbx_settings_init($commit_to_db = false) {
   $set['name'] = 'Link for Right Logo';
   $set['description'] = 'link to follow when clicking on logo, defaults to http://www.freepbx.org';
   $set['readonly'] = 1;
+  $set['sortorder'] = 110;
   $set['type'] = CONF_TYPE_TEXT;
   $set['emptyok'] = 1;
   $freepbx_conf->define_conf_setting('BRAND_IMAGE_FREEPBX_LINK_RIGHT',$set);
@@ -1632,6 +1644,7 @@ function freepbx_settings_init($commit_to_db = false) {
   $set['name'] = 'Link for Footer Logo';
   $set['description'] = 'link to follow when clicking on logo, defaults to http://www.freepbx.org';
   $set['readonly'] = 1;
+  $set['sortorder'] = 120;
   $set['type'] = CONF_TYPE_TEXT;
   $set['emptyok'] = 1;
   $freepbx_conf->define_conf_setting('BRAND_IMAGE_FREEPBX_LINK_FOOT',$set);
@@ -1642,6 +1655,7 @@ function freepbx_settings_init($commit_to_db = false) {
   $set['name'] = 'Hide Right Logo';
   $set['description'] = 'Setting to true will hide the upper right logo.';
   $set['readonly'] = 0;
+  $set['sortorder'] = 130;
   $set['type'] = CONF_TYPE_BOOL;
   $set['emptyok'] = 0;
   $freepbx_conf->define_conf_setting('BRAND_HIDE_LOGO_RIGHT',$set);
@@ -1652,6 +1666,7 @@ function freepbx_settings_init($commit_to_db = false) {
   $set['name'] = 'Hide Left FreePBX Version';
   $set['description'] = 'Setting to true will hide the FreePBX version information below the left upper header.';
   $set['readonly'] = 0;
+  $set['sortorder'] = 140;
   $set['type'] = CONF_TYPE_BOOL;
   $set['emptyok'] = 0;
   $freepbx_conf->define_conf_setting('BRAND_HIDE_HEADER_VERSION',$set);
@@ -1662,6 +1677,7 @@ function freepbx_settings_init($commit_to_db = false) {
   $set['name'] = 'Hide Header Menus';
   $set['description'] = 'Setting to true will hide the complete horizontal menu bar in the header.';
   $set['readonly'] = 0;
+  $set['sortorder'] = 150;
   $set['type'] = CONF_TYPE_BOOL;
   $set['emptyok'] = 0;
   $freepbx_conf->define_conf_setting('BRAND_HIDE_HEADER_MENUS',$set);
@@ -1672,6 +1688,7 @@ function freepbx_settings_init($commit_to_db = false) {
   $set['name'] = 'Primary CSS Stylesheet';
   $set['description'] = 'Set this to replace the default mainstyle.css style sheet with your own, relative to admin.';
   $set['readonly'] = 1;
+  $set['sortorder'] = 160;
   $set['type'] = CONF_TYPE_TEXT;
   $set['emptyok'] = 1;
   $freepbx_conf->define_conf_setting('BRAND_CSS_ALT_MAINSTYLE',$set);
@@ -1682,9 +1699,167 @@ function freepbx_settings_init($commit_to_db = false) {
   $set['name'] = 'Optional Additional CSS Stylesheet';
   $set['description'] = 'Optional custom CSS style sheet included after the primary one and any module specific ones are loaded, relative to admin.';
   $set['readonly'] = 1;
+  $set['sortorder'] = 170;
   $set['type'] = CONF_TYPE_TEXT;
   $set['emptyok'] = 1;
   $freepbx_conf->define_conf_setting('BRAND_CSS_CUSTOM',$set);
+
+  // VIEW_FREEPBX_ADMIN
+  $set['value'] = 'views/freepbx_admin.php';
+  $set['options'] = '';
+  $set['name'] = 'View: freepbx_admin.php';
+  $set['description'] = 'freepbx_admin.php view. This should never be changed except for very advanced layout changes.';
+  $set['readonly'] = 1;
+  $set['emptyok'] = 0;
+  $set['hidden'] = 1;
+  $set['sortorder'] = 180;
+  $set['type'] = CONF_TYPE_TEXT;
+  $freepbx_conf->define_conf_setting('VIEW_FREEPBX_ADMIN',$set);
+
+  // VIEW_FREEPBX
+  $set['value'] = 'views/freepbx.php';
+  $set['options'] = '';
+  $set['name'] = 'View: freepbx.php';
+  $set['description'] = 'freepbx.php view. This should never be changed except for very advanced layout changes.';
+  $set['readonly'] = 1;
+  $set['emptyok'] = 0;
+  $set['hidden'] = 1;
+  $set['sortorder'] = 190;
+  $set['type'] = CONF_TYPE_TEXT;
+  $freepbx_conf->define_conf_setting('VIEW_FREEPBX',$set);
+
+  // VIEW_FREEPBX_RELOAD
+  $set['value'] = 'views/freepbx_reload.php';
+  $set['options'] = '';
+  $set['name'] = 'View: freepbx_reload.php';
+  $set['description'] = 'freepbx_reload.php view. This should never be changed except for very advanced layout changes.';
+  $set['readonly'] = 1;
+  $set['emptyok'] = 0;
+  $set['hidden'] = 1;
+  $set['sortorder'] = 200;
+  $set['type'] = CONF_TYPE_TEXT;
+  $freepbx_conf->define_conf_setting('VIEW_FREEPBX_RELOAD',$set);
+
+  // VIEW_FREEPBX_RELOADBAR
+  $set['value'] = 'views/freepbx_reloadbar.php';
+  $set['options'] = '';
+  $set['name'] = 'View: freepbx_reloadbar.php';
+  $set['description'] = 'freepbx_reloadbar.php view. This should never be changed except for very advanced layout changes.';
+  $set['readonly'] = 1;
+  $set['emptyok'] = 0;
+  $set['hidden'] = 1;
+  $set['sortorder'] = 210;
+  $set['type'] = CONF_TYPE_TEXT;
+  $freepbx_conf->define_conf_setting('VIEW_FREEPBX_RELOADBAR',$set);
+
+  // VIEW_WELCOME
+  $set['value'] = 'views/welcome.php';
+  $set['options'] = '';
+  $set['name'] = 'View: welcome.php';
+  $set['description'] = 'welcome.php view. This should never be changed except for very advanced layout changes.';
+  $set['readonly'] = 1;
+  $set['emptyok'] = 0;
+  $set['hidden'] = 1;
+  $set['sortorder'] = 220;
+  $set['type'] = CONF_TYPE_TEXT;
+  $freepbx_conf->define_conf_setting('VIEW_WELCOME',$set);
+
+  // VIEW_WELCOME_NONMANAGER
+  $set['value'] = 'views/welcome_nomanager.php';
+  $set['options'] = '';
+  $set['name'] = 'View: welcome_nomanager.php';
+  $set['description'] = 'welcome_nomanager.php view. This should never be changed except for very advanced layout changes.';
+  $set['readonly'] = 1;
+  $set['emptyok'] = 0;
+  $set['hidden'] = 1;
+  $set['sortorder'] = 230;
+  $set['type'] = CONF_TYPE_TEXT;
+  $freepbx_conf->define_conf_setting('VIEW_WELCOME_NONMANAGER',$set);
+
+  // VIEW_MENUITEM_DISABLED
+  $set['value'] = 'views/menuitem_disabled.php';
+  $set['options'] = '';
+  $set['name'] = 'View: menuitem_disabled.php';
+  $set['description'] = 'menuitem_disabled.php view. This should never be changed except for very advanced layout changes.';
+  $set['readonly'] = 1;
+  $set['emptyok'] = 0;
+  $set['hidden'] = 1;
+  $set['sortorder'] = 240;
+  $set['type'] = CONF_TYPE_TEXT;
+  $freepbx_conf->define_conf_setting('VIEW_MENUITEM_DISABLED',$set);
+
+  // VIEW_NOACCESS
+  $set['value'] = 'views/noaccess.php';
+  $set['options'] = '';
+  $set['name'] = 'View: noaccess.php';
+  $set['description'] = 'noaccess.php view. This should never be changed except for very advanced layout changes.';
+  $set['readonly'] = 1;
+  $set['emptyok'] = 0;
+  $set['hidden'] = 1;
+  $set['sortorder'] = 250;
+  $set['type'] = CONF_TYPE_TEXT;
+  $freepbx_conf->define_conf_setting('VIEW_NOACCESS',$set);
+
+  // VIEW_UNAUTHORIZED
+  $set['value'] = 'views/unauthorized.php';
+  $set['options'] = '';
+  $set['name'] = 'View: unauthorized.php';
+  $set['description'] = 'unauthorized.php view. This should never be changed except for very advanced layout changes.';
+  $set['readonly'] = 1;
+  $set['emptyok'] = 0;
+  $set['hidden'] = 1;
+  $set['sortorder'] = 260;
+  $set['type'] = CONF_TYPE_TEXT;
+  $freepbx_conf->define_conf_setting('VIEW_UNAUTHORIZED',$set);
+
+  // VIEW_BAD_REFFERER
+  $set['value'] = 'views/bad_refferer.php';
+  $set['options'] = '';
+  $set['name'] = 'View: bad_refferer.php';
+  $set['description'] = 'bad_refferer.php view. This should never be changed except for very advanced layout changes.';
+  $set['readonly'] = 1;
+  $set['emptyok'] = 0;
+  $set['hidden'] = 1;
+  $set['sortorder'] = 270;
+  $set['type'] = CONF_TYPE_TEXT;
+  $freepbx_conf->define_conf_setting('VIEW_BAD_REFFERER',$set);
+
+  // VIEW_LOGGEDOUT
+  $set['value'] = 'views/loggedout.php';
+  $set['options'] = '';
+  $set['name'] = 'View: loggedout.php';
+  $set['description'] = 'loggedout.php view. This should never be changed except for very advanced layout changes.';
+  $set['readonly'] = 1;
+  $set['emptyok'] = 0;
+  $set['hidden'] = 1;
+  $set['sortorder'] = 280;
+  $set['type'] = CONF_TYPE_TEXT;
+  $freepbx_conf->define_conf_setting('VIEW_LOGGEDOUT',$set);
+
+  // VIEW_PANEL
+  $set['value'] = 'views/panel.php';
+  $set['options'] = '';
+  $set['name'] = 'View: panel.php';
+  $set['description'] = 'panel.php view. This should never be changed except for very advanced layout changes.';
+  $set['readonly'] = 1;
+  $set['emptyok'] = 0;
+  $set['hidden'] = 1;
+  $set['sortorder'] = 290;
+  $set['type'] = CONF_TYPE_TEXT;
+  $freepbx_conf->define_conf_setting('VIEW_PANEL',$set);
+
+  // VIEW_REPORTS
+  $set['value'] = 'views/reports.php';
+  $set['options'] = '';
+  $set['name'] = 'View: reports.php';
+  $set['description'] = 'reports.php view. This should never be changed except for very advanced layout changes.';
+  $set['readonly'] = 1;
+  $set['emptyok'] = 0;
+  $set['hidden'] = 1;
+  $set['sortorder'] = 300;
+  $set['type'] = CONF_TYPE_TEXT;
+  $freepbx_conf->define_conf_setting('VIEW_REPORTS',$set);
+
 
   //
   // CATEGORY: Device Setting Defaults

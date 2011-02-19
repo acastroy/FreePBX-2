@@ -47,6 +47,6 @@ if (isset($_REQUEST['display']) && isset($menu[$_REQUEST['display']])) {
 	$display=1;
 }
 
-show_view('views/reports.php', array('amp_conf'=>&$amp_conf, 'title'=>$title, 'display'=>$display, 'menu' => $menu));
+show_view($amp_conf['VIEW_REPORTS'], array('amp_conf'=>&$amp_conf, 'title'=>$title, 'display'=>$display, 'menu' => $menu));
 ?>
 </div>

@@ -70,7 +70,7 @@ if ($action != '' && $amp_conf['CHECKREFERER']) {
 	}
 
 	if (!$refererok) {
-		show_view('views/bad_refferer.php');
+		show_view($amp_conf['VIEW_BAD_REFFERER'], array('amp_conf'=>&$amp_conf));
 		exit;
 	}
 }
@@ -176,7 +176,7 @@ if (!$quietmode) {
 
 // check access
 if (!is_array($cur_menuitem) && $display != "") {
-	show_view("views/noaccess.php");
+	show_view($amp_conf['VIEW_NOACCESS'], array('amp_conf'=>&$amp_conf));
 	exit;
 }
 
@@ -256,7 +256,7 @@ switch($display) {
 
 		// include the module page
 		if (isset($cur_menuitem['disabled']) && $cur_menuitem['disabled']) {
-			show_view("views/menuitem_disabled.php",$cur_menuitem);
+			show_view($amp_conf['VIEW_MENUITEM_DISABLED'],$cur_menuitem);
 			break; // we break here to avoid the generateconfigpage() below
 		} else if (file_exists($module_file)) {
 			// load language info if available
@@ -288,10 +288,10 @@ switch($display) {
 	break;
 	case '':
 		if ($astman) {
-			show_view('views/welcome.php', array('AMP_CONF' => &$amp_conf));
+			show_view($amp_conf['VIEW_WELCOME'], array('AMP_CONF' => &$amp_conf));
 		} else {
 			// no manager, no connection to asterisk
-			show_view('views/welcome_nomanager.php', array('mgruser' => $amp_conf["AMPMGRUSER"]));
+			show_view($amp_conf['VIEW_WELCOME_NOMANAGER'], array('mgruser' => $amp_conf["AMPMGRUSER"]));
 		}
 	break;
 }
@@ -314,7 +314,7 @@ if ($quietmode) {
 
 
 	// then load it and put it into the main freepbx interface
-	$template['content'] = load_view('views/freepbx_admin.php', $admin_template) . load_view('views/freepbx_footer.php',$admin_tempalate) ;
+	$template['content'] = load_view($amp_conf['VIEW_FREEPBX_ADMIN'], $admin_template) . load_view('views/freepbx_footer.php',$admin_tempalate) ;
 	$template['use_nav_background'] = true;
 
 	// setup main template
@@ -345,7 +345,7 @@ if ($quietmode) {
 	$template['reload_needed'] = check_reload_needed();
 	$template['benchmark_starttime'] = $benchmark_starttime;
 
-	show_view('views/freepbx.php', $template);
+	show_view($amp_conf['VIEW_FREEPBX'], $template);
 }
 
 ?>

@@ -276,7 +276,7 @@ if (isset($_COOKIE['lang']) && $_COOKIE['lang']==="he_IL")
 $reload_needed = isset($reload_needed) ? $reload_needed : false;
 
 if ($reload_needed) {
-	show_view('views/freepbx_reload.php');
+	show_view($amp_conf['VIEW_FREEPBX_RELOAD']);
 }
 ?>
 <!-- module process box, used by module admin (page.modules.php) - has to be here because of IE6's z-order stupidity -->
@@ -326,7 +326,7 @@ if ($reload_needed) {
 	
 	// need reload bar - hidden by default
 	if ($reload_needed) {
-		show_view('views/freepbx_reloadbar.php');
+		show_view($amp_conf['VIEW_FREEPBX_RELOADBAR']);
 	}
 	
 	echo "\t<div id=\"login_message\">";

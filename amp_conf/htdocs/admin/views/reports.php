@@ -16,6 +16,6 @@ $template['content'] .=
 	'<iframe width="97%" height="2000" frameborder="0" align="top" scrolling="auto" src="config.php?handler=cdr&s='.$display.($display=='1' ? '&posted=1' : '').'"></iframe>'.
 	'</div>';
 
-show_view('views/freepbx.php', $template);
+show_view($amp_conf['VIEW_FREEPBX'], $template);
 
 ?>

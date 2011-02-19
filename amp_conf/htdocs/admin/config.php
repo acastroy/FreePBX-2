@@ -164,6 +164,9 @@ if(!$quietmode && is_array($active_modules)){
 	}
 }
 
+// set the language so local module languages take
+set_language();
+
 // extensions vs device/users ... this is a bad design, but hey, it works
 if (!$quietmode) {
 	if (isset($amp_conf["AMPEXTENSIONS"]) && ($amp_conf["AMPEXTENSIONS"] == "deviceanduser")) {
@@ -217,8 +220,6 @@ if (($display == 'index') && ($cur_menuitem['module']['rawname'] == 'builtin')) 
 	$display = '';
 }
 
-// set the language so local module languages take
-set_language();
 
 // show the appropriate page
 switch($display) {

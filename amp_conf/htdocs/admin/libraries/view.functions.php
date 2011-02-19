@@ -48,38 +48,6 @@ function frameworkPasswordCheck() {
 	}
 }
 
-/** Loads a view (from the views/ directory) with a number of named parameters created as local variables.
- * @param  string   The name of the view.
- * @param  array    The parameters to pass. Note that the key will be turned into a variable name for use by the view.
- *                  For example, passing array('foo'=>'bar'); will create a variable $foo that can be used by
- *                  the code in the view.
- */
-function loadview($viewname, $parameters = false) {
-	ob_start();
-	showview($viewname, $parameters);
-	$contents = ob_get_contents();
-	ob_end_clean();
-	return $contents;
-}
-
-/** Outputs the contents of a view.
- * @param  string   The name of the view.
- * @param  array    The parameters to pass. Note that the key will be turned into a variable name for use by the view.
- *                  For example, passing array('foo'=>'bar'); will create a variable $foo that can be used by
- *                  the code in the view.
- */
-function showview($viewname, $parameters = false) {
-	global $amp_conf, $db;
-	if (is_array($parameters)) {
-		extract($parameters);
-	}
-
-	$viewname = str_replace('..','.',$viewname); // protect against going to subdirectories
-	if (file_exists('views/'.$viewname.'.php')) {
-		include('views/'.$viewname.'.php');
-	}
-}
-
 // setup locale
 function set_language() {
 	if (extension_loaded('gettext')) {
@@ -181,8 +149,7 @@ function fileRequestHandler($handler, $module = false, $file = false){
  * @return	string
  * 
  */
-
-function load_view($view_filename_protected, array $vars = array()) {
+function load_view($view_filename_protected, $vars = array()) {
 	
 	//return false if we cant find the file or if we cant open it
 	if ( ! $view_filename_protected OR ! file_exists($view_filename_protected) OR ! is_readable($view_filename_protected) ) {
@@ -206,7 +173,30 @@ function load_view($view_filename_protected, array $vars = array()) {
 	
 	//Return captured output
 	return $buffer;
-	
+}
+
+/**
+ * Show View
+ *
+ * This function is used to show a "view" file. It has two parameters:
+ *
+ * 1. The name of the "view" file to be included.
+ * 2. An associative array of data to be extracted for use in the view.
+ *
+ * This simply echos the output of load_view() if not false.
+ *
+ * NOTE: you cannot use the variable $view_filename_protected in your views!
+ *
+ * @param	string
+ * @param	array
+ * @return	string
+ * 
+ */
+function show_view($view_filename_protected, $vars = array()) {
+  $buffer = load_view($view_filename_protected, $vars );
+  if ($buffer !== false) {
+    echo $buffer;
+  }
 }
 
 /** Abort all output, and redirect the browser's location.

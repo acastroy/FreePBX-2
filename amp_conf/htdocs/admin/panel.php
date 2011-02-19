@@ -24,5 +24,5 @@ $message=_("Flash Operator Panel");
 
 $template['amp_conf'] = &$amp_conf;
 
-showview('panel', array('title'=>$title, 'deptname' => $_SESSION["AMP_user"]->_deptname, 'amp_conf' => &$amp_conf));
+show_view('views/panel.php', array('title'=>$title, 'deptname' => $_SESSION["AMP_user"]->_deptname, 'amp_conf' => &$amp_conf));
 ?>

@@ -70,7 +70,7 @@ if ($action != '' && $amp_conf['CHECKREFERER']) {
 	}
 
 	if (!$refererok) {
-		showview('bad_refferer');
+		show_view('views/bad_refferer.php');
 		exit;
 	}
 }
@@ -176,7 +176,7 @@ if (!$quietmode) {
 
 // check access
 if (!is_array($cur_menuitem) && $display != "") {
-	showview("noaccess");
+	show_view("views/noaccess.php");
 	exit;
 }
 
@@ -256,7 +256,7 @@ switch($display) {
 
 		// include the module page
 		if (isset($cur_menuitem['disabled']) && $cur_menuitem['disabled']) {
-			showview("menuitem_disabled",$cur_menuitem);
+			show_view("views/menuitem_disabled.php",$cur_menuitem);
 			break; // we break here to avoid the generateconfigpage() below
 		} else if (file_exists($module_file)) {
 			// load language info if available
@@ -269,7 +269,7 @@ switch($display) {
 			}
 			include($module_file);
 		} else {
-			// TODO: make this a showview()
+			// TODO: make this a load_view()
 			echo "404 Not found";
 		}
 		
@@ -288,10 +288,10 @@ switch($display) {
 	break;
 	case '':
 		if ($astman) {
-			showview('welcome', array('AMP_CONF' => &$amp_conf));
+			show_view('views/welcome.php', array('AMP_CONF' => &$amp_conf));
 		} else {
 			// no manager, no connection to asterisk
-			showview('welcome_nomanager', array('mgruser' => $amp_conf["AMPMGRUSER"]));
+			show_view('views/welcome_nomanager.php', array('mgruser' => $amp_conf["AMPMGRUSER"]));
 		}
 	break;
 }
@@ -314,7 +314,7 @@ if ($quietmode) {
 
 
 	// then load it and put it into the main freepbx interface
-	$template['content'] = loadview('freepbx_admin', $admin_template);
+	$template['content'] = load_view('views/freepbx_admin.php', $admin_template) . load_view('views/freepbx_footer.php',$admin_tempalate) ;
 	$template['use_nav_background'] = true;
 
 	// setup main template
@@ -345,7 +345,7 @@ if ($quietmode) {
 	$template['reload_needed'] = check_reload_needed();
 	$template['benchmark_starttime'] = $benchmark_starttime;
 
-	showview('freepbx', $template);
+	show_view('views/freepbx.php', $template);
 }
 
 ?>

@@ -8,7 +8,7 @@ if (isset($_REQUEST['logout'])) {
 	// flag to prompt for pw again
 	$_SESSION['logout'] = true; 
 
-	showview('loggedout');
+	show_view('views/loggedout.php');
 	exit;
 }
 
@@ -36,7 +36,7 @@ switch (strtolower($amp_conf['AUTHTYPE'])) {
 			// not logged in, send headers
 			@header('WWW-Authenticate: Basic realm="'._('FreePBX Administration').'"');
 			@header('HTTP/1.0 401 Unauthorized');
-			showview("unauthorized");
+			show_view("views/unauthorized.php");
 			exit;
 		}
 		define('FREEPBX_IS_AUTH', 'TRUE');
@@ -79,7 +79,7 @@ switch (strtolower($amp_conf['AUTHTYPE'])) {
 			// not logged in, send headers
 			@header('WWW-Authenticate: Basic realm=" '._('FreePBX Administration').'"');
 			@header('HTTP/1.0 401 Unauthorized');
-			showview("unauthorized");
+			show_view("views/unauthorized.php");
 			exit;
 		}
 		if (!defined('FREEPBX_IS_AUTH')) {

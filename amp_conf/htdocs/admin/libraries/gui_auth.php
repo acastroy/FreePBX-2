@@ -60,7 +60,7 @@ switch (strtolower($amp_conf['AUTHTYPE'])) {
 				
 				if (!$_SESSION['AMP_user']->checkPassword(sha1($_SERVER['PHP_AUTH_PW']))) {
 					// failed, one last chance -- fallback to amportal.conf db admin user
-					if (($_SERVER['PHP_AUTH_USER'] == $amp_conf['AMPDBUSER']) && ($_SERVER['PHP_AUTH_PW'] == $amp_conf['AMPDBPASS'])) {
+					if (($_SERVER['PHP_AUTH_USER'] == $amp_conf['AMPDBUSER']) && ($_SERVER['PHP_AUTH_PW'] == $amp_conf['AMPDBPASS']) && $amp_conf['AMP_ACCESS_DB_CREDS']) {
 	
 						// password succesfully matched amportal.conf db admin user 
 	

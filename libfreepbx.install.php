@@ -570,6 +570,17 @@ function freepbx_settings_init($commit_to_db = false) {
   $freepbx_conf->define_conf_setting('AUTHTYPE',$set);
   $set['level'] = 0;
 
+  // AMP_ACCESS_DB_CREDS
+  $set['value'] = false;
+  $set['options'] = '';
+  $set['name'] = 'Allow Login With DB Credentials';
+  $set['description'] = "When Set to True, admin access to the FreePBX GUI will be allowed using the FreePBX configured AMPDBUSER and AMPDBPASS credentials. This only applies when Authorization Type is 'database' mode.";
+  $set['emptyok'] = 0;
+  $set['readonly'] = 0;
+  $set['sortorder'] = -126;
+  $set['type'] = CONF_TYPE_BOOL;
+  $freepbx_conf->define_conf_setting('AMP_ACCESS_DB_CREDS',$set);
+
   // ARI_ADMIN_USERNAME
   $set['value'] = '';
   $set['options'] = '';

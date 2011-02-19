@@ -45,6 +45,7 @@ function module_getonlinexml($module = false, $override_xml = false) { // was ge
 	//
 	// used for debug, time set to 0 to always fall through
 	// if((time() - $result['time']) > 0 || strlen($result['data']) < 100 ) {
+  $skip_cache |= $amp_conf['MODULEADMIN_SKIP_CACHE'];
 	if((time() - $result['time']) > 300 || $skip_cache || strlen($data) < 100 ) {
 		$version = getversion();
 		// we need to know the freepbx major version we have running (ie: 2.1.2 is 2.1)

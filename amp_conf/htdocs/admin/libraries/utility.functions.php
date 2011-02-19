@@ -10,6 +10,7 @@ define("FPBX_LOG_ERROR",    "ERROR");
 define("FPBX_LOG_WARNING",  "WARNING");
 define("FPBX_LOG_NOTICE",   "NOTICE");
 define("FPBX_LOG_INFO",     "INFO");
+define("FPBX_LOG_PHP",      "PHP");
 
 /** FreePBX Logging facility to FILE or syslog
  * @param  string   The level/severity of the error. Valid levels use constants:
@@ -293,13 +294,30 @@ function dbug_write($txt,$check=''){
 
 //http://php.net/manual/en/function.set-error-handler.php
 function freepbx_error_handler($errno, $errstr, $errfile, $errline,  $errcontext) {
+  global $amp_conf;
+
 	$txt = date("Y-M-d H:i:s")
 		. "\t" . $errfile . ':' . $errline 
 		. "\n\n"
 		. 'ERROR[' . $errno . ']: '
 		. $errstr
 		. "\n\n\n";
-	dbug_write($txt,$check='');
+  if (!isset($amp_conf['PHP_ERROR_HANDLER_OUTPUT'])) {
+	  dbug_write($txt,$check='');
+  }
+
+  $set['options'] = array('dbug','syslog','browser','off');
+  switch($amp_conf['PHP_ERROR_HANDLER_OUTPUT']) {
+  case 'syslog':
+    freepbx_log(FPBX_LOG_PHP,$txt);
+  break;
+  case 'off':
+  break;
+  case 'dbug':
+  default:
+	  dbug_write($txt,$check='');
+  break;
+  }
 }
 
 global $outn_function_buffer;

@@ -485,6 +485,126 @@ function freepbx_settings_init($commit_to_db = false) {
   //
   $set['category'] = 'System Setup';
 
+  // AMPSYSLOGLEVEL
+  $set['value'] = 'FILE';
+  $set['options'] = 'FILE, LOG_EMERG, LOG_ALERT, LOG_CRIT, LOG_ERR, LOG_WARNING, LOG_NOTICE, LOG_INFO, LOG_DEBUG';
+  // LOG_SQL, SQL are discontinued, they are removed during migration if the slipped in and in core if it were to persist because amportal.conf was not
+  // writeable for a while.
+  //
+  if (isset($amp_conf['AMPSYSLOGLEVEL']) && (strtoupper($amp_conf['AMPSYSLOGLEVEL']) == 'SQL' || strtoupper($amp_conf['AMPSYSLOGLEVEL']) == 'LOG_SQL')) {
+    $set['options'] .= ', LOG_SQL, SQL';
+  }
+  $set['name'] = 'FreePBX Log Location';
+  $set['description'] = "Determine where to send log information if the log is enabled: 'Disable FreePBX Log' is false (AMPDISABLELOG). FILE will send all log messages to the defined 'FreePBX Log File' (FPBX_LOG_FILE). The other settings will send the logs to your System Logging system using the specified log level that can be configured on most systems to determine which system log file to write to.";
+  $set['emptyok'] = 0;
+  $set['readonly'] = 0;
+  $set['sortorder'] = -190;
+  $set['type'] = CONF_TYPE_SELECT;
+  $freepbx_conf->define_conf_setting('AMPSYSLOGLEVEL',$set);
+
+  // AMPDISABLELOG
+  $set['value'] = false;
+  $set['options'] = '';
+  $set['name'] = 'Disable FreePBX Log';
+  $set['description'] = 'Whether or not to invoke the FreePBX log facility.';
+  $set['emptyok'] = 0;
+  $set['readonly'] = 0;
+  $set['sortorder'] = -180;
+  $set['type'] = CONF_TYPE_BOOL;
+  $freepbx_conf->define_conf_setting('AMPDISABLELOG',$set);
+
+  // LOG_OUT_MESSAGES
+  $set['value'] = true;
+  $set['options'] = '';
+  $set['name'] = 'Log Verbose Messages';
+  $set['description'] = 'FreePBX has many verbose and useful messages displayed to users during module installation, system installations, loading configurations and other places. In order to accumulate these messages in the log files as well as the on screen display, set this to true.';
+  $set['emptyok'] = 0;
+  $set['readonly'] = 0;
+  $set['sortorder'] = -170;
+  $set['type'] = CONF_TYPE_BOOL;
+  $freepbx_conf->define_conf_setting('LOG_OUT_MESSAGES',$set);
+
+  // LOG_NOTIFICATIONS
+  $set['value'] = true;
+  $set['options'] = '';
+  $set['name'] = 'Send Dashboard Notifications to Log';
+  $set['description'] = 'When enabled all notification updates to the Dashboard notification panel will also be logged into the specified log file when enabled.';
+  $set['emptyok'] = 0;
+  $set['readonly'] = 0;
+  $set['sortorder'] = -160;
+  $set['type'] = CONF_TYPE_BOOL;
+  $freepbx_conf->define_conf_setting('LOG_NOTIFICATIONS',$set);
+
+  // FPBX_LOG_FILE
+  $set['value'] = '/tmp/freepbx.log';
+  $set['options'] = '';
+  $set['name'] = 'FreePBX Log File';
+  $set['description'] = 'Full path and name of the FreePBX Log File used in conjunction with the Syslog Level (AMPSYSLOGLEVEL) being set to FILE, not used otherwise. Initial installs may have some early logging sent to /tmp/freepbx_pre_install.log when it is first bootstrapping the installer.';
+  $set['emptyok'] = 0;
+  $set['readonly'] = 0;
+  $set['sortorder'] = -150;
+  $set['type'] = CONF_TYPE_TEXT;
+  $freepbx_conf->define_conf_setting('FPBX_LOG_FILE',$set);
+
+  // PHP_ERROR_HANDLER_OUTPUT
+  $set['value'] = 'dbug';
+  $set['options'] = array('dbug','syslog','off');
+  $set['name'] = 'PHP Error Log Output';
+  $set['description'] = "Where to send PHP errors, warnings and notices by the FreePBX PHP error handler. Set to 'dbug', they will go to the Debug File regardless of whether dbug Loggin is disalbed or not. Set to 'syslog' will send them to the FreePBX Log. Set to 'off' and they will be ignored.";
+  $set['emptyok'] = 0;
+  $set['readonly'] = 0;
+  $set['sortorder'] = -140;
+  $set['type'] = CONF_TYPE_SELECT;
+  $freepbx_conf->define_conf_setting('PHP_ERROR_HANDLER_OUTPUT',$set);
+
+  // AUTHTYPE
+  $set['value'] = 'database';
+  $set['options'] = 'database,none,webserver';
+  $set['name'] = 'Authorization Type';
+  $set['description'] = 'Authentication type to use for web admin. If type set to <b>database</b>, the primary AMP admin credentials will be the AMPDBUSER/AMPDBPASS above. When using database you can create users that are restricted to only certain module pages. When set to none, you should make sure you have provided security at the apache level. When set to webserver, FreePBX will expect authentication to happen at the apache level, but will take the user credentials and apply any restrictions as if it were in database mode.';
+  $set['emptyok'] = 0;
+  $set['level'] = 3;
+  $set['readonly'] = 1;
+  $set['sortorder'] = -130;
+  $set['type'] = CONF_TYPE_SELECT;
+  $freepbx_conf->define_conf_setting('AUTHTYPE',$set);
+  $set['level'] = 0;
+
+  // ARI_ADMIN_USERNAME
+  $set['value'] = '';
+  $set['options'] = '';
+  $set['name'] = 'User Portal Admin Username';
+  $set['description'] = 'This is the default admin name used to allow an administrator to login to ARI bypassing all security. Change this to whatever you want, do not forget to change the User Portal Admin Password as well. Default = not set';
+  $set['emptyok'] = 1;
+  $set['readonly'] = 0;
+  $set['sortorder'] = -120;
+  $set['type'] = CONF_TYPE_TEXT;
+  $freepbx_conf->define_conf_setting('ARI_ADMIN_USERNAME',$set);
+
+  // ARI_ADMIN_PASSWORD
+  $set['value'] = 'ari_password';
+  $set['options'] = '';
+  $set['name'] = 'User Portal Admin Password';
+  $set['description'] = 'This is the default admin password to allow an administrator to login to ARI bypassing all security. Change this to a secure password. Default = not set';
+  $set['emptyok'] = 0;
+  $set['readonly'] = 0;
+  $set['sortorder'] = -110;
+  $set['type'] = CONF_TYPE_TEXT;
+  $freepbx_conf->define_conf_setting('ARI_ADMIN_PASSWORD',$set);
+
+  // FORCED_ASTVERSION
+  $set['value'] = '';
+  $set['options'] = '';
+  $set['name'] = 'Force Asterisk Version';
+  $set['description'] = 'Normally FreePBX gets the current Asterisk version directly form Asterisk. This is required to generate proper dialplan for a given version. When using some custom Asterisk builds, the version may not be properly parsed and imporoper dialplan generated. Setting this to an equivalent Asterisk version will override what is read from Asterisk. This SHOULD be left blank unless you know what you are doing.';
+  $set['emptyok'] = 1;
+  $set['readonly'] = 1;
+  $set['sortorder'] = -100;
+  $set['type'] = CONF_TYPE_TEXT;
+  $set['level'] = 4;
+  $freepbx_conf->define_conf_setting('FORCED_ASTVERSION',$set);
+  $set['level'] = 0;
+
   // AMPENGINE
   $set['value'] = 'asterisk';
   $set['options'] = 'asterisk';
@@ -497,33 +617,10 @@ function freepbx_settings_init($commit_to_db = false) {
   $freepbx_conf->define_conf_setting('AMPENGINE',$set);
   $set['level'] = 0;
 
-  // AUTHTYPE
-  $set['value'] = 'database';
-  $set['options'] = 'database,none,webserver';
-  $set['name'] = 'Authorization Type';
-  $set['description'] = 'Authentication type to use for web admin. If type set to <b>database</b>, the primary AMP admin credentials will be the AMPDBUSER/AMPDBPASS above. When using database you can create users that are restricted to only certain module pages. When set to none, you should make sure you have provided security at the apache level. When set to webserver, FreePBX will expect authentication to happen at the apache level, but will take the user credentials and apply any restrictions as if it were in database mode.';
-  $set['emptyok'] = 0;
-  $set['level'] = 3;
-  $set['readonly'] = 1;
-  $set['type'] = CONF_TYPE_SELECT;
-  $freepbx_conf->define_conf_setting('AUTHTYPE',$set);
-  $set['level'] = 0;
-
-  // AMPEXTENSIONS
-  $set['value'] = 'extensions';
-  $set['options'] = 'extensions,deviceanduser';
-  $set['name'] = 'User & Devices Mode';
-  $set['description'] = 'Sets the extension behavior in FreePBX.  If set to <b>extensions</b>, Devices and Users are administered together as a unified Extension, and appear on a single page. If set to <b>deviceanduser</b>, Devices and Users will be administered separately. Devices (e.g. each individual line on a SIP phone) and Users (e.g. <b>101</b>) will be configured independent of each other, allowing association of one User to many Devices, or allowing Users to login and logout of Devices.';
-  $set['emptyok'] = 0;
-  $set['readonly'] = 0;
-  $set['type'] = CONF_TYPE_SELECT;
-  $freepbx_conf->define_conf_setting('AMPEXTENSIONS',$set);
-
   // AMPVMUMASK
   $set['value'] = '007';
   $set['options'] = '';
   $set['name'] = 'Asterisk VMU Mask';
-  $set['description'] = 'Sets the extension behavior in FreePBX.  If set to <b>extensions</b>, Devices and Users are administered together as a unified Extension, and appear on a single page. If set to <b>deviceanduser</b>, Devices and Users will be administered separately. Devices (e.g. each individual line on a SIP phone) and Users (e.g. <b>101</b>) will be configured independent of each other, allowing association of one User to many Devices, or allowing Users to login and logout of Devices.';
   $set['description'] = 'Defaults to 077 allowing only the asterisk user to have any permission on VM files. If set to something like 007, it would allow the group to have permissions. This can be used if setting apache to a different user then asterisk, so that the apache user (and thus ARI) can have access to read/write/delete the voicemail files. If changed, some of the voicemail directory structures may have to be manually changed.';
   $set['emptyok'] = 0;
   $set['readonly'] = 0;
@@ -543,26 +640,6 @@ function freepbx_settings_init($commit_to_db = false) {
   $set['level'] = 4;
   $freepbx_conf->define_conf_setting('AMPWEBADDRESS',$set);
   $set['level'] = 0;
-
-  // ARI_ADMIN_USERNAME
-  $set['value'] = '';
-  $set['options'] = '';
-  $set['name'] = 'User Portal Admin Username';
-  $set['description'] = 'This is the default admin name used to allow an administrator to login to ARI bypassing all security. Change this to whatever you want, do not forget to change the User Portal Admin Password as well. Default = not set';
-  $set['emptyok'] = 1;
-  $set['readonly'] = 0;
-  $set['type'] = CONF_TYPE_TEXT;
-  $freepbx_conf->define_conf_setting('ARI_ADMIN_USERNAME',$set);
-
-  // ARI_ADMIN_PASSWORD
-  $set['value'] = 'ari_password';
-  $set['options'] = '';
-  $set['name'] = 'User Portal Admin Password';
-  $set['description'] = 'This is the default admin password to allow an administrator to login to ARI bypassing all security. Change this to a secure password. Default = not set';
-  $set['emptyok'] = 0;
-  $set['readonly'] = 0;
-  $set['type'] = CONF_TYPE_TEXT;
-  $freepbx_conf->define_conf_setting('ARI_ADMIN_PASSWORD',$set);
 
   // AMPASTERISKUSER
   $set['value'] = 'asterisk';
@@ -635,63 +712,6 @@ function freepbx_settings_init($commit_to_db = false) {
   $set['level'] = 4;
   $freepbx_conf->define_conf_setting('AMPDEVGROUP',$set);
   $set['level'] = 0;
-
-  // AMPDISABLELOG
-  $set['value'] = false;
-  $set['options'] = '';
-  $set['name'] = 'Disable FreePBX Log';
-  $set['description'] = 'Whether or not to invoke the FreePBX log facility.';
-  $set['emptyok'] = 0;
-  $set['readonly'] = 0;
-  $set['type'] = CONF_TYPE_BOOL;
-  $freepbx_conf->define_conf_setting('AMPDISABLELOG',$set);
-
-  // LOG_OUT_MESSAGES
-  $set['value'] = true;
-  $set['options'] = '';
-  $set['name'] = 'Log Verbose Messages';
-  $set['description'] = 'FreePBX has many verbose and useful messages displayed to users during module installation, system installations, loading configurations and other places. In order to accumulate these messages in the log files as well as the on screen display, set this to true.';
-  $set['emptyok'] = 0;
-  $set['readonly'] = 0;
-  $set['type'] = CONF_TYPE_BOOL;
-  $freepbx_conf->define_conf_setting('LOG_OUT_MESSAGES',$set);
-
-  // AMPSYSLOGLEVEL
-  $set['value'] = 'FILE';
-  $set['options'] = 'FILE, LOG_EMERG, LOG_ALERT, LOG_CRIT, LOG_ERR, LOG_WARNING, LOG_NOTICE, LOG_INFO, LOG_DEBUG';
-  // LOG_SQL, SQL are discontinued, they are removed during migration if the slipped in and in core if it were to persist because amportal.conf was not
-  // writeable for a while.
-  //
-  if (isset($amp_conf['AMPSYSLOGLEVEL']) && (strtoupper($amp_conf['AMPSYSLOGLEVEL']) == 'SQL' || strtoupper($amp_conf['AMPSYSLOGLEVEL']) == 'LOG_SQL')) {
-    $set['options'] .= ', LOG_SQL, SQL';
-  }
-  $set['name'] = 'Syslog Location';
-  $set['description'] = "Determine where to send log information if the log is enabled: 'Disable FreePBX Log' is false (AMPDISABLELOG). FILE will send all log messages to the defined 'FreePBX Log File' (FPBX_LOG_FILE). The other settings will send the logs to your System Logging system using the specified log level that can be configured on most systems to determine which system log file to write to.";
-  $set['emptyok'] = 0;
-  $set['readonly'] = 0;
-  $set['type'] = CONF_TYPE_SELECT;
-  $freepbx_conf->define_conf_setting('AMPSYSLOGLEVEL',$set);
-
-  // FPBX_LOG_FILE
-  $set['value'] = '/tmp/freepbx.log';
-  $set['options'] = '';
-  $set['name'] = 'FreePBX Log File';
-  $set['description'] = 'Full path and name of the FreePBX Log File used in conjunction with the Syslog Level (AMPSYSLOGLEVEL) being set to FILE, not used otherwise. Initial installs may have some early logging sent to /tmp/freepbx_pre_install.log when it is first bootstrapping the installer.';
-  $set['emptyok'] = 0;
-  $set['readonly'] = 0;
-  $set['type'] = CONF_TYPE_TEXT;
-  $freepbx_conf->define_conf_setting('FPBX_LOG_FILE',$set);
-
-  // LOG_NOTIFICATIONS
-  $set['value'] = true;
-  $set['options'] = '';
-  $set['name'] = 'Send Dashboard Notifications to Log';
-  $set['description'] = 'When enabled all notification updates to the Dashboard notification panel will also be logged into the specified log file when enabled.';
-  $set['emptyok'] = 0;
-  $set['readonly'] = 0;
-  $set['type'] = CONF_TYPE_BOOL;
-  $freepbx_conf->define_conf_setting('LOG_NOTIFICATIONS',$set);
-
 
   //
   // CATEGORY: Dialplan and Operational
@@ -1322,7 +1342,6 @@ function freepbx_settings_init($commit_to_db = false) {
   $set['readonly'] = 1;
   $set['type'] = CONF_TYPE_DIR;
   $freepbx_conf->define_conf_setting('AMPLOCALBIN',$set);
-
   
   // DISABLE_CSS_AUTOGEN
   $set['value'] = false;
@@ -1333,6 +1352,16 @@ function freepbx_settings_init($commit_to_db = false) {
   $set['readonly'] = 0;
   $set['type'] = CONF_TYPE_BOOL;
   $freepbx_conf->define_conf_setting('DISABLE_CSS_AUTOGEN',$set);
+
+  // MODULEADMIN_SKIP_CACHE
+  $set['value'] = false;
+  $set['options'] = '';
+  $set['name'] = 'Disable Module Admin Caching';
+  $set['description'] = 'Module Admin caches a copy of the online XML document that describes what is availalbe on the server. Subsequent online update checks will use the cached information if it is less than 5 minutes old. To bypass the cache and force it to go to the server each time, set this to True. This should normally be false but can be helpful during testing.';
+  $set['emptyok'] = 0;
+  $set['readonly'] = 1;
+  $set['type'] = CONF_TYPE_BOOL;
+  $freepbx_conf->define_conf_setting('MODULEADMIN_SKIP_CACHE',$set);
 
 
   //

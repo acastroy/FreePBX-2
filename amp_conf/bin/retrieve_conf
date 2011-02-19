@@ -302,7 +302,7 @@ if ($argc > 1) {
 		  break;
 		  case "--run-install":
 			  $run_install = true;
-			  out(_("Running module install.php and install.sql scripts"),false);
+			  out(_("Running module install.php and install.sql scripts"),true);
 		  break;
 		  case "--amportalconf":
 			  $amportalconf = $arg[1];

@@ -2925,6 +2925,7 @@ function module_get_annoucements() {
 	if ($engver['engine'] == 'asterisk') {
 		$options .="&astver=".urlencode($engver['version']);
 	}
+  $options .= "&phpver=".urlencode(phpversion());
 
 	$announcement = @ file_get_contents("http://mirror.freepbx.org/version-".getversion().".html".$options);
 	return $announcement;

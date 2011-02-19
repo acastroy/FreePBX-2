@@ -1401,6 +1401,7 @@ function module_get_annoucements() {
 	} else {
 		$options .="&astver=".urlencode($engver['raw']);
 	}
+  $options .= "&phpver=".urlencode(phpversion());
 
 	$fn = "http://mirror.freepbx.org/version-".getversion().".html".$options;
   $announcement = file_get_contents_url($fn);

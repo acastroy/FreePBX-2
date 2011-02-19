@@ -456,7 +456,7 @@ switch ($extdisplay) {  // process, confirm, or nothing
 		}
 		echo "| <a href='config.php?display=modules&amp;type=$type'>"._("Manage local modules")."</a>\n";
 		if (!EXTERNAL_PACKAGE_MANAGEMENT) {
-			echo " | <a class='info check_updates' href='config.php?display=modules&type=$type&online=1&module_repo=$module_repo'>"._("Check for updates online")."<span>"._("Checking for updates will transmit your FreePBX and Asterisk version numbers along with a unique but random identifier. This is used to provide proper update information and track version usage to focus development and maintenance efforts. No private information is transmitted.")."</span></a>\n";
+			echo " | <a class='info check_updates' href='config.php?display=modules&type=$type&online=1&module_repo=$module_repo'>"._("Check for updates online")."<span>"._("Checking for updates will transmit your FreePBX, Asterisk and PHP version numbers along with a unique but random identifier. This is used to provide proper update information and track version usage to focus development and maintenance efforts. No private information is transmitted.")."</span></a>\n";
 		}
 				
 		if (isset($_FILES['uploadmod']) && !empty($_FILES['uploadmod']['name'])) {
@@ -512,7 +512,7 @@ switch ($extdisplay) {  // process, confirm, or nothing
 		} else {
 			if (!EXTERNAL_PACKAGE_MANAGEMENT) {
 				displayRepoSelect();
-				echo " | <a class='info check_updates' href='config.php?display=modules&amp;type=$type&amp;online=1&amp;module_repo=$module_repo'>"._("Check for updates online")."<span>"._("Checking for updates will transmit your FreePBX and Asterisk version numbers along with a unique but random identifier. This is used to provide proper update information and track version usage to focus development and maintenance efforts. No private information is transmitted.")."</span></a>\n";
+				echo " | <a class='info check_updates' href='config.php?display=modules&amp;type=$type&amp;online=1&amp;module_repo=$module_repo'>"._("Check for updates online")."<span>"._("Checking for updates will transmit your FreePBX, Asterisk and PHP version numbers along with a unique but random identifier. This is used to provide proper update information and track version usage to focus development and maintenance efforts. No private information is transmitted.")."</span></a>\n";
 			}
 			echo " | <a href='config.php?display=modules&type=$type&extdisplay=upload'>"._("Upload module")."</a><br />\n";
 		}

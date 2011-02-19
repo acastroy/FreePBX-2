@@ -18,7 +18,7 @@ class extensions {
 
   var $_section_no_custom = array();
 
-  var $disable_custom_contexts = false;
+  var $_disable_custom_contexts = false;
 	
 	/** The filename to write this configuration to
 	*/

@@ -1,3 +1,6 @@
+<?php
+global $amp_conf;
+?>
 <div id="footer">
 	<hr />
 	<?php

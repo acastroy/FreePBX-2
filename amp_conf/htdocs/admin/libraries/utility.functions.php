@@ -151,7 +151,7 @@ function die_freepbx($text, $extended_text="", $type="FATAL") {
 function getversion($cached=true) {
   global $db;
   static $version;
-  if (isset($version) && $cached) {
+  if (isset($version) && $version && $cached) {
     return $version;
   }
   $sql = "SELECT value FROM admin WHERE variable = 'version'";
@@ -166,7 +166,7 @@ function getversion($cached=true) {
 function get_framework_version($cached=true) {
   global $db;
   static $version;
-  if (isset($version) && $cached) {
+  if (isset($version) && $version && $cached) {
     return $version;
   }
   $sql = "SELECT version FROM modules WHERE modulename = 'framework' AND enabled = 1";

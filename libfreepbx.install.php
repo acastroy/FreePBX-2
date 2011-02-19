@@ -548,7 +548,7 @@ function freepbx_settings_init($commit_to_db = false) {
 
   // PHP_ERROR_HANDLER_OUTPUT
   $set['value'] = 'dbug';
-  $set['options'] = array('dbug','syslog','off');
+  $set['options'] = array('dbug','freepbxlog','off');
   $set['name'] = 'PHP Error Log Output';
   $set['description'] = "Where to send PHP errors, warnings and notices by the FreePBX PHP error handler. Set to 'dbug', they will go to the Debug File regardless of whether dbug Loggin is disalbed or not. Set to 'syslog' will send them to the FreePBX Log. Set to 'off' and they will be ignored.";
   $set['emptyok'] = 0;

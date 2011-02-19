@@ -310,7 +310,7 @@ function freepbx_error_handler($errno, $errstr, $errfile, $errline,  $errcontext
   }
 
   switch($amp_conf['PHP_ERROR_HANDLER_OUTPUT']) {
-  case 'syslog':
+  case 'freepbxlog':
     $txt = sprintf("(%s:%s)-ERRNO[%s] - %s", $errfile, $line, $errorno, $errstr);
     freepbx_log(FPBX_LOG_PHP,$txt);
   break;

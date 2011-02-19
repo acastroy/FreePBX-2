@@ -37,7 +37,7 @@ function freepbx_log($level, $message) {
     $line = $bt[0]['line'];
   }
 
-  if (!$php_error_handler) {{
+  if (!$php_error_handler) {
     $file_base = basename($file_full);
     $file_dir  = basename(dirname($file_full));
     $txt = sprintf("[%s] (%s/%s:%s) - %s\n", $level, $file_dir, $file_base, $line, $message);

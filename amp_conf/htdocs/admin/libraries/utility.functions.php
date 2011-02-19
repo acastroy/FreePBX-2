@@ -21,9 +21,12 @@ define("FPBX_LOG_PHP",      "PHP");
 function freepbx_log($level, $message) {
 	global $amp_conf;
 
+  $php_error_handler = false;
 	$bt = debug_backtrace();
 
-  if ($bt[1]['function'] == 'out' || $bt[1]['function'] == 'die_freepbx') {
+  if ($bt[1]['function'] == 'freepbx_error_handler') {
+    $php_error_handler = true;
+  } elseif ($bt[1]['function'] == 'out' || $bt[1]['function'] == 'die_freepbx') {
     $file_full = $bt[1]['file'];
     $line = $bt[1]['line'];
   } elseif (basename($bt[0]['file']) == 'notifications.class.php') {
@@ -33,10 +36,16 @@ function freepbx_log($level, $message) {
     $file_full = $bt[0]['file'];
     $line = $bt[0]['line'];
   }
-  $file_base = basename($file_full);
-  $file_dir  = basename(dirname($file_full));
 
-  $txt = sprintf("[%s] (%s/%s:%s) - %s\n", $level, $file_dir, $file_base, $line, $message);
+  if (!$php_error_handler) {{
+    $file_base = basename($file_full);
+    $file_dir  = basename(dirname($file_full));
+    $txt = sprintf("[%s] (%s/%s:%s) - %s\n", $level, $file_dir, $file_base, $line, $message);
+  } else {
+    // PHP Error Handler provides it's own formatting
+    //
+    $txt = sprintf("[%s] %s\n", $level, $message);
+  }
 
   // if it is not set, it's probably an initial installation so we want to log something
   //
@@ -296,26 +305,26 @@ function dbug_write($txt,$check=''){
 function freepbx_error_handler($errno, $errstr, $errfile, $errline,  $errcontext) {
   global $amp_conf;
 
-	$txt = date("Y-M-d H:i:s")
-		. "\t" . $errfile . ':' . $errline 
-		. "\n\n"
-		. 'ERROR[' . $errno . ']: '
-		. $errstr
-		. "\n\n\n";
   if (!isset($amp_conf['PHP_ERROR_HANDLER_OUTPUT'])) {
-	  dbug_write($txt,$check='');
+    $amp_conf['PHP_ERROR_HANDLER_OUTPUT'] = 'dbug';
   }
 
-  $set['options'] = array('dbug','syslog','browser','off');
   switch($amp_conf['PHP_ERROR_HANDLER_OUTPUT']) {
   case 'syslog':
+    $txt = sprintf("(%s:%s)-ERRNO[%s] - %s", $errfile, $line, $errorno, $errstr);
     freepbx_log(FPBX_LOG_PHP,$txt);
   break;
   case 'off':
   break;
   case 'dbug':
   default:
-	  dbug_write($txt,$check='');
+	  $txt = date("Y-M-d H:i:s")
+		  . "\t" . $errfile . ':' . $errline 
+		  . "\n\n"
+		  . 'ERROR[' . $errno . ']: '
+		  . $errstr
+		  . "\n\n\n";
+	    dbug_write($txt,$check='');
   break;
   }
 }

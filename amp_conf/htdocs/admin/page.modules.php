@@ -559,6 +559,13 @@ switch ($extdisplay) {  // process, confirm, or nothing
 			if (isset($module_filter[$name]) && strtolower(trim($module_filter[$name])) == 'hidden') {
 				continue;
 			}
+      // If versionupgrade module is present then allow it to skip modules that should not be presented
+      // because and upgrade is in process. This can help assure only safe modules are present and
+      // force the user to upgrade in the proper order.
+      //
+      if (function_exists('versionupgrade_allowed_modules') && !versionupgrade_allowed_modules(&$modules[$name])) {
+        continue;
+      }
 			$numdisplayed++;
 			
 			if ($category !== $modules[$name]['category']) {

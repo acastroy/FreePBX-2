@@ -44,7 +44,7 @@ function freepbx_log($level, $message) {
   } else {
     // PHP Error Handler provides it's own formatting
     //
-    $txt = sprintf("[%s] %s\n", $level, $message);
+    $txt = sprintf("[%s-%s\n", $level, $message);
   }
 
   // if it is not set, it's probably an initial installation so we want to log something
@@ -305,13 +305,29 @@ function dbug_write($txt,$check=''){
 function freepbx_error_handler($errno, $errstr, $errfile, $errline,  $errcontext) {
   global $amp_conf;
 
+  $errortype = array (
+    E_ERROR              => 'ERROR',
+    E_WARNING            => 'WARNING',
+    E_PARSE              => 'PARSE_ERROR',
+    E_NOTICE             => 'NOTICE',
+    E_CORE_ERROR         => 'CORE_ERROR',
+    E_CORE_WARNING       => 'CORE_WARNING',
+    E_COMPILE_ERROR      => 'COMPILE_ERROR',
+    E_COMPILE_WARNING    => 'COMPILE_WARNING',
+    E_USER_ERROR         => 'USER_ERROR',
+    E_USER_WARNING       => 'USER_WARNING',
+    E_USER_NOTICE        => 'USER_NOTICE',
+    E_STRICT             => 'RUNTIM_NOTICE',
+    E_RECOVERABLE_ERROR  => 'CATCHABLE_FATAL_ERROR',
+  );
+
   if (!isset($amp_conf['PHP_ERROR_HANDLER_OUTPUT'])) {
     $amp_conf['PHP_ERROR_HANDLER_OUTPUT'] = 'dbug';
   }
 
   switch($amp_conf['PHP_ERROR_HANDLER_OUTPUT']) {
   case 'freepbxlog':
-    $txt = sprintf("(%s:%s)-ERRNO[%s] - %s", $errfile, $line, $errorno, $errstr);
+    $txt = sprintf("%s] (%s:%s) - %s", $errortype[$errno], $errfile, $errline, $errstr);
     freepbx_log(FPBX_LOG_PHP,$txt);
   break;
   case 'off':
@@ -320,10 +336,10 @@ function freepbx_error_handler($errno, $errstr, $errfile, $errline,  $errcontext
   default:
 	  $txt = date("Y-M-d H:i:s")
 		  . "\t" . $errfile . ':' . $errline 
-		  . "\n\n"
-		  . 'ERROR[' . $errno . ']: '
+		  . "\n"
+		  . '[' . $errortype[$errno] . ']: '
 		  . $errstr
-		  . "\n\n\n";
+		  . "\n\n";
 	    dbug_write($txt,$check='');
   break;
   }

@@ -314,7 +314,7 @@ if ($quietmode) {
 
 
 	// then load it and put it into the main freepbx interface
-	$template['content'] = load_view($amp_conf['VIEW_FREEPBX_ADMIN'], $admin_template) . load_view('views/freepbx_footer.php',$admin_tempalate) ;
+	$template['content'] = load_view($amp_conf['VIEW_FREEPBX_ADMIN'], $admin_template) . load_view('views/freepbx_footer.php',$admin_template) ;
 	$template['use_nav_background'] = true;
 
 	// setup main template

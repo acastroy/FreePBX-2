@@ -494,8 +494,8 @@ function freepbx_settings_init($commit_to_db = false) {
   if (isset($amp_conf['AMPSYSLOGLEVEL']) && (strtoupper($amp_conf['AMPSYSLOGLEVEL']) == 'SQL' || strtoupper($amp_conf['AMPSYSLOGLEVEL']) == 'LOG_SQL')) {
     $set['options'] .= ', LOG_SQL, SQL';
   }
-  $set['name'] = 'FreePBX Log Location';
-  $set['description'] = "Determine where to send log information if the log is enabled: 'Disable FreePBX Log' is false (AMPDISABLELOG). FILE will send all log messages to the defined 'FreePBX Log File' (FPBX_LOG_FILE). The other settings will send the logs to your System Logging system using the specified log level that can be configured on most systems to determine which system log file to write to.";
+  $set['name'] = 'FreePBX Log Routing';
+  $set['description'] = "Determine where to send log information if the log is enabled ('Disable FreePBX Log' (AMPDISABLELOG) false. There are two places to route the log messages. 'FILE' will send all log messages to the defined 'FreePBX Log File' (FPBX_LOG_FILE). All the other settings will route the log messages to your System Logging subsystem (syslog) using the specified log level. Syslog can be configured to route different levels to different locations. See 'syslog' documentation (man syslog) on your system for more details.";
   $set['emptyok'] = 0;
   $set['readonly'] = 0;
   $set['sortorder'] = -190;
@@ -550,7 +550,7 @@ function freepbx_settings_init($commit_to_db = false) {
   $set['value'] = 'dbug';
   $set['options'] = array('dbug','freepbxlog','off');
   $set['name'] = 'PHP Error Log Output';
-  $set['description'] = "Where to send PHP errors, warnings and notices by the FreePBX PHP error handler. Set to 'dbug', they will go to the Debug File regardless of whether dbug Loggin is disalbed or not. Set to 'syslog' will send them to the FreePBX Log. Set to 'off' and they will be ignored.";
+  $set['description'] = "Where to send PHP errors, warnings and notices by the FreePBX PHP error handler. Set to 'dbug', they will go to the Debug File regardless of whether dbug Loggin is disalbed or not. Set to 'freepbxlog' will send them to the FreePBX Log. Set to 'off' and they will be ignored.";
   $set['emptyok'] = 0;
   $set['readonly'] = 0;
   $set['sortorder'] = -140;

@@ -557,6 +557,17 @@ function freepbx_settings_init($commit_to_db = false) {
   $set['type'] = CONF_TYPE_SELECT;
   $freepbx_conf->define_conf_setting('PHP_ERROR_HANDLER_OUTPUT',$set);
 
+  // AMPEXTENSIONS
+  $set['value'] = 'extensions';
+  $set['options'] = 'extensions,deviceanduser';
+  $set['name'] = 'User & Devices Mode';
+  $set['description'] = 'Sets the extension behavior in FreePBX.  If set to <b>extensions</b>, Devices and Users are administered together as a unified Extension, and appear on a single page. If set to <b>deviceanduser</b>, Devices and Users will be administered separately. Devices (e.g. each individual line on a SIP phone) and Users (e.g. <b>101</b>) will be configured independent of each other, allowing association of one User to many Devices, or allowing Users to login and logout of Devices.';
+  $set['emptyok'] = 0;
+  $set['readonly'] = 0;
+  $set['sortorder'] = -135;
+  $set['type'] = CONF_TYPE_SELECT;
+  $freepbx_conf->define_conf_setting('AMPEXTENSIONS',$set);
+
   // AUTHTYPE
   $set['value'] = 'database';
   $set['options'] = 'database,none,webserver';

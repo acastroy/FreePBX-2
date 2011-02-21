@@ -80,6 +80,15 @@ out(_("ok"));
 //
 $freepbx_conf =& freepbx_conf::create();
 $update_arr = array();
+
+/* Previously 'none' was the default. If migrating from old system, and it was
+ * not set, then it was in 'none' mode. We need to retain this as part of the
+ * migration or we may lock out admins after the migration.
+ */
+if (!isset($current_amp_conf['AUTHTYPE']) || ($current_amp_conf['AUTHTYPE'] !='database' && $current_amp_conf['AUTHTYPE'] !='webserver')) {
+  out(_("Setting AUTHTYPE to none consistent with old default"));
+  $current_amp_conf['AUTHTYPE'] = 'none';
+}
 out(_("Migrate current values into freepbx_conf.."));
 foreach ($current_amp_conf as $key => $val) {
 	outn(sprintf(_("checking %s .."),$key));

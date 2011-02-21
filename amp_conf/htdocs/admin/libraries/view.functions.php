@@ -3,27 +3,12 @@
 function frameworkPasswordCheck() {
 	global $amp_conf;
 
-	$freepbx_conf =& freepbx_conf::create();
-  $amp_conf_defaults =& $freepbx_conf->conf_defaults;
+  $nt = notifications::create($db);
 
-	$nt = notifications::create($db);
-	if ($amp_conf['AMPMGRPASS'] == $amp_conf_defaults['AMPMGRPASS'][1]) {
-		$nt->add_warning('core', 'AMPMGRPASS', _("Default Asterisk Manager Password Used"), _("You are using the default Asterisk Manager password that is widely known, you should set a secure password"));
-	} else {
-		$nt->delete('core', 'AMPMGRPASS');
-	}
-	
-	if ($amp_conf['ARI_ADMIN_PASSWORD'] == $amp_conf_defaults['ARI_ADMIN_PASSWORD'][1]) {
-		$nt->add_warning('ari', 'ARI_ADMIN_PASSWORD', _("Default ARI Admin password Used"), _("You are using the default ARI Admin password that is widely known, you should change to a new password. Do this in Advanced Settings"));
-	} else {
-		$nt->delete('ari', 'ARI_ADMIN_PASSWORD');
-	}
-	
-	if ($amp_conf['AMPDBPASS'] == $amp_conf_defaults['AMPDBPASS'][1]) {
-		$nt->add_warning('core', 'AMPDBPASS', _("Default SQL Password Used"), _("You are using the default SQL password that is widely known, you should set a secure password"));
-	} else {
-		$nt->delete('core', 'AMPDBPASS');
-	}
+  // Moved most of the other checks to retrieve_conf to avoid running every page load. These have been left
+  // here becuase both of these settings could be affected differently in the php apache related settings vs.
+  // what retrieve_conf would see running the CLI version of php
+  //
 	
 	// Check and increase php memory_limit if needed and if allowed on the system
 	//
@@ -46,6 +31,7 @@ function frameworkPasswordCheck() {
 	} else {
 		$nt->delete('core', 'MQGPC');
 	}
+
 }
 
 // setup locale

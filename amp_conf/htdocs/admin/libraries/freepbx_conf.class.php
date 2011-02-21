@@ -535,6 +535,23 @@ class freepbx_conf {
     }
   }
 
+  /** Get's the default value of a configuration setting from the database store.
+   *
+   * @param string  The setting to fetch.
+   * @return mixed  returns the default of the setting, or boolean false if the
+   *                setting does not exist. Since configuration booleans are
+   *                returned as '0' and '1', they can be differentiated by a
+   *                true boolean false (use === operator) if a setting does
+   *                not exist.
+   */
+  function get_conf_default_setting($keyword) {
+    if (isset($this->db_conf_store[$keyword])) {
+      return $this->db_conf_store[$keyword]['defaultval'];
+    } else {
+      return false;
+    }
+  }
+
   /** Reset all conf settings specified int the passed in array to their defaults.
    *
    * @param array   An array of the settings that should be reset.

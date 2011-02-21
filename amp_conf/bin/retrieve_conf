@@ -668,9 +668,56 @@ if(isset($active_modules) && is_array($active_modules)){
 }
 // Now we write on amportal.conf if it is writable, which allows legacy applications in the
 // eco-system to take advantage of the settings.
+// we write out the error message here instead of in freepbx_settings so that we don't hit the db every single page load
 //
 if ($freepbx_conf->amportal_canwrite()) {
   file_put_contents('/etc/amportal.conf',$freepbx_conf->amportal_generate(true));
+  $nt->delete('framework', 'AMPORTAL_NO_WRITE');
+} elseif (!$nt->exists('framework', 'AMPORTAL_NO_WRITE')) {
+  $nt->add_error('framework', 'AMPORTAL_NO_WRITE', _("amportal.conf not writeable"), _("Your amportal.conf file is not writeable. FreePBX is running in a crippled mode until changed. You can run 'amportal chown' from the Linux command line to rectify this."),true);
+}
+
+// Let's move some more of our checks to retrieve_conf so that we are not constantly checking these on page loads
+//
+
+// Warn about default Manager Interface Password
+//
+if ($amp_conf['AMPMGRPASS'] == $freepbx_conf->get_conf_default_setting('AMPMGRPASS')) {
+  if (!$nt->exists('core', 'AMPMGRPASS')) {
+	  $nt->add_warning('core', 'AMPMGRPASS', _("Default Asterisk Manager Password Used"), _("You are using the default Asterisk Manager password that is widely known, you should set a secure password"));
+  }
+} else {
+	$nt->delete('core', 'AMPMGRPASS');
+}
+	
+// Warn about default ARI Admin Password
+//
+if ($amp_conf['ARI_ADMIN_PASSWORD'] == $freepbx_conf->get_conf_default_setting('ARI_ADMIN_PASSWORD')) {
+  if (!$nt->exists('ari', 'ARI_ADMIN_PASSWORD')) {
+	  $nt->add_warning('ari', 'ARI_ADMIN_PASSWORD', _("Default ARI Admin password Used"), _("You are using the default ARI Admin password that is widely known, you should change to a new password. Do this in Advanced Settings"));
+  }
+} else {
+	$nt->delete('ari', 'ARI_ADMIN_PASSWORD');
+}
+	
+// Warn about default Database Password
+//
+if ($amp_conf['AMPDBPASS'] == $freepbx_conf->get_conf_default_setting('AMPDBPASS')) {
+  if (!$nt->exists('core', 'AMPDBPASS')) {
+	  $nt->add_warning('core', 'AMPDBPASS', _("Default SQL Password Used"), _("You are using the default SQL password that is widely known, you should set a secure password"));
+  }
+} else {
+	$nt->delete('core', 'AMPDBPASS');
+}
+
+// Warn if in deviceanduser mode and not using DYNAMICHINTS
+//
+if ($amp_conf['AMPEXTENSIONS'] == 'deviceanduser' && !$amp_conf['DYNAMICHINTS']) {
+  if (!$nt->exists('framework', 'NO_DYNAMICHINTS')) {
+	  $nt->add_warning('framework', 'NO_DYNAMICHINTS', _("Device & User Hints Issue"), _("You are set to Device and User mode but are not set to 'Dynamically Generate Hints' which can result in improper phone state behavior. This can be changed on the Advanced Settings page, check the tooltip for specific configuration details."));
+  }
+} else {
+	$nt->delete('framework', 'NO_DYNAMICHINTS');
 }
 
 function write_file($filename,$contents,$use_warning_banner=true) {

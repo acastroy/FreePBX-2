@@ -445,6 +445,15 @@ case "$1" in
 			modadmin|ma)
 				$ASTVARLIBDIR/bin/module_admin $3 $4
 			;;
+			freepbx_setting|fs)
+				$ASTVARLIBDIR/bin/freepbx_setting $3 $4
+			;;
+			auth_database|ad)
+				$ASTVARLIBDIR/bin/freepbx_setting AUTHTYPE database 
+			;;
+			auth_none|an)
+				$ASTVARLIBDIR/bin/freepbx_setting AUTHTYPE none 
+			;;
 			externalip|extip)
 				echo `wget http://mirror.freepbx.org/whatismyip.php -O - -q|sed 's/<[^>]*>//g'`
 			;;
@@ -477,6 +486,9 @@ ${b}context$bx|${b}cxt$bx:   Show's the specified context from the dialplan. Thi
                When run with the 'list' or 'l' option, will list all avalible 
                contexts as they appear in extensions* files
 ${b}modadmin$bx|${b}ma$bx:   Runs the module_admin script with additional argument as passed
+${b}freepbx_setting$bx|${b}fs$bx:   Runs the freepbx_setting script with additional 2 arguments passed
+${b}auth_database$bx|${b}ad$bx:   Changes AUTHMODE to database
+${b}auth_none$bx|${b}an$bx:   Changes AUTHMODE to none
 ${b}externalip$bx|${b}extip$bx: Returns the external ip for the default gateway    
 ${b}dbug$bx: shows the freepbx debug log file and any updates     
 \n\n\n"

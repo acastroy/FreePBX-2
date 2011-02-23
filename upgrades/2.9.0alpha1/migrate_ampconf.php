@@ -89,6 +89,29 @@ if (!isset($current_amp_conf['AUTHTYPE']) || ($current_amp_conf['AUTHTYPE'] !='d
   out(_("Setting AUTHTYPE to none consistent with old default"));
   $current_amp_conf['AUTHTYPE'] = 'none';
 }
+
+/* FreePBX has a 'back door' option that allows loging into the GUI with the dababase username/password as
+ * admin user. We have disabled this ability by default but it has the potential to lock people out of
+ * their systems on upgrade. Check to see if they have ANY admin users defined. If not, then set
+ * AMP_ACCESS_DB_CREDS to true overriding the default so they can still access their GUI.
+ */
+if ($current_amp_conf['AUTHTYPE'] !='none') {
+  outn(_("Checking number of admin users.."));
+  $sql = "SELECT count(*) FROM ampusers WHERE sections = '*'";
+  $admin_users = $db->getOne($sql);
+  if (DB::IsError($admin_users)) {
+    out(_("error reading ampusers table"));
+  } elseif (!$admin_users) {
+    out(_("0 admins"));
+  }
+  if (DB::IsError($admin_users) || !$admin_users) {
+    out(_("setting AMP_ACCESS_DB_CREDS to true"));
+    out(_("[WARNING] this is a security risk, you should create an admin user and disable this vulnerability."));
+  } else {
+    out(sprintf(_("%s admins"),$admin_users));
+  }
+}
+
 out(_("Migrate current values into freepbx_conf.."));
 foreach ($current_amp_conf as $key => $val) {
 	outn(sprintf(_("checking %s .."),$key));

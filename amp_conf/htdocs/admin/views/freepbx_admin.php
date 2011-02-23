@@ -207,6 +207,7 @@ if (is_array($fpbx_menu)) {
 		<option value="it_IT" <?php echo ($_COOKIE['lang']=="it_IT" ? "selected" : "") ?> >Italiano</option>
 		<option value="pt_PT" <?php echo ($_COOKIE['lang']=="pt_PT" ? "selected" : "") ?> >Portuguese</option>
 		<option value="pt_BR" <?php echo ($_COOKIE['lang']=="pt_BR" ? "selected" : "") ?> >Portuguese (Brasil)</option>
+		<option value="ro_RO" <?php echo ($_COOKIE['lang']=="ro_RO" ? "selected" : "") ?> >Romanian</option>
 		<option value="ru_RU" <?php echo ($_COOKIE['lang']=="ru_RU" ? "selected" : "") ?> >Russki</option>
 		<option value="sv_SE" <?php echo ($_COOKIE['lang']=="sv_SE" ? "selected" : "") ?> >Svenska</option>
 		</select>

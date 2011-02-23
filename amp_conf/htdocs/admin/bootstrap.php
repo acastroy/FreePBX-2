@@ -15,6 +15,13 @@
  * $restrict_mods: false means include all modules functions.inc.php, true skip all modules
  *                 array of hashes means each module where there is a hash
  *                 e.g. $restrict_mods = array('core' => true, 'dashboard' => true)
+ *
+ * Settings that are set by bootstrap to indicate the results of what was setup and not:
+ *
+ * $bootstrap_settings['framework_functions_included'] = true;
+ * $bootstrap_settings['amportal_conf_initialized'] = true;
+ * $bootstrap_settings['astman_connected'] = false;
+ * $bootstrap_settings['function_modules_included'] = true;
  */
 
 if (!isset($bootstrap_settings['skip_astman'])) {
@@ -38,6 +45,7 @@ function microtime_float() { list($usec,$sec) = explode(' ',microtime()); return
 $benchmark_starttime = microtime_float();
 
 // include base functions
+$bootstrap_settings['framework_functions_included'] = false;
 require_once(dirname(__FILE__) . '/functions.inc.php');
 $bootstrap_settings['framework_functions_included'] = true;
 
@@ -63,10 +71,12 @@ $freepbx_conf =& freepbx_conf::create();
 // passing by reference, this means that the $amp_conf available to everyone is the same one as present
 // within the class, which is probably a direction we want to go to use the class.
 //
+$bootstrap_settings['amportal_conf_initialized'] = false;
 $amp_conf =& $freepbx_conf->parse_amportal_conf("/etc/amportal.conf",$amp_conf);
 $asterisk_conf =& $freepbx_conf->get_asterisk_conf();
 $bootstrap_settings['amportal_conf_initialized'] = true;
 
+$bootstrap_settings['astman_connected'] = false;
 if (!$bootstrap_settings['skip_astman']) {
 	require_once(dirname(__FILE__) . '/libraries/php-asmanager.php');
   $astman	= new AGI_AsteriskManager($bootstrap_settings['astman_config'], $bootstrap_settings['astman_options']);
@@ -76,7 +86,6 @@ if (!$bootstrap_settings['skip_astman']) {
 		if (!$res = $astman->connect($amp_conf["ASTMANAGERHOST"] . ":" . $amp_conf["ASTMANAGERPORT"], $amp_conf["AMPMGRUSER"] , $amp_conf["AMPMGRPASS"], $bootstrap_settings['astman_events'])) {
 			// couldn't connect at all
 			unset( $astman );
-			$bootstrap_settings['astman_connected'] = false;
 		} else {
 			$bootstrap_settings['astman_connected'] = true;
 		}

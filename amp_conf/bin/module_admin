@@ -330,7 +330,6 @@ function showi18n($modulename) {
 	if (!isset($modules[$modulename])) {
 		fatal($modulename.' not found');
 	}
-	    echo "<?php\n";
 	if (isset($modules[$modulename]['name'])) {
 		echo "# name:\n_(\"".$modules[$modulename]['name']."\");\n";
 	}
@@ -345,7 +344,6 @@ function showi18n($modulename) {
 			echo "# $key:\n_(\"$menuitem\");\n";
 		}
 	}
-	    echo "?>\n";
 }
 
 function showCheckDepends($modulename) {

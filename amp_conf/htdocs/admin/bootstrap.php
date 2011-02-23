@@ -18,10 +18,10 @@
  *
  * Settings that are set by bootstrap to indicate the results of what was setup and not:
  *
- * $bootstrap_settings['framework_functions_included'] = true;
- * $bootstrap_settings['amportal_conf_initialized'] = true;
- * $bootstrap_settings['astman_connected'] = false;
- * $bootstrap_settings['function_modules_included'] = true;
+ * $bootstrap_settings['framework_functions_included'] = true/false;
+ * $bootstrap_settings['amportal_conf_initialized'] = true/false;
+ * $bootstrap_settings['astman_connected'] = false/false;
+ * $bootstrap_settings['function_modules_included'] = true/false true if one or more were included, false if all were skipped;
  */
 
 if (!isset($bootstrap_settings['skip_astman'])) {

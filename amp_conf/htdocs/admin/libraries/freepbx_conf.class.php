@@ -1039,18 +1039,22 @@ class freepbx_conf {
   }
 }
 
-
 /** DEPRECATED: $amp_conf provided by bootstrap or use freepbx_conf class.
+ * this must be in a if (!function_exists('parse_amportal_conf')) because during
+ * upgrading from 2.8 to 2.9, the old functions.inc.php is currently loaded
+ * and calls functions which include this.
  *
- * @param string  filename of amportal.conf to pas to parse_amportal_conf method
+ * @param string  filename of amportal.conf to pass to parse_amportal_conf method
  *
  * @return array  $amp_conf array
  */
-function parse_amportal_conf($conf) {
+if (!function_exists('parse_amportal_conf')) {
+  function parse_amportal_conf($conf) {
 
-  freepbx_log(FPBX_LOG_ERROR,'parse_amportal_conf() is deprecated. Use of bootstrap.php creates $amp_conf');
+    freepbx_log(FPBX_LOG_ERROR,'parse_amportal_conf() is deprecated. Use of bootstrap.php creates $amp_conf');
 
-  $freepbx_conf =& freepbx_conf::create();
-  return $freepbx_conf->parse_amportal_conf($conf);
+    $freepbx_conf =& freepbx_conf::create();
+    return $freepbx_conf->parse_amportal_conf($conf);
+  }
 }
 ?>

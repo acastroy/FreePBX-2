@@ -37,7 +37,7 @@ class CI_Table {
 	var $empty_cells		= "";
 	var	$function			= FALSE;
 
-  /*
+  /* Commented out to make this class PHP 4 compatible, Philippe Lindheimer
 	public function __construct()
 	{
 		log_message('debug', "Table Class Initialized");

@@ -37,10 +37,12 @@ class CI_Table {
 	var $empty_cells		= "";
 	var	$function			= FALSE;
 
+  /*
 	public function __construct()
 	{
 		log_message('debug', "Table Class Initialized");
 	}
+   */
 
 	// --------------------------------------------------------------------
 

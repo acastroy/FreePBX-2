@@ -1038,4 +1038,19 @@ class freepbx_conf {
     return $ret;
   }
 }
+
+
+/** DEPRECATED: $amp_conf provided by bootstrap or use freepbx_conf class.
+ *
+ * @param string  filename of amportal.conf to pas to parse_amportal_conf method
+ *
+ * @return array  $amp_conf array
+ */
+function parse_amportal_conf($conf) {
+
+  freepbx_log(FPBX_LOG_ERROR,'parse_amportal_conf() is deprecated. Use of bootstrap.php creates $amp_conf');
+
+  $freepbx_conf =& freepbx_conf::create();
+  return $freepbx_conf->parse_amportal_conf($conf);
+}
 ?>

@@ -217,7 +217,7 @@ pid_length=`$PIDOF asterisk|awk '{print length($0)}'`
 			# su - asterisk -c "export PATH=$PATH:/usr/sbin && export LD_LIBRARY_PATH=/usr/local/lib && /usr/sbin/safe_asterisk"
 			export LD_LIBRARY_PATH=/usr/local/lib
 			umask $AMPVMUMASK
-			/usr/sbin/safe_asterisk -U asterisk -G $AMPASTERISKGROUP
+			/usr/sbin/safe_asterisk -U $AMPASTERISKUSER -G $AMPASTERISKGROUP
 			sleep 5
 			check_asterisk
 			sleep 1

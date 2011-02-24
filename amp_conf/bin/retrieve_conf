@@ -6,6 +6,11 @@ $bootstrap_settings['freepbx_auth'] = false;
 if (!@include_once(getenv('FREEPBX_CONF') ? getenv('FREEPBX_CONF') : '/etc/freepbx.conf')) {
 	include_once('/etc/asterisk/freepbx.conf');
 }
+
+if (!$bootstrap_settings['astman_connected']) {
+  fatal(sprintf(_("Unable to connect to Asterisk Manager from %s, aborting"),__FILE__));
+}
+
 $freepbx_conf =& freepbx_conf::create();
 
 class connectdirs {

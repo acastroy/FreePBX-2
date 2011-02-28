@@ -154,6 +154,37 @@ function doUpgrade($modulename, $force) {
 	doInstall($modulename, $force);
 }
 
+function doInstallLocal($force) {
+        $module_info=module_getinfo(false, MODULE_STATUS_NOTINSTALLED);
+        foreach ($module_info as $module) {
+                if ($module['rawname'] != 'builtin') {
+                        $modules[] = $module['rawname'];
+                }
+        }
+        if (in_array('core', $modules)){
+                out("Installing core...");
+                doInstall('core', $force);
+        }
+        if (in_array('ampuserpermissions', $modules)){
+                out("Installing ampuserpermissions...");
+                doInstall('ampuserpermissions', $force);
+        }
+        if (count($modules) > 0) {
+                out("Installing: ".implode(', ',$modules));
+                sleep(1); // a bit of time to ^C abort..
+                foreach ($modules as $module => $name) {
+                        if (($name != 'core')){//we dont want to reinstall core
+                                getIncludes(); //get functions from other modules, in case we need them here
+                                out("Installing $name...");
+                                doInstall($name, $force);
+                        }
+                }
+                out("Done. All modules installed.");
+        } else {
+                out("All modules up to date.");
+        }
+}
+
 function doInstallAll($force) {
 	doUpgradeAll(true);
 	$modules = getInstallableModules();
@@ -341,6 +372,8 @@ function showHelp() {
 	out("      print out i18n required text for the given module",false);
 	out("  install <module>",false);
 	out("      Install the module (must exist in the modules directory)",false);
+	out("  installlocal",false);
+	out("      Installs any module not installed that is locally available",false);
 	out("  installall",false);
 	out("      Installs all module that exist in the repository",false);
 	out("  list",false);
@@ -627,6 +660,9 @@ switch ($operation ) {
 			fatal("Missing module name");
 		}
 		doInstall($param, $force);
+	break;
+	case 'installlocal':
+		doInstallLocal(true);
 	break;
 	case 'installall':
 		doInstallAll(true);

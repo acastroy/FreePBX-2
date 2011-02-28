@@ -805,7 +805,7 @@ if (!isset($core_conf) || !is_a($core_conf, "core_conf")) {
 	generate_configurations_iax($version);
 	generate_configurations_zap($version);
 }
-if (!isset($queues_conf) || !is_a($queues_conf, "queues_conf")) {
+if (isset($modules['queues']['status']) && $modules['queues']['status'] == MODULE_STATUS_ENABLED && (!isset($queues_conf) || !is_a($queues_conf, "queues_conf"))) {
 	include_once("libfreepbx.confgen.php");
 	generate_configurations_queues($version);
 }

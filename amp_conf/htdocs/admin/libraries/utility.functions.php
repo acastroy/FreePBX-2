@@ -427,6 +427,7 @@ function file_get_contents_url($fn) {
       $text = sprintf(_("Forced %s to true"),'MODULEADMINWGET');
       $extext = sprintf(_("The system detected a problem trying to access external server data and changed internal setting %s (Use wget For Module Admin) to true, see the tooltip in Advanced Settings for more details."),'MODULEADMINWGET');
       $nt->add_warning('freepbx', 'MODULEADMINWGET', $text, $extext, '', false, true);
+      freepbx_log(FPBX_LOG_WARNING,_("file_get_contents() failed, Forced freepbx_conf setting: [MODULEADMINWGET] => [1]"));
     }
     $contents = implode("\n",$data_arr);
   }

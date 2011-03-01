@@ -1,12 +1,30 @@
 <?php
 
-//helper for freepbx labels that show help text
+/**
+ * short FreePBX Label generator
+ * long Function  used to generate FreePBX 'labels' that can
+ * show a help popup when moused over
+ *
+ * @author Moshe Brevda <mbrevda@gmail.com>
+ * @param string $text
+ * @param string $help
+ * @return string
+ * @todo change format to take advantage of html's data attribute. No need for spans!
+ *
+ * {@source } 
+ */
 function fpbx_label($text, $help = '') {
-	return '<a href="javascript:void(null)" class="info">'
-			. $text
-			. '<span>'
-			. $help
-			. '</span></a>';
+	if ($help) {
+		$ret = '<a href="#" class="info">'
+				. $text
+				. '<span>'
+				. $help
+				. '</span></a>';
+	} else {
+		$ret = $text;
+	}
+	
+	return $ret;
 }
 
 /*

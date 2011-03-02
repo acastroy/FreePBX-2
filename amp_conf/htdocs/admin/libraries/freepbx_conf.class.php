@@ -1050,10 +1050,19 @@ class freepbx_conf {
  */
 if (!function_exists('parse_amportal_conf')) {
   function parse_amportal_conf($conf) {
+    global $db;
 
-    freepbx_log(FPBX_LOG_ERROR,'parse_amportal_conf() is deprecated. Use of bootstrap.php creates $amp_conf');
+    if (!is_object($db)) {
+      $restrict_mods = true;
+      $bootstrap_settings['skip_astman'] = true;
+      if (!@include_once(getenv('FREEPBX_CONF') ? getenv('FREEPBX_CONF') : '/etc/freepbx.conf')) {
+	      include_once('/etc/asterisk/freepbx.conf');
+      }
+    }
 
     $freepbx_conf =& freepbx_conf::create();
+
+    freepbx_log(FPBX_LOG_ERROR,'parse_amportal_conf() is deprecated. Use of bootstrap.php creates $amp_conf');
     return $freepbx_conf->parse_amportal_conf($conf);
   }
 }

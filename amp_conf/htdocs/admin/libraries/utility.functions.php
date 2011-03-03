@@ -24,9 +24,9 @@ function freepbx_log($level, $message) {
   $php_error_handler = false;
 	$bt = debug_backtrace();
 
-  if ($bt[1]['function'] == 'freepbx_error_handler') {
+  if (isset($bt[1]) && $bt[1]['function'] == 'freepbx_error_handler') {
     $php_error_handler = true;
-  } elseif ($bt[1]['function'] == 'out' || $bt[1]['function'] == 'die_freepbx') {
+  } elseif (isset($bt[1]) && $bt[1]['function'] == 'out' || $bt[1]['function'] == 'die_freepbx') {
     $file_full = $bt[1]['file'];
     $line = $bt[1]['line'];
   } elseif (basename($bt[0]['file']) == 'notifications.class.php') {
@@ -427,7 +427,6 @@ function file_get_contents_url($fn) {
       $text = sprintf(_("Forced %s to true"),'MODULEADMINWGET');
       $extext = sprintf(_("The system detected a problem trying to access external server data and changed internal setting %s (Use wget For Module Admin) to true, see the tooltip in Advanced Settings for more details."),'MODULEADMINWGET');
       $nt->add_warning('freepbx', 'MODULEADMINWGET', $text, $extext, '', false, true);
-      freepbx_log(FPBX_LOG_WARNING,_("file_get_contents() failed, Forced freepbx_conf setting: [MODULEADMINWGET] => [1]"));
     }
     $contents = implode("\n",$data_arr);
   }

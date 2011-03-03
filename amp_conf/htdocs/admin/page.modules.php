@@ -725,6 +725,14 @@ switch ($extdisplay) {  // process, confirm, or nothing
 					if (!EXTERNAL_PACKAGE_MANAGEMENT) {
 						echo '<input type="radio" id="install_'.prep_id($name).'" name="moduleaction['.prep_id($name).']" value="install" /> '.
 							 '<label for="install_'.prep_id($name).'">'.sprintf(_('Upgrade to %s and Enable'),$modules_local[$name]['version']).'</label> <br />';
+
+						if (isset($modules_online[$name]['version'])) {
+							$vercomp = version_compare_freepbx($modules_local[$name]['version'], $modules_online[$name]['version']);
+							if ($vercomp < 0) {
+								echo '<input type="radio" id="upgrade_'.prep_id($name).'" name="moduleaction['.prep_id($name).']" value="upgrade" /> '.
+									 '<label for="upgrade_'.prep_id($name).'">'.sprintf(_('Download and Upgrade to %s'), $modules_online[$name]['version']).'</label> <br />';
+              }
+            }
 						echo '<input type="radio" id="uninstall_'.prep_id($name).'" name="moduleaction['.prep_id($name).']" value="uninstall" /> '.
 							 '<label for="uninstall_'.prep_id($name).'">'._('Uninstall').'</label> <br />';
 					}

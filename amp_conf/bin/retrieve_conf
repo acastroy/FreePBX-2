@@ -199,7 +199,7 @@ class connectdirs {
   }
   function cp_check_errors() {
     if ($this->cp_errors) {
-      $this->nt->add_error('retrieve_conf', 'CPAGIBIN', _("Failed to copy from module agi-bin"), sprintf(_("Retrieve conf failed to copy file(s) from a module's agi-bin dir: %s"),$cp_errors));
+      $this->nt->add_error('retrieve_conf', 'CPAGIBIN', _("Failed to copy from module agi-bin"), sprintf(_("Retrieve conf failed to copy file(s) from a module's agi-bin dir: %s"),$this->cp_errors));
 	  } else {
       $this->nt->delete('retrieve_conf', 'CPAGIBIN');
 	  }
@@ -237,11 +237,9 @@ class connectdirs {
 // error function as a callback (otherwise, can move it into above).
 //
 function report_errors($errno, $errstr, $errfile, $errline) {
-	global $cp_errors;
   global $db;
   $escaped_string = $db->escapeSimple($errstr);
 	freepbx_log(FPBX_LOG_ERROR, "php reported: '$escaped_string' after copy or unlink attempt!");
-	$cp_errors .= $errstr."\n";
   $conn_dirs = connectdirs::create();
   $conn_dirs->add_cp_error($errstr."\n");
 }

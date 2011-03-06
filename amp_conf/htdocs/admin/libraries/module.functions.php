@@ -1579,14 +1579,25 @@ function _module_distro_id() {
     $pbx_version = trim(file_get_contents('/etc/asterisknow-version'));
   
   // Elastix
-  } elseif (file_exists('/usr/share/elastix/pre_elastix_version.info')) {
+  } elseif (is_dir('/usr/share/elastix') || file_exists('/usr/share/elastix/pre_elastix_version.info')) {
     $pbx_type = 'elastix';
-    $pbx_version = trim(file_get_contents('/usr/share/elastix/pre_elastix_version.info'));
-
-  // Elastix 2.X+ - kept in db, unless there is a simple query to get to the db
-  } elseif (is_dir('/usr/share/elastix')) {
-    $pbx_type = 'elastix';
-    $pbx_version = '2.X+';
+    $pbx_version = '';
+    if (class_exists('PDO') && file_exists('/var/www/db/settings.db')) {
+      $elastix_db = new PDO('sqlite:/var/www/db/settings.db');
+      $result = $elastix_db->query("SELECT value FROM settings WHERE key='elastix_version_release'");
+      if ($result !== false) foreach ($result as $row) {
+        if (isset($row['value'])) {
+          $pbx_version = $row['value'];
+          break;
+        }
+      }
+    }
+    if (!$pbx_version && file_exists('/usr/share/elastix/pre_elastix_version.info')) {
+      $pbx_version = trim(file_get_contents('/usr/share/elastix/pre_elastix_version.info'));
+    }
+    if (!$pbx_version) {
+      $pbx_version = '2.X+';
+    }
 
   // PIAF
   } elseif (file_exists('/etc/pbx/.version') || file_exists('/etc/pbx/.color')) {

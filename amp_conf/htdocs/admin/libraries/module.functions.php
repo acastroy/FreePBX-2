@@ -1619,7 +1619,7 @@ function _module_distro_id() {
       }
     }
 
-  // Fonicordiax
+  // Old PIAF or Fonica
   } elseif (file_exists('/etc/pbx/version') || file_exists('/etc/pbx/ISO-Version')) {
     $pbx_type = 'fonica';
     if (file_exists('/etc/pbx/ISO-Version')) {
@@ -1628,8 +1628,12 @@ function _module_distro_id() {
       $pbx_version = $pbx_arr[count($pbx_arr)-1];
       if (stristr($pbx_arr[0],'foncordiax') !== false) {
         $pbx_version .= '.pro';
+      } else {
+        $pbx_version = str_replace(' ','.',$pbx_version);
+        if ($pbx_version != '1.0.standard') {
+          $pbx_type = 'piaf';
+        }
       }
-      $pbx_version = str_replace(' ','.',$pbx_version);
     } else {
       $pbx_version = 'unknown';
     }

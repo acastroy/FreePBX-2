@@ -225,6 +225,8 @@ function getInstallableModules($extarray = false) {
 	$modules_installable = array();
   global $active_repos;
 
+  check_active_repos();
+
 	foreach ($modules_online as $name) {
 
     // Theory: module is not in the defined repos, and since it is not local (meaning we loaded it at some point) then we
@@ -250,6 +252,8 @@ function getUpgradableModules($extarray = false) {
 	$modules_upgradable = array();
   global $active_repos;
 	
+  check_active_repos();
+
 	foreach (array_keys($modules_local) as $name) {
 		if (isset($modules_online[$name])) {
 			if (version_compare_freepbx($modules_local[$name]['version'], $modules_online[$name]['version']) < 0) {
@@ -346,6 +350,21 @@ function showEngine() {
 		out(str_pad($key,15,' ',STR_PAD_LEFT).': '.$value);
 	}
 }
+
+function check_active_repos() {
+  global $no_warnings;
+  global $active_repos;
+
+  if (!isset($active_repos)) {
+    $active_repos = module_get_active_repos();
+    $list = implode(',',array_keys($active_repos));
+    if (!$no_warnings) {
+      out("no repos specified, using: [$list] from last GUI settings");
+      out("");
+    }
+  }
+}
+
 
 function showHelp() {
 	global $argv;
@@ -446,6 +465,8 @@ function showList($online = false) {
 	$modules_local = module_getinfo(false,false,true);
 	$modules = $modules_local;
   global $active_repos;
+
+  check_active_repos();
 
 	if ($online) {
 		$modules_online = module_getonlinexml(false, $repo);
@@ -611,13 +632,6 @@ foreach ($args[0] as $arg) {
       }
 		break;
 	}
-}
-
-if (!isset($active_repos)) {
-  $active_repos = module_get_active_repos();
-  $list = implode(',',array_keys($active_repos));
-  out("no repos specified, using: [$list] from last GUI settings");
-  out("");
 }
 
 $operation = $args[1][0];

@@ -1,5 +1,6 @@
 <?php
-
+// Set language, needs to be set here for full localization of the gui
+set_language();
 @session_start();
 if (isset($_REQUEST['logout'])) {
 	// logging out..

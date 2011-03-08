@@ -164,8 +164,6 @@ if(!$quietmode && is_array($active_modules)){
 	}
 }
 
-// set the language so local module languages take
-set_language();
 
 // extensions vs device/users ... this is a bad design, but hey, it works
 if (!$quietmode) {
@@ -313,6 +311,8 @@ if ($quietmode) {
 	$admin_template['fpbx_type'] = $type;
 	$admin_template['display'] = $display;
 
+	// set the language so local module languages take
+	set_language();
 
 	// then load it and put it into the main freepbx interface
 	$template['content'] = load_view($amp_conf['VIEW_FREEPBX_ADMIN'], $admin_template) . load_view('views/freepbx_footer.php',$admin_template) ;

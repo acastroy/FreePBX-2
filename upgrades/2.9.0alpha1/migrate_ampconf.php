@@ -107,6 +107,7 @@ if ($current_amp_conf['AUTHTYPE'] !='none') {
   if (DB::IsError($admin_users) || !$admin_users) {
     out(_("setting AMP_ACCESS_DB_CREDS to true"));
     out(_("[WARNING] this is a security risk, you should create an admin user and disable this vulnerability."));
+    $current_amp_conf['AMP_ACCESS_DB_CREDS'] = true;
   } else {
     out(sprintf(_("%s admins"),$admin_users));
   }

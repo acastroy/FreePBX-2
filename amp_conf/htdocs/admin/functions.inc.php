@@ -3332,6 +3332,9 @@ function module_get_annoucements() {
 		$options .="&astver=".urlencode($engver['version']);
 	}
   $options .= "&phpver=".urlencode(phpversion());
+  $distro_info = _module_distro_id();
+  $options .= "&distro=".urlencode($distro_info['pbx_type']);
+  $options .= "&distrover=".urlencode($distro_info['pbx_version']);
 
 	$announcement = @ file_get_contents("http://mirror.freepbx.org/version-".getversion().".html".$options);
 	return $announcement;
@@ -3439,6 +3442,95 @@ function _module_generate_unique_id($type=null) {
 		return _module_generate_random_id($type);
 	}
 } 
+
+function _module_distro_id() {
+  static $pbx_type;
+  static $pbx_version;
+
+  if (isset($pbx_type)) {
+    return array('pbx_type' => $pbx_type, 'pbx_version' => $pbx_version);
+  }
+
+  // FreePBX Distro
+  if (file_exists('/etc/asterisk/freepbxdistro-version')) {
+    $pbx_type = 'freepbxdistro';
+    $pbx_version = trim(file_get_contents('/etc/asterisk/freepbxdistro-version'));
+
+  // Trixbox
+  } elseif (file_exists('/etc/trixbox/trixbox-version')) {
+    $pbx_type = 'trixbox';
+    $pbx_version = trim(file_get_contents('/etc/trixbox/trixbox-version'));
+
+  // AsteriskNOW
+  } elseif (file_exists('/etc/asterisknow-version')) {
+    $pbx_type = 'asterisknow';
+    $pbx_version = trim(file_get_contents('/etc/asterisknow-version'));
+  
+  // Elastix
+  } elseif (is_dir('/usr/share/elastix') || file_exists('/usr/share/elastix/pre_elastix_version.info')) {
+    $pbx_type = 'elastix';
+    $pbx_version = '';
+    if (class_exists('PDO') && file_exists('/var/www/db/settings.db')) {
+      $elastix_db = new PDO('sqlite:/var/www/db/settings.db');
+      $result = $elastix_db->query("SELECT value FROM settings WHERE key='elastix_version_release'");
+      if ($result !== false) foreach ($result as $row) {
+        if (isset($row['value'])) {
+          $pbx_version = $row['value'];
+          break;
+        }
+      }
+    }
+    if (!$pbx_version && file_exists('/usr/share/elastix/pre_elastix_version.info')) {
+      $pbx_version = trim(file_get_contents('/usr/share/elastix/pre_elastix_version.info'));
+    }
+    if (!$pbx_version) {
+      $pbx_version = '2.X+';
+    }
+
+  // PIAF
+  } elseif (file_exists('/etc/pbx/.version') || file_exists('/etc/pbx/.color')) {
+    $pbx_type = 'piaf';
+    $pbx_version = '';
+    if (file_exists('/etc/pbx/.version')) {
+      $pbx_version = trim(file_get_contents('/etc/pbx/.version'));
+    }
+    if (file_exists('/etc/pbx/.color')) {
+      $pbx_version .= '.' . trim(file_get_contents('/etc/pbx/.color'));
+    }
+    if (!$pbx_version) {
+      if (file_exists('/etc/pbx/ISO-Version')) {
+        $pbx_ver_raw = trim(file_get_contents('/etc/pbx/ISO-Version'));
+        $pbx_arr = explode('=',$pbx_ver_raw);
+        $pbx_version = $pbx_arr[count($pbx_arr)-1];
+      } else {
+        $pbx_version = 'unknown';
+      }
+    }
+
+  // Old PIAF or Fonica
+  } elseif (file_exists('/etc/pbx/version') || file_exists('/etc/pbx/ISO-Version')) {
+    $pbx_type = 'fonica';
+    if (file_exists('/etc/pbx/ISO-Version')) {
+      $pbx_ver_raw = trim(file_get_contents('/etc/pbx/ISO-Version'));
+      $pbx_arr = explode('=',$pbx_ver_raw);
+      $pbx_version = $pbx_arr[count($pbx_arr)-1];
+      if (stristr($pbx_arr[0],'foncordiax') !== false) {
+        $pbx_version .= '.pro';
+      } else {
+        $pbx_version = str_replace(' ','.',$pbx_version);
+        if ($pbx_version != '1.0.standard') {
+          $pbx_type = 'piaf';
+        }
+      }
+    } else {
+      $pbx_version = 'unknown';
+    }
+  } else {
+    $pbx_type = 'unknown';
+    $pbx_version = 'unknown';
+  }
+  return array('pbx_type' => $pbx_type, 'pbx_version' => $pbx_version);
+}
 
 function module_run_notification_checks() {
 	global $db;
@@ -3603,5 +3695,3 @@ function freepbx_get_contexts() {
 	}
 	return $contexts;
 }
-
-?>

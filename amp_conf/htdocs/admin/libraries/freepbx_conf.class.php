@@ -81,7 +81,7 @@ class freepbx_conf {
   'AMPSBIN'        => array(CONF_TYPE_DIR, '/usr/sbin'),
   'AMPWEBROOT'     => array(CONF_TYPE_DIR, '/var/www/html'),
   'FOPWEBROOT'     => array(CONF_TYPE_DIR, '/var/www/html/panel'),
-  'MOHDIR'         => array(CONF_TYPE_DIR, 'mohmp3'),
+  'MOHDIR'         => array(CONF_TYPE_DIR, 'moh'),
   'FPBXDBUGFILE'	 => array(CONF_TYPE_DIR, '/tmp/freepbx_debug.log'),
 
   'USECATEGORIES'  => array(CONF_TYPE_BOOL, true),

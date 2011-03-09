@@ -90,6 +90,11 @@ if (!isset($current_amp_conf['AUTHTYPE']) || ($current_amp_conf['AUTHTYPE'] !='d
   $current_amp_conf['AUTHTYPE'] = 'none';
 }
 
+if (!isset($current_amp_conf['MOHDIR']) || $current_amp_conf['MOHDIR'] == '') {
+  out(_("Setting MOHDIR to mohmp3 consistent with old default"));
+  $current_amp_conf['MOHDIR'] = 'mohmp3';
+}
+
 /* FreePBX has a 'back door' option that allows loging into the GUI with the dababase username/password as
  * admin user. We have disabled this ability by default but it has the potential to lock people out of
  * their systems on upgrade. Check to see if they have ANY admin users defined. If not, then set

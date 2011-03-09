@@ -73,3 +73,25 @@ All rights reserved.
 license http://codeigniter.com/user_guide/license.html
 
 *******************************************************************************************
+Credits/License for music included in this package
+------------------------------------------
+macroform-cold_day - Paul Shuler (Macroform)
+paulshuler@gmail.com - http://macroform.bandcamp.com/
+
+macroform-robot_dity - Paul Shuler (Macroform)
+paulshuler@gmail.com - http://macroform.bandcamp.com/
+
+macroform-the_simplicity - Paul Shuler (Macroform)
+paulshuler@gmail.com - http://macroform.bandcamp.com/
+
+manolo_camp-morning_coffee - Manolo Camp
+beatbastard@gmx.net - http://ccmixter.org/people/ManoloCamp
+
+reno_project-system - Reno Project
+renoproject@hotmail.com - http://www.jamendo.com/en/album/23661
+
+These files are distributed under the Creative Commons Attribution-ShareAlike
+3.0 license through explicit permission from their authors.
+
+The license can be found at:
+http://creativecommons.org/licenses/by-sa/3.0/

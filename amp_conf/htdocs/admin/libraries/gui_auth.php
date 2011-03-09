@@ -46,7 +46,9 @@ switch (strtolower($amp_conf['AUTHTYPE'])) {
 			$_SESSION['AMP_user'] = new ampuser($amp_conf['AMPDBUSER']);
 			$_SESSION['AMP_user']->setAdmin();
 		}
-		define('FREEPBX_IS_AUTH', 'TRUE');
+    if (!defined('FREEPBX_IS_AUTH')) {
+		  define('FREEPBX_IS_AUTH', 'TRUE');
+    }
 	break;
 	case 'database':
 	default:

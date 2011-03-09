@@ -10,28 +10,12 @@ ux="\e[0m"
 
 ROOT_UID=0	 # root uid is 0
 E_NOTROOT=67 # Non-root exit error
-
-# function to eventually get freepbx.conf to /etc
-move_freepbxconf() {
-	if [ -e /etc/asterisk/freepbx.conf -a ! -e /etc/freepbx.conf ]; then
-		echo moving /etc/asterisk/freepbx.conf to /etc/freepbx.conf
-		mv /etc/asterisk/freepbx.conf /etc/
-  	if [ "$?" -ne "0" ]; then
-			echo "unable to move, FreePBX will function fine but you will"
-			echo "get this error until the file can be successfully moved"
-		else
-			FREEPBX_CONF="/etc/freepbx.conf"
-  	fi
-	fi
-}
-
 # define freepbx config file if not already set
 if [ -z "$FREEPBX_CONF" ]; then
 	if [ -e "/etc/freepbx.conf" ]; then
 		FREEPBX_CONF="/etc/freepbx.conf"
 	elif [ -e "/etc/asterisk/freepbx.conf" ]; then
 		FREEPBX_CONF="/etc/asterisk/freepbx.conf"
-		move_freepbxconf
 	else
 		FREEPBX_CONF="/etc/freepbx.conf"
 	fi
@@ -45,6 +29,7 @@ then
 	echo
 	exit $E_NOTROOT
 fi
+
 
 # Set some defaults which can be re-defined from the config file/db
 AMPDEVUSER=asterisk
@@ -73,6 +58,14 @@ write_freepbxconf() {
 		require_once('${AMPWEBROOT}/admin/bootstrap.php');
 
 		EOF
+	fi
+	if [ -e /etc/asterisk/freepbx.conf -a ! -e /etc/freepbx.conf ]; then
+		echo moving /etc/asterisk/freepbx.conf to /etc/freepbx.conf
+		mv /etc/asterisk/freepbx.conf /etc/
+  	if [ "$?" -ne "0" ]; then
+			echo "unable to move, FreePBX will function fine but you will"
+			echo "get this error until the file can be successfully moved"
+  	fi
 	fi
 }
 
@@ -474,6 +467,9 @@ case "$1" in
 				fi 
 				tail -f $FPBXDBUGFILE $httpd_error
 			;;
+			mysql|m)
+				mysql -u$AMPDBUSER -D$AMPDBNAME -p$AMPDBPASS
+			;;
 		*)
 
 #formating variables defined at top of file
@@ -484,20 +480,18 @@ useage: ${b}amportal$bx (${b}admin$bx|${b}a$bx) <option>
 
 options: 
 
-${b}reload$bx|${b}r$bx:      Does a full dialplan regeneration/reload (like clicking 
-               the orange bar)
+${b}externalip$bx|${b}extip$bx: Returns the external ip for the default gateway    
+${b}dbug$bx:		Shows the freepbx debug log file and any update
 ${b}context$bx|${b}cxt$bx:   Show's the specified context from the dialplan. This is extreamly
                usefull when developing dialplan on a system with many modules, 
                where it is not fesable look thru the whole extensions_additional
                every time to see how a specific context was generate
                When run with the 'list' or 'l' option, will list all avalible 
                contexts as they appear in extensions* files
-${b}modadmin$bx|${b}ma$bx:   Runs the module_admin script with additional argument as passed
-${b}freepbx_setting$bx|${b}fs$bx:   Runs the freepbx_setting script with additional 2 arguments passed
-${b}auth_database$bx|${b}ad$bx:   Changes AUTHMODE to database
-${b}auth_none$bx|${b}an$bx:   Changes AUTHMODE to none
-${b}externalip$bx|${b}extip$bx: Returns the external ip for the default gateway    
-${b}dbug$bx: shows the freepbx debug log file and any updates     
+${b}modadmin$bx|${b}ma$bx:  Runs the module_admin script with additional argument as passed
+${b}mysql$bx|${b}m$bx:	Connect to freebx's mysql connection (assumes server is on localhost) s 
+${b}reload$bx|${b}r$bx:      Does a full dialplan regeneration/reload (like clicking 
+               the orange bar)     
 \n\n\n"
 		;;
 	esac

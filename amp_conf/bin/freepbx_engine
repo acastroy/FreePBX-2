@@ -11,18 +11,27 @@ ux="\e[0m"
 ROOT_UID=0	 # root uid is 0
 E_NOTROOT=67 # Non-root exit error
 
-	# function to eventually get freepbx.conf to /etc 
-move_freepbxconf() { 
-	if [ -e /etc/asterisk/freepbx.conf -a ! -e /etc/freepbx.conf ]; then 
-		echo moving /etc/asterisk/freepbx.conf to /etc/freepbx.conf 
-		mv /etc/asterisk/freepbx.conf /etc/ 
-		if [ "$?" -ne "0" ]; then 
+echo
+# check to see if we are root
+if [ "$UID" -ne "$ROOT_UID" ]
+then
+	echo "Sorry, you must be root to run this script."
+	echo
+	exit $E_NOTROOT
+fi
+
+# function to eventually get freepbx.conf to /etc 
+move_freepbxconf() {
+	if [ -e /etc/asterisk/freepbx.conf -a ! -e /etc/freepbx.conf ]; then
+		echo moving /etc/asterisk/freepbx.conf to /etc/freepbx.conf
+		mv /etc/asterisk/freepbx.conf /etc/
+  	if [ "$?" -ne "0" ]; then
 			echo "unable to move, FreePBX will function fine but you will" 
 			echo "get this error until the file can be successfully moved" 
-		else 
-			FREEPBX_CONF="/etc/freepbx.conf" 
-		fi 
-	fi 
+		else
+			FREEPBX_CONF="/etc/freepbx.conf"
+  	fi
+	fi
 }
 
 # define freepbx config file if not already set
@@ -35,15 +44,6 @@ if [ -z "$FREEPBX_CONF" ]; then
 	else
 		FREEPBX_CONF="/etc/freepbx.conf"
 	fi
-fi
-
-echo
-# check to see if we are root
-if [ "$UID" -ne "$ROOT_UID" ]
-then
-	echo "Sorry, you must be root to run this script."
-	echo
-	exit $E_NOTROOT
 fi
 
 
@@ -155,8 +155,8 @@ fi
 chown_asterisk() {
 	echo SETTING FILE PERMISSIONS
 	
-	chown -R $AMPASTERISKUSER:$AMPASTERISKGROUP /etc/amportal.conf
-	chown -R $AMPASTERISKUSER:$AMPASTERISKGROUP $FREEPBX_CONF
+	chown -R $AMPASTERISKWEBUSER:$AMPASTERISKWEBGROUP /etc/amportal.conf
+	chown -R $AMPASTERISKWEBUSER:$AMPASTERISKWEBGROUP $FREEPBX_CONF
 	chmod g+w /etc/amportal.conf
 	chmod g+w $FREEPBX_CONF
 	chown -R $AMPASTERISKUSER:$AMPASTERISKGROUP $ASTRUNDIR
@@ -173,9 +173,9 @@ chown_asterisk() {
 	chmod -R g+w $AMPWEBROOT/admin
 	chown -R $AMPASTERISKWEBUSER:$AMPASTERISKWEBGROUP $FOPWEBROOT
 	chmod -R g+w $FOPWEBROOT
-	chown -R $AMPASTERISKUSER:$AMPASTERISKGROUP $AMPWEBROOT/recordings
+	chown -R $AMPASTERISKWEBUSER:$AMPASTERISKWEBGROUP $AMPWEBROOT/recordings
 	chmod -R g+w $AMPWEBROOT/recordings
-	chown -R $AMPASTERISKUSER:$AMPASTERISKGROUP $AMPWEBROOT/_asterisk
+	chown -R $AMPASTERISKWEBUSER:$AAMPASTERISKWEBGROUP $AMPWEBROOT/_asterisk
 	chmod u+x,g+x $ASTVARLIBDIR/bin/*
 	chown -R $AMPASTERISKUSER:$AMPASTERISKGROUP $ASTVARLIBDIR/bin/*
 	chown -R $AMPASTERISKUSER:$AMPASTERISKGROUP $AMPBIN/*

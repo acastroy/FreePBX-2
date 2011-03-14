@@ -93,6 +93,8 @@ if (!isset($current_amp_conf['AUTHTYPE']) || ($current_amp_conf['AUTHTYPE'] !='d
 if (!isset($current_amp_conf['MOHDIR']) || $current_amp_conf['MOHDIR'] == '') {
   out(_("Setting MOHDIR to mohmp3 consistent with old default"));
   $current_amp_conf['MOHDIR'] = 'mohmp3';
+} else {
+  $current_amp_conf['MOHDIR'] = trim($current_amp_conf['MOHDIR'],'/');
 }
 
 /* FreePBX has a 'back door' option that allows loging into the GUI with the dababase username/password as

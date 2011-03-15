@@ -200,7 +200,9 @@ function redirect($url, $stop_processing = true) {
 	// TODO: If I don't call ob_end_clean() then is output buffering still on? Do I need to run it off still?
 	//       (note ob_end_flush() results in the same php NOTICE so not sure how to turn it off. (?ob_implicit_flush(true)?)
 	//
-	@ob_end_clean();
+	if (!empty($res)) {
+		@ob_end_clean();
+	}
 	@header('Location: '.$url);
 	if ($stop_processing) exit;
 }

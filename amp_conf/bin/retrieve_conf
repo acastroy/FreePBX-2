@@ -408,27 +408,6 @@ $engine = $engineinfo['engine'];
 $version = $engineinfo['version'];
 $chan_dahdi = ast_with_dahdi();
 
-// this is not initialized in the installer because I think there are scenarios where
-// Asterisk may not be running and we may some day not need it to be so just deal
-// with it here.
-//
-if (!$freepbx_conf->conf_setting_exists('ASTVERSION')) {
-  // ASTVERSION
-  //
-  $set['value'] = '';
-  $set['defaultval'] =& $set['value'];
-  $set['options'] = '';
-  $set['readonly'] = 1;
-  $set['hidden'] = 1;
-  $set['level'] = 10;
-  $set['module'] = '';
-  $set['category'] = 'Internal Use';
-  $set['emptyok'] = 1;
-  $set['name'] = 'Asterisk Version';
-  $set['description'] = "Asterisk Version used during last 'Apply Configuration Changes' when retrieve_conf is run";
-  $set['type'] = CONF_TYPE_TEXT;
-  $freepbx_conf->define_conf_setting('ASTVERSION',$set);
-}
 if (!$freepbx_conf->conf_setting_exists('AST_FUNC_DEVICE_STATE')) {
   // AST_FUNC_DEVICE_STATE
   //
@@ -513,9 +492,6 @@ if (!$freepbx_conf->conf_setting_exists('AST_FUNC_MASTER_CHANNEL')) {
   $set['description'] = "Set to the function name if the function is present in this Asterisk install";
   $set['type'] = CONF_TYPE_TEXT;
   $freepbx_conf->define_conf_setting('AST_FUNC_MASTER_CHANNEL',$set);
-}
-if ($version != $freepbx_conf->get_conf_setting('ASTVERSION')) {
-  $update_arr['ASTVERSION'] = $version;
 }
 // Since modules can be loaded in a current version, we check these each time
 // DEVICE_STATE exists in two flavors, DEVSTATE and DEVICE_STATE, the latter is the official one

@@ -187,6 +187,38 @@ function engine_getinfo($force_read=false) {
         $engine_info['engine'] = $amp_conf['AMPENGINE'];
         $engine_info['version'] = $amp_conf['FORCED_ASTVERSION'];
       }
+
+      // Now we make sure the ASTVERSION freepbx_setting/amp_conf value is defined and set
+
+      // this is not initialized in the installer because I think there are scenarios where
+      // Asterisk may not be running and we may some day not need it to be so just deal
+      // with it here.
+      //
+      $freepbx_conf =& freepbx_conf::create();
+      if (!$freepbx_conf->conf_setting_exists('ASTVERSION')) {
+        // ASTVERSION
+        //
+        $set['value'] = $engine_info['version'];
+        $set['defaultval'] = '';
+        $set['options'] = '';
+        $set['readonly'] = 1;
+        $set['hidden'] = 1;
+        $set['level'] = 10;
+        $set['module'] = '';
+        $set['category'] = 'Internal Use';
+        $set['emptyok'] = 1;
+        $set['name'] = 'Asterisk Version';
+        $set['description'] = "Last Asterisk Version detected (or forced)";
+        $set['type'] = CONF_TYPE_TEXT;
+        $freepbx_conf->define_conf_setting('ASTVERSION',$set,true);
+        unset($set);
+        $amp_conf['ASTVERSION'] = $engine_info['version'];
+      }
+
+      if ($engine_info['version'] != $amp_conf['ASTVERSION']) {
+        $freepbx_conf->set_conf_values(array('ASTVERSION' => $engine_info['version']), true, true);
+      }
+
       return $engine_info;
 		break;
 	}

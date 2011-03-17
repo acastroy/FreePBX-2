@@ -939,6 +939,17 @@ function freepbx_settings_init($commit_to_db = false) {
   $set['type'] = CONF_TYPE_SELECT;
   $freepbx_conf->define_conf_setting('ASTSTOPPOLLINT',$set);
 
+  // CID_PREPEND_REPLACE
+  $set['value'] = true;
+  $set['options'] = '';
+  $set['name'] = 'Only Use Last CID Prepend';
+  $set['description'] = "Some modules allow the CNAM to be prepended. If a previous prepend was done, the default behavior is to remove the previous prepend and only use the most recent one. Setting this to false will turn that off allowing all prepends to be 'starcked' in front of one another.";
+  $set['emptyok'] = 0;
+  $set['readonly'] = 0;
+  $set['type'] = CONF_TYPE_BOOL;
+  $freepbx_conf->define_conf_setting('CID_PREPEND_REPLACE',$set);
+
+
   //
   // CATEGORY: Directory Layout
   //

@@ -308,7 +308,7 @@ function showi18n($modulename) {
 		echo "# name:\n_(\"".$modules[$modulename]['name']."\");\n";
 	}
 	if (isset($modules[$modulename]['category'])) {
-		echo "# category:\n_(\"".$modules[$modulename]['category']."\");\n";
+		echo "# category:\n_(\"".str_replace("\n","",$modules[$modulename]['category'])."\");\n";
 	}
 	if (isset($modules[$modulename]['description'])) {
 		echo "# description:\n_(\"".trim(str_replace("\n","",$modules[$modulename]['description']))."\");\n";

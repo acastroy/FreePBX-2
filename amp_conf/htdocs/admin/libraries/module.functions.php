@@ -535,7 +535,7 @@ function module_checkdepends($modulename) {
 							
 							$engine = engine_getinfo();
 							if (($engine['engine'] == $matches[1]) &&
-							    (empty($matches[4]) || !version_compare($matches[4], $engine['version'], $operator))
+                (empty($matches[4]) || version_compare($engine['version'], $matches[4], $operator))
 							   ) {
 							   
 								$engine_matched = true;

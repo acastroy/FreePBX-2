@@ -893,8 +893,8 @@ if ((preg_match('/^Asterisk (\d+(\.\d+)*)(-?(.*))$/', $verinfo, $matches)) ||
 // **** Make sure selinux isn't enabled
 
 outn("Checking for selinux..");
-$tmpoutput;
-$tmpout = exec("getenforce", $tmpoutput, $sereturn);
+$tmpoutput = array();
+$tmpout = exec("getenforce 2>/dev/null", $tmpoutput, $sereturn);
 if (strtolower($tmpoutput[0]) === "enabled") {
         // this method seems better because disabled and permissive are the same
         // if a user installs and realizes selinux is running the other method 

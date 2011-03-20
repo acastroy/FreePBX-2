@@ -13,14 +13,14 @@
 #    You should have received a copy of the GNU General Public License
 #    along with FreePBX.  If not, see <http://www.gnu.org/licenses/>.
 #
-# FreePBX language template for amp
+# FreePBX language template for framework
 # Copyright (C) 2008, 2009, 2010, 2011 Bandwith.com
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: FreePBX\n"
+"Project-Id-Version: FreePBX framework\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-11 07:15+0100\n"
+"POT-Creation-Date: 2011-03-20 15:22+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -509,19 +509,6 @@ msgstr ""
 msgid "Daily load"
 msgstr ""
 
-msgid "Please select a \"Destination\""
-msgstr ""
-
-msgid ""
-"Custom Goto contexts must contain the string \"custom-\".  ie: custom-app,s,1"
-msgstr ""
-
-msgid "The secret must be at minimum six characters in length."
-msgstr ""
-
-msgid "The secret must contain at least two numbers and two letters."
-msgstr ""
-
 msgid "Submit"
 msgstr ""
 
@@ -913,6 +900,19 @@ msgid ""
 "runs under that assumption"
 msgstr ""
 
+msgid "Please select a \"Destination\""
+msgstr ""
+
+msgid ""
+"Custom Goto contexts must contain the string \"custom-\".  ie: custom-app,s,1"
+msgstr ""
+
+msgid "The secret must be at minimum six characters in length."
+msgstr ""
+
+msgid "The secret must contain at least two numbers and two letters."
+msgstr ""
+
 msgid "Potential Security Breach"
 msgstr ""
 
@@ -1154,6 +1154,12 @@ msgid ""
 msgstr ""
 
 msgid "We hope you enjoy using FreePBX!"
+msgstr ""
+
+msgid "choose one"
+msgstr ""
+
+msgid "Terminate Call"
 msgstr ""
 
 msgid "Core"
@@ -1697,6 +1703,16 @@ msgid ""
 "For extensions that have CW enabled, report unanswered CW calls as <b>busy</"
 "b> (resulting in busy voicemail greeting). If set to no, unanswered CW calls "
 "simply report as <b>no-answer</b>."
+msgstr ""
+
+msgid "Only Use Last CID Prepend"
+msgstr ""
+
+msgid ""
+"Some modules allow the CNAM to be prepended. If a previous prepend was done, "
+"the default behavior is to remove the previous prepend and only use the most "
+"recent one. Setting this to false will turn that off allowing all prepends "
+"to be 'starcked' in front of one another."
 msgstr ""
 
 msgid "Polling Interval for Stopping Asterisk"
@@ -2332,7 +2348,7 @@ msgstr ""
 msgid ""
 "Where to send PHP errors, warnings and notices by the FreePBX PHP error "
 "handler. Set to 'dbug', they will go to the Debug File regardless of whether "
-"dbug Loggin is disalbed or not. Set to 'freepbxlog' will send them to the "
+"dbug Loggin is disabled or not. Set to 'freepbxlog' will send them to the "
 "FreePBX Log. Set to 'off' and they will be ignored."
 msgstr ""
 
@@ -2404,10 +2420,10 @@ msgid "Force Asterisk Version"
 msgstr ""
 
 msgid ""
-"Normally FreePBX gets the current Asterisk version directly form Asterisk. "
+"Normally FreePBX gets the current Asterisk version directly from Asterisk. "
 "This is required to generate proper dialplan for a given version. When using "
 "some custom Asterisk builds, the version may not be properly parsed and "
-"imporoper dialplan generated. Setting this to an equivalent Asterisk version "
+"improper dialplan generated. Setting this to an equivalent Asterisk version "
 "will override what is read from Asterisk. This SHOULD be left blank unless "
 "you know what you are doing."
 msgstr ""
@@ -2525,9 +2541,6 @@ msgid "VMX Default Timeout Extension"
 msgstr ""
 
 msgid "VMX Default Timeout Priority"
-msgstr ""
-
-msgid "Terminate Call"
 msgstr ""
 
 msgid "Hangup"

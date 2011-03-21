@@ -587,7 +587,7 @@ class freepbx_conf {
     unset($this->last_update_status);
     foreach($update_arr as $keyword => $value) {
       if (!isset($this->db_conf_store[$keyword])) {
-        die_freepbx(sprintf(_("trying to set keyword [%s] to [%s] on unitialized setting"),$keyword, $value));
+        die_freepbx(sprintf(_("trying to set keyword [%s] to [%s] on uninitialized setting"),$keyword, $value));
       } 
       $this->last_update_status[$keyword]['validated'] = false;
       $this->last_update_status[$keyword]['saved'] = false;

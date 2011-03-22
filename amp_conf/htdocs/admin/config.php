@@ -310,7 +310,8 @@ if ($quietmode) {
 	$admin_template['fpbx_usecategories'] = $amp_conf['USECATEGORIES'];
 	$admin_template['fpbx_type'] = $type;
 	$admin_template['display'] = $display;
-
+	$admin_template['reload_needed'] = check_reload_needed();
+	$admin_template['reload_confirm'] = $amp_conf['RELOADCONFIRM'];
 	// set the language so local module languages take
 	set_language();
 

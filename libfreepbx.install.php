@@ -1495,7 +1495,7 @@ function freepbx_settings_init($commit_to_db = false) {
   // CDRDBPORT
   $set['value'] = '';
   $set['options'] = array(1024,65536);
-  $set['name'] = 'Remote CDR DB Password';
+  $set['name'] = 'Remote CDR DB Port';
   $set['description'] = 'DO NOT set this unless you know what you are doing. Only used if you do not use the default values provided by FreePBX.<br>Port number for db host.';
   $set['emptyok'] = 1;
   $set['readonly'] = 1;

@@ -1648,7 +1648,7 @@ function get_framework_version() {
 	global $db;
   static $freepbx_framework_version;
   if (isset($freepbx_framework_version) && $freepbx_framework_version) {
-    return $freepbx_version;
+    return $freepbx_framework_version;
   }
 	$sql = "SELECT version FROM modules WHERE modulename = 'framework' AND enabled = 1";
 	$freepbx_framework_version = $db->getOne($sql);

@@ -765,7 +765,7 @@ function freepbx_settings_init($commit_to_db = false) {
   // ZAP2DAHDICOMPAT
   $set['value'] = false;
   $set['options'] = '';
-  $set['name'] = 'Convert ZAP Settings to DAHDi';
+  $set['name'] = 'Convert ZAP Settings to DAHDI';
   $set['description'] = 'If set to true, FreePBX will check if you have chan_dahdi installed. If so, it will automatically use all your ZAP configuration settings (devices and trunks) and silently convert them, under the covers, to DAHDI so no changes are needed. The GUI will continue to refer to these as ZAP but it will use the proper DAHDI channels. This will also keep Zap Channel DIDs working.';
   $set['emptyok'] = 0;
   $set['readonly'] = 1;

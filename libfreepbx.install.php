@@ -2024,7 +2024,7 @@ function freepbx_settings_init($commit_to_db = false) {
   // DEVICE_CALLGROUP
   $set['value'] = '';
   $set['options'] = '';
-  $set['name'] = 'SIP & DAHDI callgroup';
+  $set['name'] = 'SIP and DAHDI callgroup';
   $set['description'] = "Default setting for SIP, DAHDI (and Zap) callgroup. Callgroup(s) that the device is part of, can be one or more callgroups, e.g. '1,3-5' would be in groups 1,3,4,5. See Asterisk documentation for details.";
   $set['readonly'] = 0;
   $set['type'] = CONF_TYPE_TEXT;
@@ -2035,7 +2035,7 @@ function freepbx_settings_init($commit_to_db = false) {
   // DEVICE_PICKUPGROUP
   $set['value'] = '';
   $set['options'] = '';
-  $set['name'] = 'SIP & DAHDI pickupgroup';
+  $set['name'] = 'SIP and DAHDI pickupgroup';
   $set['description'] = "Default setting for SIP, DAHDI (and Zap) pickupgroup. Pickupgroups(s) that the device can pickup calls from, can be one or more groups, e.g. '1,3-5' would be in groups 1,3,4,5. Device does not have to be in a group to be able to pickup calls from that group. See Asterisk documentation for details.";
   $set['readonly'] = 0;
   $set['type'] = CONF_TYPE_TEXT;

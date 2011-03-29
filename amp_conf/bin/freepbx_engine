@@ -192,7 +192,6 @@ chown_asterisk() {
 		chmod u+x $ASTVARLIBDIR/$MOHDIR
 	fi
 
-	chmod u+x,g+x $AMPBIN/bounce_op.sh
 	chmod u+x,g+x $FOPWEBROOT/*.pl
 	chmod u+x $FOPWEBROOT/safe_opserver
 	chown $AMPASTERISKUSER /dev/tty9

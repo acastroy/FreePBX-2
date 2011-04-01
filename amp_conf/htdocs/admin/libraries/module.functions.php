@@ -431,12 +431,12 @@ function module_checkdepends($modulename) {
 					case 'phpcomponent':
 						/* accepted formats
 						   <depends>
-							   <phpversion>zlib<phpversion>        TRUE: if extension zlib is loaded
-								 <phpversion>zlib 1.2<phpversion>    TRUE: if extension zlib is loaded and >= 1.2
-								 <phpversion>zlib gt 1.2<phpversion> TRUE: if extension zlib is loaded and > 1.2
+							   <phpcomponent>zlib<phpversion>        TRUE: if extension zlib is loaded
+								 <phpcomponent>zlib 1.2<phpversion>    TRUE: if extension zlib is loaded and >= 1.2
+								 <phpcomponent>zlib gt 1.2<phpversion> TRUE: if extension zlib is loaded and > 1.2
 							</depends>
 						*/
-						if (preg_match('/^([a-z0-9_]+)(\s+(lt|le|gt|ge|==|=|eq|!=|ne)?\s*(\d+(\.\d*[beta|alpha|rc|RC]*\d+)+))?$/i', $value, $matches)) {
+						if (preg_match('/^([a-z0-9_]+|Zend Optimizer)(\s+(lt|le|gt|ge|==|=|eq|!=|ne)?\s*(\d+(\.\d*[beta|alpha|rc|RC]*\d+)+))?$/i', $value, $matches)) {
 							// matches[1] = extension name, [3]=comparison operator, [4] = version
 							$compare_ver = isset($matches[4]) ? $matches[4] : '';
 							if (extension_loaded($matches[1])) {
